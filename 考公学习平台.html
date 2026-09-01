@@ -1,0 +1,3512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考公学习平台 · 2028 国考冲刺版</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232563eb'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='%23fff' font-family='sans-serif' font-weight='bold'%3E%E6%95%B0%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#f4f6fa;--card:#ffffff;--ink:#1b2230;--ink-2:#49536a;--ink-3:#8a93a8;
+    --line:#e3e8f0;--accent:#2563eb;--accent-soft:#eaf0fe;
+    --red:#d93025;--red-soft:#fdeeec;--green:#0f9d58;--green-soft:#e8f6ef;
+    --amber:#c77700;--amber-soft:#fff4e0;--purple:#6b3fa0;--purple-soft:#f2ecfa;
+    --shadow:0 1px 3px rgba(20,30,60,.06),0 6px 22px rgba(20,30,60,.05);
+    --r:14px;
+  }
+  [data-theme="dark"]{
+    --bg:#12161f;--card:#1b2130;--ink:#e8ecf5;--ink-2:#aab3c7;--ink-3:#6b7590;
+    --line:#2a3247;--accent:#5b8def;--accent-soft:#1d2a49;
+    --red-soft:#3a1f1c;--green-soft:#12291e;--amber-soft:#33270e;--purple-soft:#261b38;
+    --shadow:0 1px 3px rgba(0,0,0,.4),0 6px 22px rgba(0,0,0,.25);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",sans-serif;
+    line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 18px 80px}
+
+  /* top bar */
+  .top{display:flex;align-items:center;gap:14px;padding:18px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .brand{font-size:19px;font-weight:800;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+  .brand .dot{width:12px;height:12px;border-radius:4px;background:linear-gradient(135deg,#2563eb,#7c3aed);display:inline-block}
+  .top-right{margin-left:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .count-chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-size:13px;color:var(--ink-2);box-shadow:var(--shadow)}
+  .count-chip b{color:var(--accent);font-variant-numeric:tabular-nums}
+  .theme-btn{border:1px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:10px;padding:6px 12px;font-size:13px;cursor:pointer;transition:.2s}
+  .theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* tabs */
+  .tabs{display:flex;gap:4px;margin:16px 0 20px;padding:5px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow-x:auto;box-shadow:var(--shadow)}
+  .tab{flex:1;min-width:92px;text-align:center;padding:9px 6px;border:none;background:transparent;color:var(--ink-3);font-size:13.5px;font-weight:700;border-radius:9px;cursor:pointer;transition:.2s;white-space:nowrap}
+  .tab:hover{color:var(--ink-2);background:var(--bg)}
+  .tab.active{background:var(--accent);color:#fff}
+  .tab .ic{display:block;font-size:15px;margin-bottom:2px}
+  @media(max-width:640px){.tab{min-width:74px;font-size:12px}}
+
+  main section{display:none}
+  main section.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  h2.sec{font-size:19px;margin:6px 0 4px;letter-spacing:-.01em}
+  p.sub{color:var(--ink-3);font-size:13.5px;margin:0 0 16px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px 20px}
+
+  /* dashboard */
+  .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:16px}
+  .stat{padding:16px 18px}
+  .stat .k{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--ink-3);margin-bottom:6px}
+  .stat .v{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+  .stat .v small{font-size:13px;color:var(--ink-3);font-weight:600}
+  .stat .d{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+  .ring-wrap{display:flex;align-items:center;gap:18px}
+  .ring{width:110px;height:110px;border-radius:50%;display:grid;place-items:center;flex:none}
+  .ring .rv{font-size:22px;font-weight:800;font-variant-numeric:tabular-nums}
+  .ring .rl{font-size:11px;color:var(--ink-3)}
+  .today{flex:1;min-width:240px}
+  .today h4{margin:0 0 10px;font-size:14.5px}
+  .todo-item{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px;color:var(--ink-2)}
+  .todo-item:last-child{border-bottom:none}
+  .todo-item .no{flex:none;width:22px;height:22px;border-radius:7px;background:var(--accent-soft);color:var(--accent);font-size:11.5px;font-weight:800;display:grid;place-items:center}
+  .empty-hint{color:var(--ink-3);font-size:13.5px;padding:8px 0}
+  .btn{display:inline-flex;align-items:center;gap:7px;border:none;border-radius:10px;padding:9px 16px;font-size:13.5px;font-weight:700;cursor:pointer;transition:.2s}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.primary:hover{filter:brightness(1.08)}
+  .btn.ghost{background:var(--card);border:1px solid var(--line);color:var(--ink-2)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .btn.small{padding:6px 11px;font-size:12.5px;border-radius:8px}
+
+  /* stages / tasks */
+  .stage{margin-bottom:14px;overflow:hidden}
+  .stage-hd{display:flex;align-items:center;gap:13px;padding:13px 18px;cursor:pointer;user-select:none;border-bottom:1px solid var(--line)}
+  .stage-hd .badge{font-size:11px;font-weight:800;color:#fff;background:var(--ink);border-radius:7px;padding:3px 9px;letter-spacing:.05em;flex:none}
+  .stage-hd h3{margin:0;font-size:15.5px;flex:1}
+  .stage-hd .when{font-size:12.5px;color:var(--ink-3);white-space:nowrap}
+  .stage-hd .pct{font-size:12.5px;font-weight:800;color:var(--accent);min-width:44px;text-align:right;font-variant-numeric:tabular-nums}
+  .stage-hd .arrow{color:var(--ink-3);font-size:12px;transition:transform .2s}
+  .stage.collapsed .arrow{transform:rotate(-90deg)}
+  .stage-bd{display:none;padding:6px 18px 14px}
+  .stage:not(.collapsed) .stage-bd{display:block}
+  .task{display:flex;align-items:flex-start;gap:11px;padding:9px 4px;border-bottom:1px dashed var(--line);cursor:pointer}
+  .task:last-child{border-bottom:none}
+  .task input[type=checkbox]{width:17px;height:17px;margin-top:4px;accent-color:var(--accent);cursor:pointer;flex:none;pointer-events:none}
+  .task .t-main{flex:1}
+  .task .t-name{font-size:14.3px;font-weight:600}
+  .task .t-desc{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+  .task.done .t-name{text-decoration:line-through;color:var(--ink-3)}
+  .task .t-est{font-size:11.5px;color:var(--ink-3);flex:none;margin-top:3px}
+
+  .sbar{background:var(--bg);border-radius:8px;height:14px;overflow:hidden;border:1px solid var(--line)}
+  .sbar i{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:8px;transition:width .4s}
+
+  /* pomodoro */
+  .pomo{display:flex;flex-direction:column;align-items:center;padding:30px 20px;gap:6px}
+  .pomo-ring{width:230px;height:230px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(var(--accent) 0deg,var(--bg) 0deg);transition:background .1s}
+  .pomo-ring::before{content:"";position:absolute;inset:14px;background:var(--card);border-radius:50%;border:1px solid var(--line)}
+  .pomo-inner{position:relative;text-align:center}
+  .pomo-time{font-size:52px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .pomo-mode{font-size:13px;color:var(--ink-3);font-weight:700}
+  .pomo-round{font-size:12px;color:var(--ink-3);margin-top:2px}
+  .pomo-ops{display:flex;gap:10px;margin-top:16px}
+  .pomo-modes{display:flex;gap:6px;margin-top:14px}
+  .mode-btn{border:1px solid var(--line);background:var(--card);color:var(--ink-2);border-radius:999px;padding:6px 14px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .mode-btn.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .pomo-tip{max-width:520px;text-align:center;font-size:13px;color:var(--ink-3);margin-top:14px}
+
+  /* notes */
+  .notes-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.notes-grid{grid-template-columns:1fr}}
+  .notes-grid textarea{width:100%;min-height:220px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);padding:13px;font-size:13.5px;font-family:inherit;line-height:1.7;resize:vertical}
+  .notes-grid textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+  .log-item{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line);font-size:13.8px}
+  .log-item:last-child{border-bottom:none}
+  .log-item .ld{flex:none;font-size:11.5px;color:var(--ink-3);font-weight:700;padding-top:3px;min-width:92px}
+  .log-item .lt{flex:1;color:var(--ink-2);white-space:pre-wrap}
+  .log-item .del{background:none;border:none;color:var(--ink-3);cursor:pointer;font-size:13px;padding:2px 6px;border-radius:6px}
+  .log-item .del:hover{background:var(--red-soft);color:var(--red)}
+  .muted{color:var(--ink-3);font-size:12.5px}
+
+  /* resources */
+  .res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .res-card h4{margin:0 0 10px;font-size:14.5px}
+  .res-card ul{margin:0;padding-left:2px;list-style:none}
+  .res-card li{margin-bottom:9px;font-size:13.8px}
+  .res-card a{color:var(--ink-2);text-decoration:none;font-weight:600;border-bottom:1px solid transparent}
+  .res-card a:hover{color:var(--accent);border-color:var(--accent)}
+  .res-card .rd{display:block;font-size:12px;color:var(--ink-3);font-weight:400}
+
+  /* data mgmt */
+  .data-bar{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+  .data-bar .muted{margin-right:auto}
+
+  /* modal */
+  .modal-mask{position:fixed;inset:0;background:rgba(10,15,30,.55);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;z-index:100;padding:36px 16px;overflow:auto}
+  .modal-mask.show{display:flex;animation:fade .2s ease}
+  .modal{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.25);max-width:760px;width:100%;animation:slideup .25s ease}
+  @keyframes slideup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .modal-hd{display:flex;align-items:center;gap:12px;padding:16px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card);border-radius:16px 16px 0 0;z-index:2}
+  .modal-hd .badge{font-size:11px;font-weight:800;color:#fff;background:var(--accent);border-radius:7px;padding:3px 9px;letter-spacing:.05em;flex:none}
+  .modal-hd h3{margin:0;font-size:16.5px;flex:1}
+  .modal-x{background:none;border:none;color:var(--ink-3);font-size:18px;cursor:pointer;padding:4px 8px;border-radius:8px}
+  .modal-x:hover{background:var(--red-soft);color:var(--red)}
+  .modal-bd{padding:18px 22px 8px;font-size:14.5px;color:var(--ink-2);max-height:64vh;overflow:auto}
+  .modal-bd h4{font-size:13px;letter-spacing:.05em;color:var(--ink-3);margin:16px 0 8px;font-weight:800}
+  .modal-bd h4:first-child{margin-top:0}
+  .modal-bd .intro{background:var(--accent-soft);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--ink);margin-bottom:4px}
+  .modal-bd details{background:var(--amber-soft);border:1px dashed #e2c98a;border-radius:10px;padding:10px 14px;margin:4px 0 6px}
+  .modal-bd details summary{cursor:pointer;font-size:13.5px;font-weight:800;color:#8a5400;user-select:none}
+  .modal-bd details summary:hover{opacity:.8}
+  .modal-bd .terms-list{margin:8px 0 2px;padding:0;list-style:none}
+  .modal-bd .terms-list li{padding:6px 0 6px 2px;font-size:13.5px;color:var(--ink);border-bottom:1px dashed rgba(194,164,90,.35)}
+  .modal-bd .terms-list li:last-child{border-bottom:none}
+  .modal-bd .terms-list li::before{content:"";display:none}
+  .modal-bd .terms-list b{color:var(--amber);font-weight:800;background:rgba(255,255,255,.55);padding:1px 6px;border-radius:5px;margin-right:6px}
+  .modal-bd .tl-eg{display:block;color:var(--ink-3);font-size:12.5px;margin-top:1px}
+  .modal-bd ul{margin:0;padding-left:2px;list-style:none}
+  .modal-bd ul li{position:relative;padding:5px 0 5px 20px;font-size:14px}
+  .modal-bd ul li::before{content:"▸";position:absolute;left:2px;color:var(--accent);font-weight:800}
+  .modal-bd ul li b{color:var(--ink)}
+  .modal-bd code{background:var(--bg);border:1px solid var(--line);padding:1px 6px;border-radius:5px;font-size:12.5px;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--ink)}
+  .modal-bd .pit{background:var(--amber-soft);border-radius:10px;padding:11px 14px;font-size:13.5px;color:#8a5400;margin-top:2px}
+  .modal-bd .pit b{color:#5c3800}
+  .modal-bd .quiz{background:var(--green-soft);border-radius:10px;padding:11px 14px;font-size:13.5px;color:#0b6b3f;margin-top:2px}
+  .modal-bd .quiz b{color:#084a2c}
+  .modal-ft{padding:12px 22px 18px;text-align:right}
+  .kbtn{border:1px solid var(--line);background:var(--accent-soft);color:var(--accent);border-radius:7px;padding:3px 9px;font-size:12px;font-weight:700;cursor:pointer;flex:none;transition:.15s}
+  .kbtn:hover{background:var(--accent);color:#fff}
+  .task .kbtn{margin-top:2px}
+  .skill-row .kbtn{padding:4px 9px}
+
+  /* 打卡 */
+  .checkin-grid{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .ci{width:34px;height:44px;border-radius:8px;background:var(--bg);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:var(--ink-3);gap:2px}
+  .ci.on{background:var(--green-soft);border-color:var(--green);color:var(--green);font-weight:800}
+  .ci .d{font-size:13px;font-weight:700}
+  .ci .w{font-size:9px}
+  .ci.today{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+  /* 掌握度 */
+  .mbtn{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid var(--line);background:var(--card);color:var(--ink-3);font-size:11px;cursor:pointer;margin-top:2px;display:grid;place-items:center;font-weight:800;transition:.15s}
+  .mbtn[data-m="1"]{border-color:var(--amber);color:var(--amber);background:var(--amber-soft)}
+  .mbtn[data-m="2"]{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+  .mbtn[data-m="3"]{border-color:#b8860b;color:#b8860b;background:#fdf6e3}
+  .mbtn:hover{transform:scale(1.12)}
+  .mastery-bar{display:flex;gap:8px;margin:4px 0 10px}
+  .m-choice{flex:1;border:1.5px solid var(--line);background:var(--card);border-radius:9px;padding:8px 4px;font-size:13px;font-weight:700;color:var(--ink-3);cursor:pointer;transition:.15s}
+  .m-choice[data-m="0"]:hover,.m-choice[data-m="0"].sel{border-color:var(--ink-3);color:var(--ink)}
+  .m-choice[data-m="1"]:hover,.m-choice[data-m="1"].sel{border-color:var(--amber);color:var(--amber);background:var(--amber-soft)}
+  .m-choice[data-m="2"]:hover,.m-choice[data-m="2"].sel{border-color:var(--green);color:var(--green);background:var(--green-soft)}
+  .m-choice[data-m="3"]:hover,.m-choice[data-m="3"].sel{border-color:#b8860b;color:#b8860b;background:#fdf6e3}
+  .wrong-btn{width:100%;border:1.5px dashed var(--red);background:var(--red-soft);color:var(--red);border-radius:9px;padding:9px;font-size:13px;font-weight:700;cursor:pointer;margin-top:2px}
+  .wrong-btn:hover{background:var(--red);color:#fff}
+  /* 深入学习板块 */
+  .deep{background:var(--blue-soft);border-radius:10px;padding:12px 16px;font-size:14px;color:var(--ink-2);margin-bottom:10px}
+  .deep b{color:var(--accent)}
+  .deep-hd{font-size:13px;font-weight:800;color:var(--ink-3);letter-spacing:.04em;margin:2px 0 6px}
+  .deep-tasks{list-style:none;margin:0;padding:0}
+  .deep-tasks li{padding:7px 0;border-bottom:1px dashed var(--line);font-size:14px;color:var(--ink-2)}
+  .deep-tasks li:last-child{border-bottom:none}
+  .deep-tasks label{display:flex;gap:9px;align-items:flex-start;cursor:pointer}
+  .deep-tasks input[type=checkbox]{width:16px;height:16px;margin-top:4px;accent-color:var(--green);flex:none;cursor:pointer}
+  .deep-tasks li.on span{text-decoration:line-through;color:var(--ink-3)}
+  /* 作品化模板（deep.tpl） */
+  .deep-tpl{background:var(--card);border:1.5px dashed var(--accent);border-radius:10px;padding:10px 14px;font-size:13.5px;color:var(--ink-2);margin-bottom:10px}
+  .deep-tpl b{color:var(--accent)}
+  /* 折叠式参考答案 */
+  .q-ans{margin:4px 0 2px;border:1px solid var(--line);border-radius:9px;background:var(--card);padding:0}
+  .q-ans summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--green);padding:8px 12px;user-select:none;list-style:none;display:flex;align-items:center;gap:6px}
+  .q-ans summary::before{content:"👀"}
+  .q-ans[open] summary{border-bottom:1px dashed var(--line)}
+  .q-ans .a-body{padding:10px 12px;font-size:13.5px;color:var(--ink-2)}
+  .q-ans .a-body b{color:var(--ink)}
+  .q-follow{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--ink-3)}
+  .q-follow b{color:var(--amber)}
+  /* 搜索 */
+  .search-wrap{position:relative;flex:1;min-width:180px;max-width:340px}
+  .search-input{width:100%;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px 8px 34px;font-size:13.5px;color:var(--ink);outline:none;transition:.2s}
+  .search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .search-ic{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--ink-3);pointer-events:none}
+  .search-res{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 14px 40px rgba(10,20,50,.18);max-height:340px;overflow:auto;z-index:60;display:none}
+  .search-res.show{display:block}
+  .sr-item{padding:9px 14px;font-size:13.5px;cursor:pointer;border-bottom:1px dashed var(--line);display:flex;gap:8px;align-items:baseline}
+  .sr-item:last-child{border-bottom:none}
+  .sr-item:hover{background:var(--accent-soft)}
+  .sr-item .sg{flex:none;font-size:10.5px;font-weight:800;color:var(--ink-3);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+  .sr-item .st{color:var(--ink-2)}
+  .sr-empty{padding:12px 14px;font-size:13px;color:var(--ink-3)}
+  /* 备份提醒 */
+  .tip-bar{display:flex;align-items:center;gap:10px;background:var(--amber-soft);border:1px solid #e2c98a;border-radius:12px;padding:10px 16px;font-size:13.5px;color:#8a5400;margin-bottom:14px;flex-wrap:wrap}
+  .tip-bar b{color:#5c3800}
+  .tip-bar .x{margin-left:auto;background:none;border:none;color:#8a5400;cursor:pointer;font-size:15px}
+  /* 错题本 */
+  .wrong-item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line);font-size:13.8px}
+  .wrong-item:last-child{border-bottom:none}
+  .wrong-item .wi{flex:1;color:var(--ink-2)}
+  .wrong-item .wi b{color:var(--red)}
+  .wrong-item .wd{font-size:11.5px;color:var(--ink-3);white-space:nowrap;margin-top:2px}
+  .wrong-item .btn{padding:4px 9px;font-size:12px}
+  .wrong-item .wr{display:inline-block;font-size:11px;font-weight:700;color:var(--amber);background:var(--amber-soft);border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:2px}
+  .wrong-item .wr.hot{color:var(--red);background:var(--red-soft)}
+  /* 学习轨迹（打卡关联任务） */
+  .trail{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .trail-item{font-size:12px;color:var(--ink-2);background:var(--accent-soft);border-radius:999px;padding:3px 10px;cursor:default}
+  .trail-item b{color:var(--accent);font-weight:700}
+
+  footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-3)}
+  .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:10px 20px;border-radius:999px;font-size:13.5px;font-weight:600;opacity:0;transition:.3s;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  /* 快照恢复 */
+  .snap-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 4px;border-bottom:1px solid var(--line);font-size:14px}
+  .snap-row:last-of-type{border-bottom:none}
+  /* 打卡热力图 */
+  .heat{display:flex;gap:4px;margin-top:12px}
+  .heat-col{display:flex;flex-direction:column;gap:4px}
+  .ht{width:11px;height:11px;border-radius:3px;background:var(--line);display:block}
+  .ht.on{background:var(--green)}
+  .ht.off{opacity:.25}
+  /* 搜索高亮 */
+  mark{background:var(--amber-soft);color:var(--amber);padding:0 2px;border-radius:3px;font-weight:700}
+  /* 快捷键提示 */
+  .kbd-hint{font-size:11px;color:var(--ink-3);border:1px solid var(--line);border-radius:5px;padding:1px 6px;background:var(--bg)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand"><span class="dot"></span>考公学习平台 <span style="font-size:12px;color:var(--ink-3);font-weight:600">· 2028 国考备考版</span></div>
+    <div class="search-wrap">
+      <span class="search-ic">🔍</span>
+      <input class="search-input" id="searchInput" placeholder="搜索任务 / 名词 / 知识点…" autocomplete="off">
+      <div class="search-res" id="searchRes"></div>
+    </div>
+    <div class="top-right">
+      <span class="count-chip" id="chip-intern">距国考笔试 <b>-</b> 天</span>
+      <span class="count-chip" id="chip-fall">距国考面试 <b>-</b> 天</span>
+      <button class="theme-btn" id="themeBtn">🌙 深色</button>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="dash"><span class="ic">📋</span>仪表盘</button>
+    <button class="tab" data-tab="tasks"><span class="ic">🗂️</span>路线任务</button>
+    <button class="tab" data-tab="pomo"><span class="ic">🍅</span>番茄钟</button>
+    <button class="tab" data-tab="notes"><span class="ic">📝</span>笔记日志</button>
+    <button class="tab" data-tab="res"><span class="ic">🔗</span>资源</button>
+  </nav>
+
+  <main id="main"></main>
+
+  <div class="tip-bar" id="lsWarn" style="display:none;background:var(--red-soft);border-color:#e8b3ac;color:#9c2119">
+    <span>⛔ <b>浏览器存储不可用</b>（可能处于无痕/隐私模式）：本次学习数据<b>不会被保存，关闭页面即丢失</b>。请用正常窗口打开，或学完立即导出备份。</span>
+  </div>
+
+  <div class="tip-bar" id="backupTip" style="display:none">
+    <span>⚠️ <b>数据备份提醒：</b><span id="backupTipTxt"></span>，建议立即导出，防止浏览器数据丢失</span>
+    <button class="btn ghost small" id="tipExport">⬇ 现在导出</button>
+    <button class="tip-x" id="tipClose">✕</button>
+  </div>
+
+  <div class="card data-bar">
+    <span class="muted">数据仅存本机浏览器、不联网同步——换设备/清缓存会丢失，请定期导出备份</span>
+    <button class="btn ghost small" id="exportBtn">⬇ 导出备份</button>
+    <button class="btn ghost small" id="importBtn">⬆ 导入</button>
+    <button class="btn ghost small" id="snapBtn" title="防误操作：重置/导入前自动留快照">🛟 快照恢复</button>
+    <button class="btn ghost small" id="resetBtn" style="color:var(--red)">重置全部</button>
+    <input type="file" id="importFile" accept=".json" style="display:none">
+  </div>
+
+  <footer>生成于 2026-08-31 · 学习数据仅存本地 · 建议每两周校准一次路线</footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- 知识点详情弹窗 -->
+<div class="modal-mask" id="modal">
+  <div class="modal">
+    <div class="modal-hd">
+      <span class="badge" id="mTag">详解</span>
+      <h3 id="mTitle"></h3>
+      <button class="modal-x" id="mClose">✕</button>
+    </div>
+    <div class="modal-bd" id="mBody"></div>
+    <div class="modal-ft"><button class="btn ghost small" id="mClose2">关闭</button></div>
+  </div>
+</div>
+<script>
+"use strict";
+/* ============ 工具 ============ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+/* 启动时检测 localStorage 是否真的可用（iOS 无痕/隐私模式会静默丢失数据） */
+const LS_OK = (()=>{ try { localStorage.setItem("__bdlp_t","1"); localStorage.removeItem("__bdlp_t"); return true; } catch(e){ return false; } })();
+let _saveFailWarned = false;
+function warnSaveFail(){
+  if(_saveFailWarned) return;
+  _saveFailWarned = true;
+  toast("⚠️ 数据保存失败！浏览器存储不可用，请立即导出备份");
+}
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){ warnSaveFail(); } }
+};
+function toast(msg){ const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove("show"), 2200); }
+
+/* ============ 数据定义 ============ */
+const STAGES = [
+ {
+  "id": "s0",
+  "badge": "S0",
+  "title": "基础入门：摸清五大模块，找到自己的节奏",
+  "when": "2026.09 – 2026.11",
+  "tasks": [
+   [
+    "行测全景与资料分析入门",
+    "了解行测 5 模块分布与分值，先啃性价比最高的资料分析"
+   ],
+   [
+    "言语理解：片段阅读",
+    "主旨概括 / 意图判断 / 细节判断，掌握读题与选项排除法"
+   ],
+   [
+    "判断推理：图形推理与定义判断",
+    "位置/样式/属性/数量四大规律 + 定义关键信息提取"
+   ],
+   [
+    "判断推理：类比推理与逻辑判断",
+    "语义/逻辑/语法关系 + 翻译推理/加强削弱/朴素逻辑"
+   ],
+   [
+    "数量关系：高频基础题型",
+    "工程 / 行程 / 利润 / 容斥 / 最值，学会挑题和秒杀技巧"
+   ],
+   [
+    "常识判断方法论与积累体系",
+    "建立时政 / 法律 / 科技 / 人文的日常积累机制"
+   ],
+   [
+    "申论入门：材料阅读与归纳概括",
+    "学会读材料、抓关键词、规范作答"
+   ],
+   [
+    "申论基础：综合分析题",
+    "解释型 / 评价型 / 比较型综合分析答题框架"
+   ]
+  ]
+ },
+ {
+  "id": "s1",
+  "badge": "S1",
+  "title": "模块强化：专项突破，正确率上 80%",
+  "when": "2026.12 – 2027.04",
+  "tasks": [
+   [
+    "资料分析专项：速算技巧",
+    "截位直除 / 百化分 / 比重差 / 平均数增长率"
+   ],
+   [
+    "言语专项：逻辑填空与实词辨析",
+    "语境分析 + 高频成语实词积累，排除法选词"
+   ],
+   [
+    "判断专项：图推规律全梳理",
+    "图形推理 4 大类 18 种规律系统过一遍"
+   ],
+   [
+    "数量专项：排列组合与概率",
+    "分类分步 / 捆绑插空 / 错位排列 / 概率模型"
+   ],
+   [
+    "申论专项：提出对策题",
+    "问题到对策的转化，对策的可行性与针对性"
+   ],
+   [
+    "申论专项：贯彻执行（应用文）",
+    "倡议书 / 讲话稿 / 汇报材料等 15 类文种格式"
+   ],
+   [
+    "申论专项：大作文框架与论证",
+    "总分论点确立 + 论证方法与素材运用"
+   ],
+   [
+    "常识专项：时政、法律与科技",
+    "近一年时政大事 + 宪法民法刑法 + 前沿科技"
+   ],
+   [
+    "阶段模考与复盘方法论",
+    "第一次完整模考，建立错题分析体系"
+   ]
+  ]
+ },
+ {
+  "id": "s2",
+  "badge": "S2",
+  "title": "套卷实战：真题为王，稳住正确率",
+  "when": "2027.05 – 2027.08",
+  "tasks": [
+   [
+    "行测真题套卷一（近 5 年）",
+    "限时 120 分钟完整做一套并逐题复盘"
+   ],
+   [
+    "行测套卷提速与时间分配",
+    "确定各模块时间预算，练到稳定不超时"
+   ],
+   [
+    "申论真题套卷训练",
+    "完整作答一套申论，对照答案找差距"
+   ],
+   [
+    "错题清零与薄弱模块回炉",
+    "错题本清零计划，薄弱模块重新专项"
+   ],
+   [
+    "资料分析正确率攻坚",
+    "目标 85%+：限时训练 + 错因归类"
+   ],
+   [
+    "数量关系保底策略",
+    "10 题挑 5 题必对策略，建立取舍清单"
+   ],
+   [
+    "全真模考与考场节奏",
+    "按考试时间全真模拟，训练心态与节奏"
+   ],
+   [
+    "申论批改与范文精读",
+    "找人批改或对照范文，打磨答题语言"
+   ]
+  ]
+ },
+ {
+  "id": "s3",
+  "badge": "S3",
+  "title": "考前冲刺与面试：临门一脚",
+  "when": "2027.09 – 2027.11",
+  "tasks": [
+   [
+    "国考报名与岗位选择策略",
+    "职位表筛选方法：专业/学历/应届/地区匹配"
+   ],
+   [
+    "考前全真模拟冲刺",
+    "上午行测下午申论，按考试日全真模拟 2 周"
+   ],
+   [
+    "行测高频考点与易错清单",
+    "考前一周过一遍高频考点和易错点"
+   ],
+   [
+    "申论热点预测与素材背诵",
+    "二十大/政府工作报告等核心热点 + 金句素材"
+   ],
+   [
+    "面试入门：结构化面试概述",
+    "题型分布、评分标准、备考资料与方法"
+   ],
+   [
+    "面试专项：综合分析 / 应急应变 / 组织管理",
+    "三大高频题型答题框架与练习"
+   ],
+   [
+    "面试模拟与临场发挥",
+    "全真模拟面试，录音复盘，控制紧张感"
+   ]
+  ]
+ }
+]
+const TERMS = {};
+Object.assign(TERMS, {
+ "s0_0": [
+  [
+   "行测",
+   "行政职业能力测验：公务员笔试科目之一，考知识面与思维速度",
+   "考你的'出厂配置'：知识储备+反应速度，短时间练出上限"
+  ],
+  [
+   "资料分析",
+   "行测模块：给统计材料（文字/表格/图表）算增长率、比重等，分值高易提分",
+   "送分题模块：只要会算，正确率能练到 90%"
+  ],
+  [
+   "增长率",
+   "现期量相对基期量的增长幅度：(现期-基期)/基期",
+   "去年 100 今年 120，增长率就是 20%"
+  ],
+  [
+   "基期量",
+   "计算增长前的量：现期量/(1+增长率)",
+   "倒推：知道今年和涨幅，算去年的数"
+  ],
+  [
+   "同比",
+   "与去年同期相比",
+   "今年 9 月 vs 去年 9 月"
+  ],
+  [
+   "环比",
+   "与上一统计周期相比",
+   "今年 9 月 vs 今年 8 月"
+  ],
+  [
+   "截位直除",
+   "除法速算：分子分母截取前几位估算，牺牲精度换速度",
+   "不用算精确数，估算到够选答案即可"
+  ],
+  [
+   "百化分",
+   "把百分数化为 1/n 的速算技巧（如 25%=1/4）",
+   "记住 1/2 到 1/20 对应的百分数，算增长量飞快"
+  ]
+ ],
+ "s0_1": [
+  [
+   "言语理解",
+   "行测模块：阅读类题（片段阅读+逻辑填空+语句表达）",
+   "考阅读理解能力：快速读懂、准确理解"
+  ],
+  [
+   "片段阅读",
+   "给一段话，问主旨/意图/细节，是言语的基础题型",
+   "读完要能一句话说出'作者想说什么'"
+  ],
+  [
+   "主旨概括",
+   "概括文段中心思想的题型",
+   "把一段话压缩成一句话"
+  ],
+  [
+   "意图判断",
+   "推断作者'真正想表达/暗示'的题型，比主旨多一步",
+   "作者没说出口的潜台词"
+  ],
+  [
+   "转折词",
+   "但是/然而/可是：转折之后是重点",
+   "说了一堆废话后'但是'开头才是真话"
+  ],
+  [
+   "主题词",
+   "文段反复出现的高频核心词，正确选项通常包含它",
+   "主角是谁，答案就围着谁转"
+  ],
+  [
+   "选项排除法",
+   "通过绝对化表述（一定/必然/所有）快速排除干扰项",
+   "看到'必然'要多留个心眼"
+  ]
+ ],
+ "s0_2": [
+  [
+   "判断推理",
+   "行测模块：图形/定义/类比/逻辑四种题",
+   "考逻辑思维能力：找规律、抓关键"
+  ],
+  [
+   "图形推理",
+   "给一组图形找变化规律选下一个",
+   "找茬游戏：位置、样式、属性、数量"
+  ],
+  [
+   "位置规律",
+   "图形元素相同，位置变化：平移/旋转/翻转",
+   "同一个图形在动"
+  ],
+  [
+   "样式规律",
+   "图形间求同存异、相加相减、黑白叠加",
+   "图形之间做加减法"
+  ],
+  [
+   "属性规律",
+   "对称性/曲直性/开闭性等图形属性",
+   "图形'长什么样'：对称、直曲、开闭"
+  ],
+  [
+   "数量规律",
+   "数点线面角素的数量变化",
+   "数数游戏：几个点、几条线、几个面"
+  ],
+  [
+   "定义判断",
+   "给一个定义，判断选项是否符合",
+   "拿定义当尺子量每个选项"
+  ],
+  [
+   "关键信息",
+   "定义里的核心要素：主体/客体/方式/目的/条件",
+   "定义里最能区分的那些词"
+  ]
+ ],
+ "s0_3": [
+  [
+   "类比推理",
+   "给一组词，选关系相同的一组",
+   "词与词之间'什么关系'：苹果-水果"
+  ],
+  [
+   "语义关系",
+   "近义/反义/象征等语义层面的关系",
+   "词的意思之间的关系"
+  ],
+  [
+   "逻辑关系",
+   "包含/并列/因果/条件等逻辑关系",
+   "词的概念之间的逻辑"
+  ],
+  [
+   "语法关系",
+   "主谓/动宾/偏正等语法结构关系",
+   "词怎么搭配成句子"
+  ],
+  [
+   "翻译推理",
+   "把'如果…那么…''只有…才…'翻译成符号逻辑",
+   "把中文翻译成数学公式"
+  ],
+  [
+   "加强削弱",
+   "支持/削弱某个论证的题型",
+   "论据+论点，找最有力的支持或打击"
+  ],
+  [
+   "论证",
+   "论据（理由）→ 论点（结论）的推理过程",
+   "因为…所以…的完整链条"
+  ],
+  [
+   "朴素逻辑",
+   "信息多、靠推理排除的题目，常考列表法",
+   "侦探题：给一堆线索推真相"
+  ]
+ ],
+ "s0_4": [
+  [
+   "数量关系",
+   "行测模块：数学题，分值高但耗时，策略性取舍",
+   "性价比低的模块：会做的做对，不会的果断放弃"
+  ],
+  [
+   "工程问题",
+   "总量=效率×时间，常设总量为 1 或最小公倍数",
+   "一起干活：甲做 3 天乙做 5 天"
+  ],
+  [
+   "行程问题",
+   "路程=速度×时间，相遇/追及/流水行船",
+   "两人相向而行多久见面"
+  ],
+  [
+   "利润问题",
+   "成本/售价/利润率/折扣的计算",
+   "进价 100 卖 120，利润率 20%"
+  ],
+  [
+   "容斥问题",
+   "集合重叠：两集合/三集合公式",
+   "喜欢 A 的 + 喜欢 B 的 - 两个都喜欢的"
+  ],
+  [
+   "最值问题",
+   "最不利原则、和定最值等极值题型",
+   "抽屉原理：最少摸几个才能保证"
+  ],
+  [
+   "秒杀技巧",
+   "数字特性（奇偶/整除/倍数）、代入排除等快速解法",
+   "不硬算，用选项特征快速锁定"
+  ]
+ ],
+ "s0_5": [
+  [
+   "常识判断",
+   "行测模块：时政、法律、科技、人文、地理等知识题",
+   "考知识面：靠日常积累，突击效果有限"
+  ],
+  [
+   "时政",
+   "近一年国内外大事、重要会议文件",
+   "考最新的事：二十大、政府工作报告"
+  ],
+  [
+   "法律常识",
+   "宪法、民法、刑法、行政法等基础法律知识",
+   "考公民该懂的法律底线"
+  ],
+  [
+   "科技常识",
+   "前沿科技（航天/人工智能/生物）与传统科技常识",
+   "考'最新最热'的技术常识"
+  ],
+  [
+   "人文常识",
+   "历史、文学、文化常识",
+   "四大名著、朝代顺序、古代称谓"
+  ],
+  [
+   "积累机制",
+   "每天固定时间刷常识、做笔记的养成系统",
+   "碎片时间攒知识：等车刷 10 题"
+  ],
+  [
+   "学习强国",
+   "官方学习 App，时政积累主力来源",
+   "党员都在用的时政素材库"
+  ]
+ ],
+ "s0_6": [
+  [
+   "申论",
+   "行政职业能力测验的另一科目：给材料回答问题+写文章",
+   "考'文字工作能力'：读懂材料、规范表达"
+  ],
+  [
+   "归纳概括",
+   "从材料中提炼要点、分条作答的题",
+   "把材料里的要点挑出来分类列好"
+  ],
+  [
+   "材料阅读",
+   "读申论材料的技巧：圈关键词、分段落意、抓首尾句",
+   "先找'谁、什么事、什么结果'"
+  ],
+  [
+   "作答规范",
+   "分条列点、观点前置、语言精炼的答题格式",
+   "每一条先写小标题再展开"
+  ],
+  [
+   "关键词采分",
+   "阅卷按关键词给分，答案要贴近材料原词",
+   "写'规范化管理'比'好好管'得分高"
+  ],
+  [
+   "要点归类",
+   "把零散信息按同类合并、不同类分列",
+   "同类项合并，别一条一个点"
+  ]
+ ],
+ "s0_7": [
+  [
+   "综合分析",
+   "申论题型：解释/评价/比较三类，观点+分析+对策",
+   "先给观点，再摆理由，最后给做法"
+  ],
+  [
+   "解释型分析",
+   "解释一句话/一个词的含义并展开",
+   "'人往低处走'是什么意思？为什么？"
+  ],
+  [
+   "评价型分析",
+   "对某种观点/做法表态并论证",
+   "这个做法好不好？好在哪坏在哪？"
+  ],
+  [
+   "比较型分析",
+   "比较两个事物/观点的异同",
+   "A 和 B 有什么相同、有什么不同"
+  ],
+  [
+   "观点前置",
+   "答案第一句先亮观点，再展开分析",
+   "开门见山：先给结论再解释"
+  ],
+  [
+   "分析角度",
+   "从问题、原因、影响、对策等多角度展开",
+   "不止说'是什么'，还要'为什么'"
+  ]
+ ],
+ "s1_0": [
+  [
+   "速算技巧",
+   "资料分析提分关键：截位直除/百化分/错位加减",
+   "算得又快又准的'捷径'"
+  ],
+  [
+   "错位加减法",
+   "分子分母同时加减近似值简化计算的技巧",
+   "分数的分子分母同乘同除不变大小"
+  ],
+  [
+   "平均数增长率",
+   "平均数的增长率公式：(a-b)/(1+b)",
+   "人均收入增长了多少百分比"
+  ],
+  [
+   "比重",
+   "部分占整体的比例：部分/整体",
+   "男生占全班 40%"
+  ],
+  [
+   "比重差",
+   "现期比重与基期比重的差值",
+   "今年男生占比比去年高几个点"
+  ],
+  [
+   "混合增长率",
+   "两部分混合后的增长率介于两者之间，偏向基期大的一方",
+   "白酒 20%、红酒 30%，混合在 20-30% 之间"
+  ],
+  [
+   "隔年增长率",
+   "今年比前年：r1+r2+r1×r2",
+   "今年涨 10% 去年涨 20%，两年共涨 32%"
+  ],
+  [
+   "年均增长率",
+   "多年平均每年的增长率",
+   "五年复合增速"
+  ]
+ ],
+ "s1_1": [
+  [
+   "逻辑填空",
+   "给句子挖空选词，考语境分析+词语辨析",
+   "填最合适的词：看上下文提示"
+  ],
+  [
+   "语境分析",
+   "根据上下文线索判断空缺处语义",
+   "前后文的提示词是解题钥匙"
+  ],
+  [
+   "实词辨析",
+   "近义实词的细微差别：搭配/感情色彩/程度",
+   "'改进'和'改善'用哪个"
+  ],
+  [
+   "成语积累",
+   "高频成语的准确含义与用法",
+   "别望文生义：'不刊之论'是好话"
+  ],
+  [
+   "提示词",
+   "文段中的转折/递进/并列等标志词",
+   "'但是'后面往往藏着答案"
+  ],
+  [
+   "词语搭配",
+   "固定搭配与习惯用法",
+   "'提高水平'不说'改善水平'"
+  ],
+  [
+   "感情色彩",
+   "词语褒贬中性色彩与文段基调一致",
+   "文段夸人，别选贬义词"
+  ]
+ ],
+ "s1_2": [
+  [
+   "图形推理规律",
+   "位置/样式/属性/数量/空间重构五大类",
+   "图推就是'找规律'游戏"
+  ],
+  [
+   "空间重构",
+   "立体图形展开图折叠题，常考相对面/相邻面",
+   "正方体展开图怎么折"
+  ],
+  [
+   "相对面",
+   "展开图中不相邻的两个面（Z 字型两端）",
+   "相对的两个面永远不相邻"
+  ],
+  [
+   "时针法",
+   "用时针方向判断立体图形相对位置",
+   "画个时针看顺逆"
+  ],
+  [
+   "特殊规律",
+   "图形间的数量关系、汉字字母笔画等特殊考法",
+   "图形题里的'冷门'规律"
+  ],
+  [
+   "一笔画",
+   "图形能否一笔画完：奇点数 0 或 2",
+   "奇点判断法，图推高频考点"
+  ]
+ ],
+ "s1_3": [
+  [
+   "排列组合",
+   "从 n 个中取 m 个：排列有顺序、组合无顺序",
+   "排座位有顺序（排列），挑人不讲顺序（组合）"
+  ],
+  [
+   "分类分步",
+   "分类用加法、分步用乘法",
+   "分情况讨论用加，分步骤完成用乘"
+  ],
+  [
+   "捆绑法",
+   "必须相邻的元素先捆在一起",
+   "甲乙必须坐一起：先捆再排"
+  ],
+  [
+   "插空法",
+   "不相邻的元素插到空隙里",
+   "甲乙不相邻：先排其他人再插空"
+  ],
+  [
+   "错位排列",
+   "每个元素都不在自己位置上的排列（Dn）",
+   "5 个人拿错帽子：错位排列"
+  ],
+  [
+   "概率",
+   "事件发生的可能性：满足情况/总情况",
+   "抽奖中奖率 = 中奖签/总签"
+  ],
+  [
+   "古典概型",
+   "等可能事件的概率计算",
+   "骰子掷出 6 的概率 1/6"
+  ]
+ ],
+ "s1_4": [
+  [
+   "提出对策",
+   "申论题型：针对问题给出解决措施",
+   "材料里的问题，你来开药方"
+  ],
+  [
+   "问题转化",
+   "从问题表述反推对策：缺什么补什么",
+   "缺制度就建制度，缺人才就育人才"
+  ],
+  [
+   "对策可行性",
+   "对策要能落地：有主体、有手段、有效果",
+   "'加强监管'太虚，'设立专职巡查岗'才实在"
+  ],
+  [
+   "对策针对性",
+   "对策要对着具体问题，不能空泛",
+   "头痛医头、脚痛医脚，对准病症"
+  ],
+  [
+   "主体分析法",
+   "从政府/企业/社会/个人多主体提对策",
+   "一个萝卜一个坑，多方齐发力"
+  ],
+  [
+   "标本兼治",
+   "既要解决眼前问题，也要建立长效机制",
+   "治标（应急）+ 治本（建制度）"
+  ]
+ ],
+ "s1_5": [
+  [
+   "贯彻执行",
+   "申论题型：按文种写应用文（讲话稿/倡议书等）",
+   "给领导写材料、给群众发倡议"
+  ],
+  [
+   "文种格式",
+   "不同应用文的标题/称谓/落款格式",
+   "倡议书和通知格式不一样"
+  ],
+  [
+   "倡议书",
+   "面向群众呼吁做某事的文种",
+   "'亲爱的同学们，让我们一起…'"
+  ],
+  [
+   "讲话稿",
+   "在会议/活动上的发言稿",
+   "领导讲话：开场+要点+结尾"
+  ],
+  [
+   "汇报材料",
+   "向上级汇报工作情况的材料",
+   "做了什么、有什么问题、下一步"
+  ],
+  [
+   "宣传稿",
+   "面向大众宣传政策/理念的稿件",
+   "把政策说成人人都懂的话"
+  ],
+  [
+   "格式要素",
+   "标题、称谓、正文、落款、日期",
+   "应用文的'长相'要规范"
+  ]
+ ],
+ "s1_6": [
+  [
+   "大作文",
+   "申论最后一道题：800-1000 字议论文",
+   "给定话题写文章，考思想深度和文字功底"
+  ],
+  [
+   "总分论点",
+   "总论点（中心思想）+ 分论点（支撑角度）",
+   "文章骨架：一个总纲、几个分纲"
+  ],
+  [
+   "立意",
+   "从材料中提炼文章的核心观点",
+   "文章要表达什么，先定调"
+  ],
+  [
+   "论证方法",
+   "举例论证/道理论证/对比论证等",
+   "用例子和道理支撑你的观点"
+  ],
+  [
+   "素材运用",
+   "名言、事例、政策与论点结合",
+   "让文章有血有肉"
+  ],
+  [
+   "开头结尾",
+   "首段破题亮观点、尾段升华呼应",
+   "凤头豹尾：开头抓人、结尾有力"
+  ]
+ ],
+ "s1_7": [
+  [
+   "时政热点",
+   "近一年重大会议、政策、成就（二十大、政府工作报告）",
+   "时政是常识必考大头"
+  ],
+  [
+   "法律常识体系",
+   "宪法/民法/刑法/行政法/新修订法律",
+   "考'新法'概率高"
+  ],
+  [
+   "新修订法律",
+   "近两年新修/新立的法律法规",
+   "改了啥就考啥"
+  ],
+  [
+   "科技成就",
+   "航天、人工智能、生物医药等最新成果",
+   "嫦娥、天问、大模型……"
+  ],
+  [
+   "经济常识",
+   "宏观经济政策：财政/货币/汇率",
+   "利率升降对经济的影响"
+  ],
+  [
+   "积累节奏",
+   "每周固定 2 次常识积累，考前 3 个月加强时政",
+   "细水长流，别临时抱佛脚"
+  ]
+ ],
+ "s1_8": [
+  [
+   "模考",
+   "按考试标准完整做一套卷子",
+   "演习当实战：限时、闭卷、涂卡"
+  ],
+  [
+   "复盘",
+   "模考后逐题分析：对错原因、时间分配",
+   "考完不是结束，分析才是开始"
+  ],
+  [
+   "错题分析",
+   "错因归类：不会/粗心/超时，分别处理",
+   "错题分三堆：知识漏洞、粗心、手慢"
+  ],
+  [
+   "薄弱模块",
+   "正确率显著低于平均的模块",
+   "木桶最短的板：优先补"
+  ],
+  [
+   "时间分配",
+   "各模块用时的预算与控制",
+   "资料 30 分钟、言语 35 分钟……"
+  ],
+  [
+   "目标拆解",
+   "把总分目标拆到各模块正确率",
+   "资料 85% + 言语 80% + 判断 80%…"
+  ]
+ ],
+ "s2_0": [
+  [
+   "真题套卷",
+   "近 5 年国考真题，最好的练习材料",
+   "真题含金量最高：出题人思路都在里面"
+  ],
+  [
+   "限时训练",
+   "严格按考试时间做题",
+   "平时练速度，考时才不慌"
+  ],
+  [
+   "逐题复盘",
+   "每题都搞懂：对在哪、错在哪",
+   "不求数量求质量"
+  ],
+  [
+   "国考行测结构",
+   "130-135 题 120 分钟：常识20/言语40/数量15/判断40/资料20",
+   "记住题量分布，规划时间"
+  ],
+  [
+   "题量分布",
+   "各模块题数与分值权重",
+   "常识 0.5 分/题，资料 1 分/题"
+  ],
+  [
+   "命题规律",
+   "近 5 年高频考点与命题趋势",
+   "总结出题人偏爱考什么"
+  ]
+ ],
+ "s2_1": [
+  [
+   "时间预算",
+   "给每模块定死时间上限，超时即跳",
+   "资料 30'、言语 32'、判断 35'、数量 10'、常识 8'"
+  ],
+  [
+   "跳题策略",
+   "难题先标记跳过，做完回头再攻",
+   "别在一道题上恋战"
+  ],
+  [
+   "涂卡节奏",
+   "建议模块做完即涂卡，或最后留 10 分钟统一涂",
+   "涂卡失误是隐形丢分点"
+  ],
+  [
+   "顺序策略",
+   "按自己擅长顺序做题（建议资料放前面，数量最后）",
+   "先吃软柿子，再啃硬骨头"
+  ],
+  [
+   "提速方法",
+   "限时训练+专项提速，从'会做'到'快做'",
+   "速度是练出来的，不是想出来的"
+  ]
+ ],
+ "s2_2": [
+  [
+   "申论作答",
+   "按考试要求完整写一套申论（含大作文）",
+   "读写算一起练"
+  ],
+  [
+   "采分点",
+   "阅卷按点给分：关键词+条理+字数",
+   "答案要点要'踩'在点子上"
+  ],
+  [
+   "作答时间分配",
+   "概括 15'、综合分析 20'、对策 20'、应用文 30'、作文 60'",
+   "时间不够是大作文写不完的主因"
+  ],
+  [
+   "规范表达",
+   "用规范词替换口语：'加强监管'而非'管严点'",
+   "申论语言要'公文化'"
+  ],
+  [
+   "对照答案",
+   "答完对照参考答案找差距",
+   "看自己漏了哪些要点"
+  ]
+ ],
+ "s2_3": [
+  [
+   "错题清零",
+   "把错题本里的题彻底弄懂并归类",
+   "错题不重犯就是提分"
+  ],
+  [
+   "薄弱回炉",
+   "对薄弱模块重新过一遍基础+专项",
+   "哪弱补哪，别回避"
+  ],
+  [
+   "错题本体系",
+   "按模块分类记录错题，标注错因",
+   "错题本是你的'体检报告'"
+  ],
+  [
+   "重做验证",
+   "隔 3 天重做错题，验证是否真会了",
+   "会了会忘，重做才知道"
+  ],
+  [
+   "专项回归",
+   "薄弱模块看详解+刷专项题",
+   "哪里不会点哪里"
+  ]
+ ],
+ "s2_4": [
+  [
+   "资料提速",
+   "把单题时间压到 45-60 秒",
+   "资料分析拼的是速度和准确率"
+  ],
+  [
+   "正确率目标",
+   "目标 85%+：限时 4 篇 20 分钟",
+   "资料做对 85%，行测就稳了"
+  ],
+  [
+   "错因归类",
+   "算错/看错/公式错/单位错分别统计",
+   "知道自己错在哪类"
+  ],
+  [
+   "材料阅读",
+   "先看问题再读材料，跳过废话",
+   "带着问题读材料省时间"
+  ],
+  [
+   "防坑清单",
+   "单位陷阱（亿/万）、时间陷阱（去年/今年）、表述陷阱",
+   "出题人最爱挖的坑"
+  ]
+ ],
+ "s2_5": [
+  [
+   "数量保底",
+   "10 题挑 5 题做对，其余蒙 C 或全 B",
+   "数量 50% 正确率就是胜利"
+  ],
+  [
+   "挑题原则",
+   "优先做工程/容斥/简单方程题，跳过难题",
+   "挑软柿子捏"
+  ],
+  [
+   "代入排除",
+   "选项代入验证，快速锁定答案",
+   "不会做也能蒙对"
+  ],
+  [
+   "特殊值法",
+   "给题目设特殊值简化计算",
+   "设个方便算的数"
+  ],
+  [
+   "蒙题策略",
+   "时间不够时的统一策略（如全选 B）",
+   "保证至少蒙对 2-3 题"
+  ]
+ ],
+ "s2_6": [
+  [
+   "全真模考",
+   "按国考时间（行测 9:00-11:00，申论 14:00-17:00）模拟",
+   "生物钟和考场节奏都要练"
+  ],
+  [
+   "考场节奏",
+   "从紧张到专注的心理调节",
+   "深呼吸、先易后难"
+  ],
+  [
+   "状态管理",
+   "考前睡眠、饮食、文具准备",
+   "别让细节毁掉复习"
+  ],
+  [
+   "成绩追踪",
+   "记录每次模考分数与排名，看趋势",
+   "分数是复盘的镜子"
+  ],
+  [
+   "稳定性",
+   "多次模考波动分析，找出不稳定因素",
+   "稳定发挥比超常发挥重要"
+  ]
+ ],
+ "s2_7": [
+  [
+   "申论批改",
+   "找老师/考友/AI 批改申论答案",
+   "自己看不出自己的问题"
+  ],
+  [
+   "范文精读",
+   "读高分范文：结构、语言、素材",
+   "看别人怎么把素材用活"
+  ],
+  [
+   "答题语言",
+   "把口语换成规范公文的表达",
+   "语言升级是申论提分关键"
+  ],
+  [
+   "素材库",
+   "建立自己的名言金句、典型案例库",
+   "作文素材随手可用"
+  ],
+  [
+   "书写工整",
+   "卷面整洁、不涂改",
+   "卷面分是白送的"
+  ]
+ ],
+ "s3_0": [
+  [
+   "职位表",
+   "国考招录职位总表，含专业/学历/政治面貌要求",
+   "选岗位的'菜单'"
+  ],
+  [
+   "岗位筛选",
+   "按专业、应届、学历、地区、限制条件逐层筛选",
+   "先硬条件过滤，再比软条件"
+  ],
+  [
+   "应届生身份",
+   "择业期内的应届毕业生，国考大量岗位限应届",
+   "应届是最大的'护城河'"
+  ],
+  [
+   "报录比",
+   "报名人数与招录人数之比",
+   "1:100 就是百里挑一"
+  ],
+  [
+   "进面比",
+   "1:3 或 1:5 的面试比例",
+   "招 1 个进面 3 个"
+  ],
+  [
+   "选岗原则",
+   "限制多优先、离家近优先、避开'三不限'热门",
+   "选岗成功一半：宁做鸡头不做凤尾"
+  ]
+ ],
+ "s3_1": [
+  [
+   "考前冲刺",
+   "考前 2 周：回归基础+全真模拟",
+   "这时候不学新知识，稳住状态"
+  ],
+  [
+   "全真模拟",
+   "连续 2 周每天按考试时间模拟",
+   "让身体适应考试节奏"
+  ],
+  [
+   "回归基础",
+   "过一遍高频公式、易错点、答题框架",
+   "临阵磨枪不快也光"
+  ],
+  [
+   "调整作息",
+   "考前一周早睡早起，与考试时间同步",
+   "考试当天别困"
+  ],
+  [
+   "心理调适",
+   "接受'考不上也能再来'，放下包袱",
+   "心态是考前最大的变量"
+  ]
+ ],
+ "s3_2": [
+  [
+   "高频考点",
+   "近 5 年反复考的考点清单",
+   "重点中的重点"
+  ],
+  [
+   "易错清单",
+   "自己常错的题型和原因",
+   "错题本精华版"
+  ],
+  [
+   "公式速记",
+   "资料分析所有公式考前过一遍",
+   "公式忘了等于白学"
+  ],
+  [
+   "答题策略",
+   "各模块的取舍顺序和蒙题预案",
+   "考场预案：卡住怎么办"
+  ],
+  [
+   "考前清单",
+   "身份证、准考证、文具、考点路线",
+   "小事做细，大事不慌"
+  ]
+ ],
+ "s3_3": [
+  [
+   "热点预测",
+   "考前 3 个月的重点时政与政策热点",
+   "申论材料常考的热点话题"
+  ],
+  [
+   "核心热点",
+   "乡村振兴、科技创新、民生保障、生态文明、基层治理",
+   "五大常考主题"
+  ],
+  [
+   "素材背诵",
+   "名言金句、典型人物、政策表述",
+   "作文的'弹药库'"
+  ],
+  [
+   "范文仿写",
+   "按热点主题各练一篇作文",
+   "手熟了考场上才写得快"
+  ],
+  [
+   "政策表述",
+   "二十大报告、政府工作报告的核心表述",
+   "用官方语言说官方话"
+  ]
+ ],
+ "s3_4": [
+  [
+   "结构化面试",
+   "公务员面试主流形式：固定题目、逐题作答",
+   "统一题目，考临场表达"
+  ],
+  [
+   "面试评分",
+   "综合分析/计划组织/应急应变/人际交往四大题型分值高",
+   "知道考什么才能练什么"
+  ],
+  [
+   "作答时间",
+   "一般 3 题 10-15 分钟，每题思考+作答",
+   "控制时间：思考 1 分钟，答 3 分钟"
+  ],
+  [
+   "答题框架",
+   "观点+分析+对策的三段式框架",
+   "有框架才不慌"
+  ],
+  [
+   "备考资料",
+   "真题+热点+时评（半月谈/人民日报评论）",
+   "积累和练习并重"
+  ]
+ ],
+ "s3_5": [
+  [
+   "综合分析题",
+   "对热点现象/观点谈看法，面试第一大题型",
+   "'你怎么看'——观点+分析+对策"
+  ],
+  [
+   "应急应变题",
+   "处理突发事件：冷静+措施+总结",
+   "'怎么办'——先稳局面再处理"
+  ],
+  [
+   "组织管理题",
+   "组织一次活动/调研的完整流程",
+   "'怎么组织'——事前中后"
+  ],
+  [
+   "人际关系题",
+   "处理与领导/同事/群众的关系",
+   "原则：阳光心态、工作为重"
+  ],
+  [
+   "答题亮点",
+   "结合实际、有细节、有温度",
+   "背模板千篇一律，细节打动考官"
+  ]
+ ],
+ "s3_6": [
+  [
+   "模拟面试",
+   "找人对练或录视频模拟完整面试",
+   "练到张口就来"
+  ],
+  [
+   "录音复盘",
+   "回听自己的作答，找口头禅和卡顿",
+   "自己听自己最真实"
+  ],
+  [
+   "仪容仪表",
+   "着装得体、眼神交流、语速适中",
+   "第一印象很重要"
+  ],
+  [
+   "临场发挥",
+   "紧张控制、听题记题、分条作答",
+   "把考官当长辈，自然交流"
+  ],
+  [
+   "面试礼仪",
+   "敲门问好、坐姿、结束致谢",
+   "细节见素养"
+  ]
+ ]
+});
+/* ===== 术语表数据完毕 ===== *//* ===== 术语表数据完毕 ===== */
+
+const DETAILS = {};
+Object.assign(DETAILS, {
+ "s0_0": {
+  "intro": "行测是'正确率 × 速度'的考试，而资料分析是行测里性价比最高的模块：分值高、规律性强、提分快。第一课先搞清行测整体结构，再从资料分析入门。",
+  "pts": [
+   "<b>行测五大模块</b>：常识判断（20 题）、言语理解（40 题）、数量关系（15 题）、判断推理（40 题）、资料分析（20 题），共 135 题 120 分钟。资料分析每题约 1 分，是提分最快的模块",
+   "<b>资料分析题型</b>：增长类（增长率/增长量/基期）、比重类（现期/基期/比重差）、平均数类（现期/基期/增长率）、倍数与翻番——四大类覆盖 90% 题目",
+   "<b>核心公式</b>：增长率 = (现期-基期)/基期；增长量 = 现期-基期 = 基期×增长率；基期 = 现期/(1+增长率)；比重 = 部分/整体",
+   "<b>同比 vs 环比</b>：同比是与去年同一时期比（今年9月 vs 去年9月），环比是与上一统计周期比（今年9月 vs 今年8月）——审题第一件事分清同比环比",
+   "<b>做题顺序</b>：资料分析建议放前 30 分钟做（头脑清醒、分值高），数量放最后。先看问题、圈关键数据，再回材料定位",
+   "<b>常见陷阱</b>：单位陷阱（亿 vs 万）、时间陷阱（问'去年'你答成'今年'）、百分点 vs 百分比（5 个百分点 ≠ 5%）"
+  ],
+  "pit": "最大的坑：一上来就追求精算。资料分析是'估算的艺术'——用截位直除、百化分估算到能选出答案即可，死算既慢又容易错。另一个坑是不限时练习，考场上根本没时间慢慢算。",
+  "quiz": [
+   "2026 年某市 GDP 为 12000 亿元，2025 年为 10000 亿元，问同比增长率是多少？",
+   "资料分析里'比重差'和'比重'有什么区别？",
+   "为什么资料分析建议放前面做，而不是按题目顺序做？"
+  ],
+  "ans": [
+   "增长率 = (12000-10000)/10000 = <b>20%</b>。注意：是除以基期（10000）而不是现期（12000）。<b>先判基期现期，再套公式</b>——这是资料分析最基础也是最常错的一步。",
+   "比重 = 部分/整体（一个比例）；比重差 = 现期比重 - 基期比重（两个比重相减，单位是百分点）。例：今年男生占 40%，去年占 35%，比重差 = 5 个百分点。",
+   "三个原因：① <b>分值高</b>——每题约 1 分，是数量关系的 2-3 倍 ② <b>规律性强</b>——公式固定，正确率可练到 90% ③ <b>头脑清醒时做</b>——资料分析需要细心，放到后面容易因疲惫犯错。策略：先做性价比高的，再做难的。"
+  ],
+  "res": "粉笔/华图资料分析基础课跟一遍；每天限时 15 分钟做 3 篇（15 题），先追求正确率再提速",
+  "deep": {
+   "go": "<b>深入目标：从'会算'到'算得快、算得准'</b>。掌握截位直除、百化分、错位加减三大速算；理解增长率/比重/平均数三类题型的公式变形。<b>深入标志：4 篇资料 20 分钟内完成，正确率 85% 以上。</b>",
+   "tasks": [
+    "背熟 1/2 到 1/20 的百化分表，并默写三遍",
+    "限时做 3 篇资料分析，逐题记录：用时、正确、错因",
+    "把增长率、比重、平均数三组公式画成思维导图",
+    "总结 10 个自己常踩的陷阱，做成'防坑清单'"
+   ]
+  }
+ },
+ "s0_1": {
+  "intro": "言语理解占行测 40 题（约 1/3），是'保分模块'——正确率稳定在 80% 以上，行测就稳了一半。片段阅读是言语的基础，学会'抓重点'是核心。",
+  "pts": [
+   "<b>主旨概括题</b>：读一段话，选最能概括中心思想的选项。核心是找'主题句'——通常出现在转折之后、首尾句、观点句",
+   "<b>意图判断题</b>：比主旨多一步——作者说这番话'想表达什么'。正确答案往往是对主旨的'引申'（呼吁、对策、启示）",
+   "<b>细节判断题</b>：选项与原文比对，考'无中生有、偷换概念、绝对化表述'三类错误",
+   "<b>关键词技巧</b>：转折词（但是/然而/其实）之后是重点；因果词（因此/所以）之后是结论；'换句话说''总之'之后是总结",
+   "<b>主题词法</b>：文段反复出现的高频词是主题词，正确选项通常包含主题词——用这个方法能快速排除无关选项",
+   "<b>选项特征</b>：绝对化表述（一定/必然/所有/只有）多为错；无中生有、过度推断、偷换概念是三大干扰项"
+  ],
+  "pit": "最常见的错法：把'意图题'当'主旨题'做——意图题要选'作者想干什么'，不是'文段说了什么'。另一个坑：凭感觉选读起来顺的，不回到文段验证。",
+  "quiz": [
+   "'但'字在文段中的作用是什么？做题时看到转折词应该怎么做？",
+   "主旨概括和意图判断的区别是什么？",
+   "选项里出现'所有''必然''一定'这类词，应该怎么处理？"
+  ],
+  "ans": [
+   "转折词之后是重点。看到'但/但是/然而/其实/事实上'，<b>前面内容可能是铺垫，重点在转折之后</b>。做题时把转折后的句子作为核心，其他内容快速略读。",
+   "主旨题选'文段说了什么'（对原文的概括）；意图题选'作者想表达什么'（对主旨的引申，常是呼吁/对策）。<b>区别口诀：主旨是'是什么'，意图是'想干什么'</b>。",
+   "高度警惕。<b>绝对化表述（一定/必然/所有/只要…就）通常是错误选项</b>，因为言语题的正确选项往往表述留有余地（一般/通常/可能）。看到绝对词先打问号，回文段验证。"
+  ],
+  "res": "每天 20 道片段阅读限时训练；整理自己的'转折词/关联词'笔记",
+  "deep": {
+   "go": "<b>深入目标：从'读懂'到'快速读懂'</b>。训练 30 秒内锁定主题句；建立关联词→重点位置的反射；掌握 5 种常见干扰项的识别。<b>深入标志：限时 40 秒/题，正确率 85% 以上。</b>",
+   "tasks": [
+    "做 30 道主旨题，标注每道题的主题句位置和判断依据",
+    "总结 5 种干扰项（无中生有/偷换概念/绝对化/过度推断/以偏概全）各 3 个例子",
+    "每天精读 1 篇人民时评，划出主旨句和论证结构",
+    "限时 30 分钟做一套言语 20 题，记录错因"
+   ]
+  }
+ },
+ "s0_2": {
+  "intro": "判断推理 40 题，图形推理和定义判断各 10 题左右。图形推理是'找规律'的游戏，规律种类有限，系统梳理后正确率能稳定在 80%+。",
+  "pts": [
+   "<b>图形推理五大类</b>：位置规律（平移/旋转/翻转）、样式规律（加减同异/黑白叠加）、属性规律（对称/曲直/开闭）、数量规律（点线面角素）、空间重构——做题先按这个顺序试",
+   "<b>位置规律</b>：图形元素相同，看位置怎么变。注意平移方向（左右上下/顺时针逆时针）和步数",
+   "<b>样式规律</b>：元素相似，看叠加运算。去同存异、去异存同、黑白叠加（黑+白=？）",
+   "<b>属性规律</b>：元素凌乱，看属性。对称性（轴对称/中心对称）、曲直性、开闭性——'凌乱看属性'",
+   "<b>数量规律</b>：点（交点/切点）、线（直线/曲线/笔画数）、面（封闭空间）、角、素（元素种类/个数）。先数面、再数线",
+   "<b>定义判断</b>：把定义的关键信息（主体、客体、方式、目的、条件）当'尺子'，逐项测量。重点抓限定词"
+  ],
+  "pit": "图推最大的坑：没有体系地乱试规律，浪费时间。正确姿势是按'位置→样式→属性→数量'的固定顺序排查。定义判断的坑：凭日常理解做题，不严格对照定义关键词。",
+  "quiz": [
+   "图形推理做题的一般顺序是什么？为什么？",
+   "'凌乱看属性、相似看样式、相同看位置'是什么意思？",
+   "定义判断的解题核心是什么？"
+  ],
+  "ans": [
+   "顺序：<b>先看元素是否相同</b>（相同→位置规律）→ <b>相似</b>（→样式规律）→ <b>凌乱</b>（→先属性后数量）。固定顺序能避免东试西试浪费时间，把 10 道图推控制在 8 分钟内。",
+   "这是图推的快速定位口诀：① <b>相同</b>——元素组成完全相同，看位置（平移/旋转）② <b>相似</b>——元素类似，看样式（加减同异）③ <b>凌乱</b>——元素杂乱，先看属性（对称/曲直/开闭），再看数量（点线面）。<b>先定性再定规律</b>。",
+   "<b>严格按定义的关键信息逐项对照</b>：主体（谁做的）、客体（对谁做）、方式（怎么做）、目的（为什么做）、条件（什么情况下）。只要有一项不符合就排除。用'关键信息+排除法'，别凭生活经验。"
+  ],
+  "res": "粉笔图推专项 200 题；建立自己的'规律清单'，每做错一题就归类到清单",
+  "deep": {
+   "go": "<b>深入目标：建立完整的图推规律体系</b>。五大类 18 种规律的识别特征全部掌握；定义判断达到'每个关键词都能画出标注'的熟练度。<b>深入标志：图推 10 题 8 分钟、正确率 85%；定义 10 题 8 分钟、正确率 90%。</b>",
+   "tasks": [
+    "整理一份'图推规律速查表'（规律→特征→例题）",
+    "专项做 100 道图推，统计自己的薄弱规律类型",
+    "定义判断专项 50 题，练习划关键信息",
+    "把错题按规律类型归类，各类型做'防错笔记'"
+   ]
+  }
+ },
+ "s0_3": {
+  "intro": "类比推理和逻辑判断是判断推理的后半场。类比推理考'词间关系'，逻辑判断考'论证思维'——后者是拉开差距的关键。",
+  "pts": [
+   "<b>类比推理三大关系</b>：语义关系（近义/反义/象征）、逻辑关系（包含/并列/交叉/因果/条件）、语法关系（主谓/动宾/偏正）",
+   "<b>逻辑判断核心</b>：翻译推理（如果A那么B → A推B；只有A才B → B推A）、加强削弱（论据→论点）、朴素逻辑（排除法/列表法）",
+   "<b>加强方式</b>：搭桥（建立论据和论点的联系）、补充论据、排除他因；<b>削弱方式</b>：拆桥、否定论点、另有他因",
+   "<b>翻译口诀</b>：'如果…那么…'前推后；'只有…才…'后推前；'且'全真才真；'或'一真即真，否定一个则另一个必真",
+   "<b>论证三要素</b>：论据（理由）→ 论证（推理过程）→ 论点（结论）。加强削弱都是围绕这三者做文章",
+   "<b>朴素逻辑</b>：信息量大，用排除法+列表法+假设法，优先从'确定信息'入手"
+  ],
+  "pit": "类比推理的坑：只看表面词义，忽略深层逻辑（如'苹果：水果'是包含关系，不是并列）。逻辑判断的坑：被选项'看起来对'迷惑，不回到论点和论据验证。",
+  "quiz": [
+   "'如果明天下雨，就不去爬山'翻译成逻辑式是什么？",
+   "削弱一个论证的三种主要方式是什么？",
+   "类比推理'医生：医院'和'教师：学校'是什么关系？"
+  ],
+  "ans": [
+   "<b>下雨 → 不去爬山</b>（前推后）。注意：它的逆否命题'去爬山 → 没下雨'同样成立。'只有…才…'则相反（后推前），这两组翻译是逻辑判断的送分点也是易错点。",
+   "① <b>否定论点</b>（最直接：直接反驳结论）② <b>拆桥</b>（切断论据和论点的联系）③ <b>另有他因</b>（引入其他原因解释结果）。力度排序：否定论点 &gt; 拆桥 &gt; 另有他因 &gt; 削弱论据。",
+   "<b>职业与工作场所的对应关系</b>（语法/对应关系）：医生在医院工作，教师在学校工作。类比推理要先判断'关系类型'，再找相同类型的选项——选项可能有多个'看起来都像'，要选关系类型最一致的。"
+  ],
+  "res": "粉笔判断推理专项；每天 20 道类比+10 道逻辑，错题归类",
+  "deep": {
+   "go": "<b>深入目标：建立'论证思维'</b>。翻译推理五组关联词烂熟；加强削弱能说清每种方式的'作用位置'；朴素逻辑掌握三种解题工具。<b>深入标志：逻辑判断 10 题 9 分钟、正确率 85% 以上。</b>",
+   "tasks": [
+    "整理翻译推理 5 组关联词速记表",
+    "做 50 道加强削弱题，标注每题的'作用位置'",
+    "用列表法解决 5 道朴素逻辑难题",
+    "把类比推理错题按关系类型归类复习"
+   ]
+  }
+ },
+ "s0_4": {
+  "intro": "数量关系是行测的'分水岭'：高手靠它拉开差距，但普通考生花太多时间会拖垮全局。正确策略是'挑题做'——掌握高频题型的秒杀技巧。",
+  "pts": [
+   "<b>性价比策略</b>：15 题控制在 10 分钟内，只做 5-7 题（工程、容斥、简单方程、最值），其余蒙。目标：做对的题全对",
+   "<b>工程问题</b>：总量=效率×时间。设总量为 1 或时间的最小公倍数，求各自效率再合并",
+   "<b>行程问题</b>：路程=速度×时间。相遇（速度和）、追及（速度差）、流水行船（顺水/逆水速度）",
+   "<b>利润问题</b>：利润率=(售价-成本)/成本；折扣=售价/原价。设成本为 100 是常用技巧",
+   "<b>容斥问题</b>：两集合 A∪B=A+B-A∩B；三集合用公式或画图法",
+   "<b>最值问题</b>：最不利原则（保证=最不利+1）、和定最值（此消彼长）",
+   "<b>数字特性</b>：奇偶性（和差同奇偶）、整除特性（2/3/5/9）、倍数特性——很多题不用算，用选项特性秒杀"
+  ],
+  "pit": "最大的坑：在数量关系上恋战。一道题卡 3 分钟，后面 10 题全崩。第二个坑：只会列方程硬算，不会用数字特性、代入排除秒杀。",
+  "quiz": [
+   "为什么建议数量关系'挑题做'而不是全做？",
+   "甲 3 天完成工程，乙 6 天完成，两人合作几天完成？",
+   "'最不利原则'解决什么类型的问题？举例说明。"
+  ],
+  "ans": [
+   "因为数量 15 题每题约 0.8 分，但平均每题要 1.5-2 分钟。<b>120 分钟做 135 题，平均每题仅 53 秒</b>——数量全做完会严重挤压资料分析时间。策略：10 分钟内做对 5-7 道会做的，剩下的蒙，总体收益最大。",
+   "总量设为 6（3 和 6 的公倍数），甲效率 2、乙效率 1，合作效率 3，时间 = 6/3 = <b>2 天</b>。<b>设总量为最小公倍数</b>是工程问题的核心技巧。",
+   "解决'至少取多少个才能保证……'的问题。方法：<b>把最不利的情况都取到，再加 1</b>。例：盒子里 3 红 4 蓝，至少取几个保证有同色？最不利是取到 1 红 1 蓝（不同色），再加 1 = <b>3 个</b>必有两同色。"
+  ],
+  "res": "粉笔数量专项，只学高频题型；每道题计时，超 2 分钟看解析并标记'放弃题型'",
+  "deep": {
+   "go": "<b>深入目标：建立'挑题清单'</b>。掌握 6 类高频题型的秒杀技巧（数字特性/代入排除/特殊值）；明确自己必做、可做、放弃的题型。<b>深入标志：15 题 10 分钟内做对 5 题以上，且不影响其他模块。</b>",
+   "tasks": [
+    "列出自己的'必做 6 类题型'清单（工程/容斥/方程/最值/行程/利润）",
+    "每个题型收集 5 道真题，总结秒杀切入点",
+    "计时训练：10 分钟做 15 题（含蒙），练习取舍",
+    "整理数字特性速查表（整除/奇偶/倍数）"
+   ]
+  }
+ },
+ "s0_5": {
+  "intro": "常识判断 20 题，知识面极广，突击效果差，但'积累机制'对了能稳定拿 60%+。时政是必考大头，法律和科技是稳定出题点。",
+  "pts": [
+   "<b>常识结构</b>：时政（近一年大事）约 5-6 题、法律 3-4 题、科技 3-4 题、人文历史 3-4 题、地理经济 2-3 题——时政是性价比最高的部分",
+   "<b>时政备考</b>：关注二十大报告、中央经济工作会议、政府工作报告、两会、重大科技成就（航天/大模型/生物医药）",
+   "<b>法律常识</b>：宪法（国家机构/公民权利）、民法（民事行为能力/继承）、刑法（犯罪构成/正当防卫）、行政法（处罚/许可）、新修订法律",
+   "<b>科技常识</b>：航天工程（嫦娥/天问/神舟）、人工智能（大模型/自动驾驶）、生物（疫苗/基因）、前沿（量子/芯片）",
+   "<b>人文常识</b>：古代史（朝代更替）、文学（名著/诗人）、传统文化（二十四节气/科举制度）",
+   "<b>积累节奏</b>：每天 15 分钟刷 10-20 题 + 每周固定整理时政周报，细水长流",
+   "<b>蒙题技巧</b>：绝对化表述多为错；选项有'法律依据'的优先；实在不会统一选 B 或 C"
+  ],
+  "pit": "最大的坑：想'系统学习'常识——常识没有系统，只有积累。另一个坑：考前一个月才开始看时政，根本来不及。",
+  "quiz": [
+   "常识判断为什么不适合'突击备考'？正确姿势是什么？",
+   "时政复习重点关注哪些内容？",
+   "常识题的'蒙题技巧'有哪些？"
+  ],
+  "ans": [
+   "因为常识考点无限、分值分散（每题 0.5-0.8 分），投入产出比低。<b>正确姿势是'细水长流'</b>：每天 15 分钟刷题+积累，考前 3 个月重点补时政。把时间花在资料/言语/判断上，提分更快。",
+   "① <b>重要会议</b>：二十大、中央经济工作会议、政府工作报告 ② <b>重大成就</b>：航天任务、科技突破 ③ <b>新法新规</b>：新修订的法律法规 ④ <b>重大政策</b>：乡村振兴、科技创新等。时政考的是'最新最大'，不是零碎新闻。",
+   "① <b>绝对化表述</b>（必定/所有/只有）多为错 ② 选项含'法律依据/依法'的往往正确（体现法治思维）③ <b>排除明显错误</b>后，从剩下选项里选表述最严谨的 ④ 完全不会时统一蒙一个选项，保证至少对 25%。"
+  ],
+  "res": "每天学习强国刷时政 15 分钟 + 粉笔常识题库每日 20 题",
+  "deep": {
+   "go": "<b>深入目标：建立自己的'常识弹药库'</b>。形成时政/法律/科技三大积累体系；每周产出一份时政笔记。<b>深入标志：模考常识稳定 12/20 以上（60%+），时政题正确率 80%。</b>",
+   "tasks": [
+    "建立'时政周报'模板：每周整理 5 条重大时政",
+    "系统过一遍宪法+民法典的核心考点，做 20 题",
+    "整理近一年重大科技成就时间线",
+    "每天固定刷 20 题常识，错题加入积累本"
+   ]
+  }
+ },
+ "s0_6": {
+  "intro": "申论是'材料为王'的科目——答案都在材料里，考的是'找得到、抄得准、写得规范'。归纳概括是申论的基础题型，也是所有题型的起点。",
+  "pts": [
+   "<b>申论本质</b>：所有答案都能在材料中找到依据，考的是阅读理解+归纳提炼+规范表达，不是自由发挥",
+   "<b>材料阅读三步</b>：① 先看题目（带着问题读材料）② 标注关键词（问题/原因/做法/效果）③ 划分层次（每段的段落大意）",
+   "<b>关键词标注</b>：问题词（不足/缺失/滞后）、原因词（因为/由于）、对策词（应该/需要/建议）、影响词（促进了/导致了）",
+   "<b>作答格式</b>：分条列点（1.2.3.），每条'观点前置+展开'，语言精炼规范",
+   "<b>采分点意识</b>：阅卷按关键词给分，答案要贴近材料原词原句，别自己编新词",
+   "<b>归纳方法</b>：同类合并（把意思相近的要点合并）、不同类分列；按主体（政府/企业/群众）或层面（制度/技术/人才）分类"
+  ],
+  "pit": "最大的坑：用自己的话改写材料——阅卷按关键词采分，脱离材料的表达拿不到分。第二个坑：不控制字数，超出格子。",
+  "quiz": [
+   "申论归纳概括题的作答原则是什么？",
+   "'关键词采分'是什么意思？答题时要注意什么？",
+   "阅读申论材料的一般步骤是什么？"
+  ],
+  "ans": [
+   "<b>答案全部来自材料，忠实于材料原词，分条列点作答</b>。原则：① 问什么答什么（题目问对策只答对策）② 要点全（宁多勿漏）③ 语言规范（用公文体）④ 控制字数。概括题是'搬运工'不是'创作家'。",
+   "阅卷老师按答案里的<b>关键词（采分点）给分</b>：你的答案里出现规范关键词就得那 1 分，没有就不得分。所以答题要：① <b>贴近材料原词</b>（材料说'管理粗放'就写'管理粗放'）② 关键词前置（每条第一句放要点词）③ 用规范表达替换口语。",
+   "① <b>先看题目</b>（明确要找什么）② <b>通读材料</b>：圈出问题/原因/对策/效果关键词，标注段落大意 ③ <b>加工提炼</b>：同类合并、规范表达 ④ <b>分条作答</b>。带着题目读材料，效率翻倍。"
+  ],
+  "res": "粉笔申论方法精讲；每天精读 1 篇人民时评并划出'问题-原因-对策'结构",
+  "deep": {
+   "go": "<b>深入目标：从'读完材料'到'读透材料'</b>。建立问题/原因/对策/影响四类关键词体系；掌握材料分层与要点合并技巧。<b>深入标志：20 分钟内完成一道概括题，要点覆盖 90% 以上采分点。</b>",
+   "tasks": [
+    "用四色笔各标注一类关键词，精读 3 篇申论材料",
+    "做 5 道真题概括题，对照答案检查漏点",
+    "整理'规范表达词库'（口语→规范词对照表）",
+    "每周精读 3 篇人民时评，划出文章结构"
+   ]
+  }
+ },
+ "s0_7": {
+  "intro": "综合分析题是申论小题里的'升级版'：不仅要概括，还要'讲道理'。解释型、评价型、比较型三类，掌握框架后都能套用。",
+  "pts": [
+   "<b>综合分析三大类</b>：解释型（解释一句话/词的含义）、评价型（对观点/做法表态）、比较型（比较两个事物的异同）",
+   "<b>解释型框架</b>：① 解释含义（这句话是什么意思）② 分析论证（为什么：原因/影响/表现）③ 提出对策（怎么办）",
+   "<b>评价型框架</b>：① 亮明观点（支持/反对/辩证）② 分析论证（好在哪里/问题在哪）③ 提出对策（怎么完善）",
+   "<b>比较型框架</b>：① 分别说明（A 是什么、B 是什么）② 比较异同（相同点/不同点）③ 得出结论（如何取长补短）",
+   "<b>观点前置</b>：答案第一句先亮观点，再展开分析——阅卷老师先看你的观点",
+   "<b>材料依据</b>：分析内容全部来自材料，用材料中的事实支撑观点，别自己编",
+   "<b>时间控制</b>：综合分析 15-20 分钟/题，字数 200-300 字，别超时"
+  ],
+  "pit": "常见的坑：① 只解释不分析（答了含义就结束）② 分析脱离材料（用自己的话空谈）③ 观点不明确（含糊其辞）——综合分析必须'观点鲜明+论证充分'。",
+  "quiz": [
+   "解释型综合分析题的答题框架是什么？",
+   "评价型分析题和解释型有什么区别？",
+   "综合分析题的观点为什么要前置？"
+  ],
+  "ans": [
+   "① <b>解释含义</b>：用自己的话说明这句话/词的意思 ② <b>分析论证</b>：从原因、影响、表现等角度展开（内容全部来自材料）③ <b>提出对策</b>：针对分析出的问题给出解决方向。<b>框架口诀：是什么 → 为什么 → 怎么办</b>。",
+   "评价型是对<b>某个观点/做法表态</b>（支持/反对/辩证看待），解释型是<b>解释一句话的含义</b>。评价型多了'亮明观点'这一步，且分析时要兼顾正反两面（辩证）。框架：观点 → 正反分析 → 对策。",
+   "因为<b>阅卷按采分点给分，观点句是最大的采分点</b>。观点前置让阅卷老师 3 秒内看到你的立场，符合'开门见山'的公文习惯。含糊的观点会让整道题失分。"
+  ],
+  "res": "粉笔申论综合分析专项 20 题；背熟三类框架，每天练 1 题",
+  "deep": {
+   "go": "<b>深入目标：三类综合分析框架烂熟于心</b>。看到题目 30 秒内判断题型、调用框架；分析能兼顾'材料依据+逻辑层次'。<b>深入标志：20 分钟内完成一道综合分析题，观点明确、要点齐全。</b>",
+   "tasks": [
+    "默写解释型/评价型/比较型三个框架",
+    "各做 3 道真题，对照答案找框架漏洞",
+    "整理 10 个'观点前置'的规范表述",
+    "限时训练：每天 1 题，记录用时和漏点"
+   ]
+  }
+ },
+ "s1_0": {
+  "intro": "资料分析是行测的'提分发动机'：正确率从 70% 到 90% 靠的就是速算技巧。这一课把三大速算方法练到肌肉记忆。",
+  "pts": [
+   "<b>截位直除</b>：分子分母同时截取 2-3 位估算。分母截前 3 位，商保留 2 位；选项差距大时截 2 位即可",
+   "<b>百化分</b>：1/n 对应百分数速记：1/8=12.5%、1/12≈8.3%、1/7≈14.3%……增长量 = 现期/(n+1)，用百化分秒杀",
+   "<b>错位加减法</b>：分子分母同加同减近似比例值，简化计算。适用复杂乘除",
+   "<b>比重差公式</b>：现期比重-基期比重 = 比重×[(a-b)/(1+a)]（a 是部分增长率、b 是整体增长率）——a&gt;b 则比重上升",
+   "<b>平均数增长率</b>：(a-b)/(1+b)，a 是总量增长率、b 是份数增长率——比'先算平均数再算增长率'快得多",
+   "<b>混合增长率</b>：整体增长率介于部分之间，且偏向基期量大的一方——用'十字交叉'思想速判",
+   "<b>隔年增长率</b>：r1+r2+r1×r2（今年相对前年）"
+  ],
+  "pit": "最大的坑：每道题都精确计算——时间根本不够。资料分析平均每题 50 秒，必须用估算。第二个坑：公式记混（比重差 vs 平均数增长率），建议考前默写公式表。",
+  "quiz": [
+   "1/7、1/12、1/15 对应的百分数分别是多少？",
+   "某市 2026 年出口额增长 12%，进口额增长 5%，问贸易总额（出口+进口）的增长率范围？",
+   "比重差公式中 a 和 b 分别代表什么？a&gt;b 说明什么？"
+  ],
+  "ans": [
+   "1/7 ≈ <b>14.3%</b>、1/12 ≈ <b>8.3%</b>、1/15 ≈ <b>6.7%</b>。百化分是资料分析最常用的速算工具，建议把 1/2 到 1/20 全部背熟。<b>记忆技巧：分母越大百分数越小，8.3%≈1/12 是最常考的</b>。",
+   "贸易总额增长率<b>介于 5% 和 12% 之间</b>（混合增长率介于两部分之间）。如果出口额远大于进口额（基期量大），则整体增长率更靠近 12%。<b>混合增长率口诀：居中但不居中，偏向基期大的一方</b>。",
+   "a = 部分的增长率，b = 整体的增长率。a &gt; b 说明<b>部分增长快于整体，比重上升</b>；a &lt; b 则比重下降；a = b 比重不变。<b>比重差的正负方向由 a-b 决定</b>，这是比重类题目的核心。"
+  ],
+  "res": "默写百化分表（1/2-1/20）；每天限时 4 篇资料 20 分钟，逐题标注使用的速算方法",
+  "deep": {
+   "go": "<b>深入目标：三大速算形成肌肉记忆</b>。截位直除、百化分、错位加减任意组合使用；公式表倒背如流。<b>深入标志：4 篇资料 18 分钟内完成，正确率 85% 以上。</b>",
+   "tasks": [
+    "把 1/2-1/20 百化分表默写 5 遍到条件反射",
+    "做 50 题增长类，每题标注用到的速算方法",
+    "整理'公式速查卡'（增长率/比重/平均数/混合/隔年）",
+    "限时模考：4 篇 18 分钟，统计正确率与错因"
+   ]
+  }
+ },
+ "s1_1": {
+  "intro": "逻辑填空占言语一半（20 题），是言语提分的关键。核心是'语境为王'：答案藏在上下文里，词语辨析是基本功。",
+  "pts": [
+   "<b>语境分析</b>：先看空格前后文的提示（转折/递进/并列/解释说明），判断空缺处的语义倾向",
+   "<b>转折语境</b>：'但是/然而/却'前后语义相反——前文说优点，空格填缺点",
+   "<b>递进语境</b>：'甚至/更/不仅…而且'——空格程度比前文更深",
+   "<b>并列语境</b>：'和/与/同时'——空格与前后文语义相近或相关",
+   "<b>解释说明</b>：空格后常紧跟解释（'即''比如''换句话说'）——答案就在解释里",
+   "<b>实词辨析</b>：注意搭配对象（'改善'环境/'改进'方法）、感情色彩（褒贬）、语意轻重",
+   "<b>高频成语</b>：'不刊之论'（正确的不可修改的言论）、'差强人意'（大体上令人满意）等易错成语要准确掌握"
+  ],
+  "pit": "最大的坑：凭语感'读着顺'就选——正确率不稳定。第二个坑：成语望文生义（'不刊之论'不是'不能刊登的言论'）。",
+  "quiz": [
+   "逻辑填空的解题第一步是什么？为什么？",
+   "'但是'后面的空格通常填什么语义的词？举例说明。",
+   "'不刊之论''差强人意'的正确含义是什么？"
+  ],
+  "ans": [
+   "第一步是<b>分析语境</b>：找空格前后的关联词和提示词，判断空缺处的语义。因为答案的依据在文段里，<b>语境是'因'，选词是'果'</b>——先定语义，再用词语辨析排除。跳过语境直接看词，等于放弃了解题钥匙。",
+   "填与转折前<b>相反</b>语义的词。例：'他虽然能力很强，但是态度____'——'能力很强'是优点，空格应填缺点：'傲慢/轻率'。<b>转折词前后语义相反</b>，这是最常考的语境类型。",
+   "'不刊之论' = <b>正确的、不可修改的言论</b>（刊=删改，不是'刊登'）；'差强人意' = <b>大体上还能使人满意</b>（不是'差劲'）。这两个是公务员考试高频易错成语，望文生义必错。"
+  ],
+  "res": "整理高频成语 300 个；每天限时 20 道逻辑填空，错题记录'语境类型+错因'",
+  "deep": {
+   "go": "<b>深入目标：语境判断形成条件反射</b>。四种语境（转折/递进/并列/解释）看到标志词秒判；300 个高频成语准确掌握。<b>深入标志：逻辑填空 20 题 15 分钟，正确率 85% 以上。</b>",
+   "tasks": [
+    "整理四大语境速查表（标志词→语义方向）",
+    "背诵 100 个高频成语并造句运用",
+    "做 50 道真题，标注每题的语境类型",
+    "建立'易错成语'清单：望文生义的 30 个"
+   ]
+  }
+ },
+ "s1_2": {
+  "intro": "图形推理从'会做'到'全对'，关键是规律体系的完整。这一课把图推 18 种规律系统梳理，建立'看到图形→快速定位规律'的能力。",
+  "pts": [
+   "<b>位置类（4 种）</b>：平移（方向+步数）、旋转（方向+角度）、翻转（左右/上下）、位置遍历（元素位置循环）",
+   "<b>样式类（4 种）</b>：加减同异（去同存异/去异存同）、黑白叠加（运算规则）、求同求异、遍历（元素种类齐全）",
+   "<b>属性类（3 种）</b>：对称性（轴对称/中心对称/对称轴数量）、曲直性（全曲/全直/曲直混合）、开闭性（开放/封闭）",
+   "<b>数量类（5 种）</b>：点（交点/切点）、线（直线/曲线/笔画数）、面（封闭区域）、角（锐角/直角）、素（元素种类/个数）",
+   "<b>空间重构（2 种）</b>：展开图折叠（相对面 Z 字两端、相邻面公共边）、立体拼合（图形拼接）",
+   "<b>一笔画</b>：奇点数为 0 或 2 的图形可以一笔画成——图推高频考点，数奇点要快",
+   "<b>做题节奏</b>：10 题 8 分钟，超过 1 分钟没思路先跳过，回头再看"
+  ],
+  "pit": "最大的坑：花 3 分钟死磕一道图推——图推'看不出就是看不出'，跳过不丢分（每题 0.8 分），别为一道题打乱节奏。",
+  "quiz": [
+   "'一笔画'的判断方法是什么？",
+   "空间重构题（正方体折叠）的核心技巧是什么？",
+   "图推做题超过多久没思路应该怎么办？"
+  ],
+  "ans": [
+   "<b>数奇点（连接奇数条线的点）</b>：奇点数为 0 或 2 的图形可以一笔画成；奇点数 &gt; 2 则需要奇点数/2 笔。例：'日'字（2 个奇点）可一笔画，'田'字（4 个奇点）需 2 笔。图推几乎每年必考一笔画。",
+   "① <b>相对面法</b>：展开图中处于'Z 字两端'的两个面是相对面，永远不相邻（折叠后）② <b>相邻面法</b>：看公共边两端的图形位置是否正确 ③ <b>时针法</b>：画时针判断方向。三个技巧组合使用，30 秒内可解。",
+   "<b>超过 1 分钟直接跳过</b>，标记后做下一题，全部做完再回头。图推 10 题 8 分钟是预算上限，死磕一题会导致后面 9 题全崩。<b>策略性放弃是行测的生存法则</b>。"
+  ],
+  "res": "粉笔图推专项 300 题；制作'规律→特征'速查表，每错一题归类",
+  "deep": {
+   "go": "<b>深入目标：18 种规律全部条件反射</b>。看到图形特征（相同/相似/凌乱）3 秒内锁定规律大类；空间重构三技巧熟练。<b>深入标志：图推 10 题 8 分钟内完成，正确率 90%。</b>",
+   "tasks": [
+    "制作完整'图推规律速查表'（18 种规律+特征+例题）",
+    "专项刷 200 题，统计薄弱规律",
+    "练 20 道空间重构题，三技巧各用 5 次",
+    "整理'一分钟内看不出就跳过'的实战清单"
+   ]
+  }
+ },
+ "s1_3": {
+  "intro": "排列组合与概率是数量关系里最'讲理'的题型：规则清晰、公式固定，掌握后正确率高，是'必做清单'里的优质题。",
+  "pts": [
+   "<b>排列 vs 组合</b>：排列有顺序（A：从 n 中取 m 排序），组合无顺序（C：从 n 中取 m）——判断标准是'换顺序算不算新情况'",
+   "<b>分类用加法、分步用乘法</b>：完成一件事有几种方式（分类）用加；分几步完成（分步）用乘",
+   "<b>捆绑法</b>：要求相邻的元素先捆成整体，再与其他元素排列，最后内部排列",
+   "<b>插空法</b>：要求不相邻的元素，先排其他元素，再把它们插入空隙中",
+   "<b>错位排列</b>：每个元素都不在原位：D1=0、D2=1、D3=2、D4=9、D5=44（记住前几个）",
+   "<b>古典概型</b>：概率 = 满足条件的情况数/总情况数——先分别算两个数再相除",
+   "<b>特殊方法</b>：插板法（相同元素分组）、隔板法、环形排列（n 个元素环形排列 = (n-1)!）"
+  ],
+  "pit": "最大的坑：分不清排列组合（该用 A 用了 C）。判断口诀：'选出来的东西要排序就是排列，不排序就是组合'。第二个坑：重复计数（漏算或重算）。",
+  "quiz": [
+   "'3 个人排成一排'和'从 5 个人中选 3 个人'分别用排列还是组合？",
+   "甲乙丙丁戊 5 人排队，甲乙必须相邻，有多少种排法？",
+   "5 个人各拿一顶帽子，每个人都拿错帽子的情况有多少种？"
+  ],
+  "ans": [
+   "'3 个人排成一排'是<b>排列 A(3,3)=6</b>（顺序不同算不同）；'选 3 个人'是<b>组合 C(5,3)=10</b>（选谁和顺序无关）。<b>判断标准：换一下顺序，结果变不变？变就是排列</b>。",
+   "甲乙捆绑成 1 个整体：4 个'元素'排列 A(4,4)=24，甲乙内部 A(2,2)=2，共 <b>48 种</b>。<b>捆绑法：先捆（内部排）、再排（整体排）</b>，两步用乘法。",
+   "<b>错位排列 D5 = 44</b>。错位排列（每个人都拿错）是固定模型：D1=0、D2=1、D3=2、D4=9、D5=44。<b>记规律：Dn = (n-1)×(D(n-1)+D(n-2))</b>，D5=4×(9+2)=44。"
+  ],
+  "res": "粉笔排列组合专项 100 题；背熟错位排列 D1-D5 和捆绑/插空口诀",
+  "deep": {
+   "go": "<b>深入目标：排列组合模型全掌握</b>。捆绑/插空/插板/错位/环形五类模型秒识别；古典概型熟练转化。<b>深入标志：排列组合+概率题 1 分钟/题，正确率 90%。</b>",
+   "tasks": [
+    "默写五个模型的特征与解法",
+    "做 50 题分类练习：先判断模型再计算",
+    "总结 10 个'重复/遗漏计数'的反例",
+    "限时训练：10 题 12 分钟，错题归类"
+   ]
+  }
+ },
+ "s1_4": {
+  "intro": "提出对策题是申论'解决问题能力'的考查，也是面试'怎么办'题的基础。核心：问题在材料里，对策也从材料里来，但要'提得实'。",
+  "pts": [
+   "<b>对策来源</b>：① 材料中的直接对策（'应该/需要/建议'后）② 从问题反推（缺什么补什么）③ 从经验教训提炼（先进做法借鉴）",
+   "<b>问题转化法</b>：'管理粗放' → '建立精细化管理机制'；'人手不足' → '加强人才队伍建设/引入社会力量'",
+   "<b>对策三性</b>：针对性（对着具体问题）、可行性（有主体能落地）、有效性（能解决问题）",
+   "<b>主体分析法</b>：政府（完善制度/加强监管）、企业（履行责任/技术创新）、社会（舆论监督/公众参与）多角度",
+   "<b>标本兼治</b>：既要'治标'（立即解决眼前问题），也要'治本'（建立长效机制、源头治理）",
+   "<b>规范表达</b>：'加强宣传教育''完善法律法规''建立长效机制''强化监督管理'——规范词库要积累"
+  ],
+  "pit": "最大的坑：对策空泛（'加强监管''高度重视'满天飞但没有具体动作）。对策必须'有主体、有手段、有对象'，阅卷按'实不实'给分。",
+  "quiz": [
+   "提出对策题的'对策三性'是什么？",
+   "'材料里没有直接对策，怎么办'？",
+   "'标本兼治'在对策题里怎么体现？"
+  ],
+  "ans": [
+   "<b>针对性</b>（对着题目问的问题）、<b>可行性</b>（有实施主体、符合实际）、<b>有效性</b>（能真正解决问题）。三个标准是阅卷给分的依据——空泛的'加强管理'没有主体和手段，拿不到分。",
+   "用<b>问题转化法</b>：从材料的问题表述反推对策。材料说'缺乏资金投入'→ 对策'加大财政投入/拓宽融资渠道'；材料说'群众意识淡薄'→ '加强宣传引导'。<b>对策是问题的'镜像'</b>，问题在材料里，对策就能推出来。",
+   "治标 = 解决眼前的具体问题（应急措施）；治本 = 建立长效机制（制度/源头）。例：整治乱停车——治标：增设临时停车位、加强巡查执法；治本：完善停车规划、出台管理办法。<b>高分答案两者都要有</b>。"
+  ],
+  "res": "粉笔提出对策专项 20 题；建立'问题→对策'转化词库",
+  "deep": {
+   "go": "<b>深入目标：对策'提得实、写得全'</b>。问题转化法熟练；三性自检机制（写完检查有无主体/手段）；规范词库 50 组。<b>深入标志：20 分钟内完成对策题，对策条条有主体有手段。</b>",
+   "tasks": [
+    "整理 50 组'问题→对策'规范转化词",
+    "做 10 道真题对策题，写完用'三性'自检",
+    "从政府/企业/社会/个人四主体各写 5 条通用对策",
+    "找 3 篇高分答案对比自己的对策颗粒度"
+   ]
+  }
+ },
+ "s1_5": {
+  "intro": "贯彻执行题（应用文写作）是申论拉开差距的题型：格式+内容双考核。掌握 15 类文种格式，内容按'是什么-为什么-怎么办'组织即可。",
+  "pts": [
+   "<b>常见文种</b>：倡议书、讲话稿、宣传稿、汇报材料、调研报告、通知、工作建议、公开信、编者按、短评——格式和语气各不同",
+   "<b>格式要素</b>：标题（居中）、称谓（顶格）、正文、落款（单位+日期）——倡议书/公开信等有落款，讲话稿无落款",
+   "<b>内容结构</b>：背景（为什么写）→ 主体（核心内容，按题目要求分条）→ 结尾（呼吁/总结）",
+   "<b>倡议书结构</b>：标题+称谓+背景倡议+分条倡议事项+呼吁结尾+落款",
+   "<b>讲话稿结构</b>：标题+称谓+开场（问候+引入）+主体（要点分条）+结尾（号召）",
+   "<b>汇报材料结构</b>：标题+基本情况+主要做法/成效+存在问题+下一步打算",
+   "<b>内容为王</b>：格式占 5 分，内容占 20 分——重点是'要点全、层次清、语言规范'"
+  ],
+  "pit": "最大的坑：只背格式不写内容——格式分很少，内容分才是大头。第二个坑：语气不对（倡议书写成命令式，讲话稿写成报告式）。",
+  "quiz": [
+   "贯彻执行题'格式'和'内容'哪个更重要？为什么？",
+   "倡议书和讲话稿在格式上有什么区别？",
+   "贯彻执行题正文一般按什么结构组织？"
+  ],
+  "ans": [
+   "<b>内容更重要</b>（内容 20 分 vs 格式 5 分）。格式错只扣几分，内容空洞直接低分。<b>要点全、层次清、语言规范</b>是得分核心。备考策略：格式快速记忆（半天搞定），把时间花在内容组织上。",
+   "倡议书有<b>落款（单位+日期）</b>，讲话稿<b>无落款</b>（本人讲不需要署名）；两者都有标题和称谓。另外语气不同：倡议书是'呼吁'，讲话稿是'宣讲'。<b>分清文种的语气和格式是第一步</b>。",
+   "<b>背景（为什么写）→ 主体（写什么：分条展开）→ 结尾（呼吁/总结）</b>。主体部分按题目要求组织（题目问做法就写做法），每一条'观点+展开'。<b>万变不离其宗：内容是材料的提炼+规范的表达</b>。"
+  ],
+  "res": "背熟 15 类文种格式表；每种文种各练 1 题，共 15 题",
+  "deep": {
+   "go": "<b>深入目标：15 类文种格式+内容双过关</b>。格式表倒背如流；内容能按'背景-主体-结尾'快速组织。<b>深入标志：25 分钟内完成一道贯彻执行题，格式正确、要点覆盖 85%。</b>",
+   "tasks": [
+    "制作'15 类文种格式速查表'（标题/称谓/落款/语气）",
+    "重点练 5 类高频文种：倡议书/讲话稿/汇报材料/通知/短评",
+    "做 10 道真题，统计格式和内容失分点",
+    "收集 3 篇政府公文范文，分析其结构"
+   ]
+  }
+ },
+ "s1_6": {
+  "intro": "大作文（议论文）是申论的最后大题（40 分），也是决定申论分数的关键。'立意准、结构清、论证实'是高分三要素。",
+  "pts": [
+   "<b>立意</b>：从材料中提炼中心论点——文章的灵魂。方法：抓材料主题词、看题目要求（围绕什么话题写）",
+   "<b>结构</b>：总论点 + 2-3 个分论点。常见结构：并列式（三个分论点并列）、递进式（是什么-为什么-怎么办）",
+   "<b>分论点来源</b>：从材料的高频主题中提炼；按主体（政府/企业/个人）或层面（制度/技术/文化）拆分",
+   "<b>论证方法</b>：举例论证（典型案例）、道理论证（名言政策）、对比论证（正反对比）——论证要有'分析'不是堆例子",
+   "<b>素材运用</b>：名言金句（开头结尾用）、典型人物（论证用）、政策表述（提升高度）——素材要为论点服务",
+   "<b>标题与开头</b>：标题点题（对仗式：'以XX之力，筑XX之基'）；开头 150 字内破题亮观点",
+   "<b>时间分配</b>：大作文 60 分钟（审题立意 10'、列提纲 10'、写作 35'、检查 5'）"
+  ],
+  "pit": "最大的坑：立意跑偏（材料讲基层治理，你写乡村振兴）——跑题直接三类文。第二个坑：堆砌素材没有分析（例子+例子≠论证）。",
+  "quiz": [
+   "大作文的'立意'从哪里来？跑题的原因通常是什么？",
+   "分论点的两种主要拆分方式是什么？",
+   "大作文 60 分钟怎么分配时间？"
+  ],
+  "ans": [
+   "立意来自<b>材料主题+题目要求</b>：材料反复强调的核心话题就是中心论点的基础。跑题的原因：① 只抓材料的细枝末节 ② 自选角度脱离材料 ③ 没看清题目要求。<b>对策：先通读材料确定主题词，再结合题目要求定论点，动笔前列出提纲</b>。",
+   "① <b>并列式</b>：从不同维度拆分（政府/企业/个人，或制度/技术/人才）② <b>递进式</b>：按逻辑递进（认识层面→实践层面→保障层面）。<b>选择标准：好写、有话说的拆分方式</b>。分论点要'平行'（并列）或'递进'，不能交叉重叠。",
+   "审题立意 <b>10 分钟</b>（确定论点+列提纲）→ 写作 <b>35 分钟</b>（开头 5'、分论点各 8'、结尾 5'）→ 检查 <b>5 分钟</b>（字数/错别字/标题）。<b>最忌直接动笔边想边写</b>——结构乱了改都来不及。"
+  ],
+  "res": "每周 1 篇完整大作文；精读人民时评积累结构与金句",
+  "deep": {
+   "go": "<b>深入目标：大作文稳定二类文以上</b>。立意 10 分钟定稿；论证有'分析'而非堆砌；素材库 50 条金句+20 案例。<b>深入标志：限时 60 分钟写出结构完整、立意准确、论证扎实的 1000 字文章。</b>",
+   "tasks": [
+    "建立'金句素材库'：名言 20 条+案例 10 个+政策表述 10 条",
+    "用'材料主题提炼法'练习 10 个立意思路",
+    "写 3 篇完整大作文，找人批改或对照范文",
+    "精读 10 篇人民时评，标注每篇的论点与论证方法"
+   ]
+  }
+ },
+ "s1_7": {
+  "intro": "常识专项：时政是'必拿分'（背就有分），法律和科技是'稳定出题点'（掌握体系就能对）。这一课把三大块系统过一遍。",
+  "pts": [
+   "<b>时政主线</b>：二十大报告（中国式现代化/高质量发展）→ 中央经济工作会议 → 政府工作报告 → 两会热点——按'会议-要点-金句'记忆",
+   "<b>宪法核心</b>：国家机构（人大/政府/法院/检察院的职权）、公民基本权利（平等/政治/人身/社会经济）、宪法修正案",
+   "<b>民法典</b>：民事行为能力（8 岁/18 岁）、物权、合同、婚姻家庭（离婚冷静期 30 天）、继承（法定继承顺序）",
+   "<b>刑法要点</b>：犯罪构成（主体/主观/客体/客观）、正当防卫与紧急避险、刑罚种类、常见罪名（贪污/受贿/危险驾驶）",
+   "<b>行政法</b>：行政处罚种类、行政许可、行政强制、行政复议与行政诉讼的区分",
+   "<b>科技前沿</b>：航天（空间站/探月/火星）、人工智能（大模型/生成式 AI）、生物（基因编辑/疫苗）、量子计算——考'最新最大'",
+   "<b>新法速递</b>：近两年新修订法律（如新修订的 XX 法）——'新法必考'是常识的规律"
+  ],
+  "pit": "最大的坑：试图'背完'常识——范围无限，背不完。正确策略：时政背'最大最新'，法律学'体系框架'，科技记'成果名称+意义'。",
+  "quiz": [
+   "常识判断的备考策略为什么是'时政为主、体系为辅'？",
+   "民法典规定不满多少岁的未成年人属于无民事行为能力人？",
+   "行政复议和行政诉讼的主要区别是什么？"
+  ],
+  "ans": [
+   "因为时政题<b>背了就能拿分</b>（性价比最高），法律科技是<b>体系性内容</b>（学框架能覆盖多题），而人文历史地理范围太广性价比低。<b>备考排序：时政 &gt; 法律 &gt; 科技 &gt; 人文</b>，时间有限时按此优先级投入。",
+   "<b>不满 8 周岁</b>的未成年人是无民事行为能力人；8-18 周岁是限制民事行为能力人；18 周岁以上（或 16-18 以自己劳动收入为主要生活来源）是完全民事行为能力人。<b>8 岁和 18 岁是两个关键节点</b>。",
+   "行政复议是<b>向行政机关（上级）申请复议</b>（行政系统内部救济）；行政诉讼是<b>向法院起诉</b>（司法救济）。区别：受理机关不同、程序不同（复议可先可后，诉讼是最后救济途径）。<b>口诀：复议找上级，诉讼找法院</b>。"
+  ],
+  "res": "学习强国每日 15 分钟 + 粉笔常识专项；时政周报整理",
+  "deep": {
+   "go": "<b>深入目标：常识三大块形成体系</b>。时政'会议-要点-金句'笔记；法律四大部门框架图；科技成就时间线。<b>深入标志：模考常识 12/20 以上，时政题全对。</b>",
+   "tasks": [
+    "整理二十大报告核心要点（中国式现代化/高质量发展/五个必由之路）",
+    "画宪法+民法+刑法三张框架图",
+    "制作'近两年新法清单'并记忆",
+    "每周整理时政周报，考前 3 个月强化"
+   ]
+  }
+ },
+ "s1_8": {
+  "intro": "阶段模考是'照妖镜'：不模考不知道自己真实水平。这一课建立正确的模考与复盘方法论——模考的价值在复盘，不在分数。",
+  "pts": [
+   "<b>模考三要素</b>：限时（严格按 120 分钟）、闭卷（不查资料）、完整（含涂卡/作文）",
+   "<b>复盘四步</b>：① 对答案算分 ② 逐题分析（对在哪/错在哪）③ 错因归类（不会/粗心/超时）④ 制定改进计划",
+   "<b>错因三分法</b>：知识漏洞（不会做→补知识）、粗心失误（会做做错→练细心）、速度不足（会做没时间→练提速）——三类错因三类对策",
+   "<b>薄弱模块定位</b>：统计各模块正确率，正确率显著低于平均的就是薄弱模块，下一阶段优先补",
+   "<b>时间复盘</b>：记录各模块实际用时 vs 预算用时，找出超时模块",
+   "<b>成绩追踪表</b>：记录每次模考总分/各模块正确率，看趋势——单次波动正常，趋势才说明问题"
+  ],
+  "pit": "最大的坑：模考完只看分数不复盘——模考就白做了。第二个坑：模考中途查资料/延长计时，成绩虚高，考场打回原形。",
+  "quiz": [
+   "模考的三要素是什么？为什么缺一不可？",
+   "错因三分法是什么？分别对应什么对策？",
+   "成绩追踪表记录什么？为什么单次分数不重要？"
+  ],
+  "ans": [
+   "<b>限时、闭卷、完整</b>。限时保证成绩真实反映速度问题；闭卷避免'假会'；完整（含申论作文和涂卡）保证全流程演练。<b>模考是演习，演习不真实，实战就露馅</b>。",
+   "① <b>知识漏洞</b>（不会做）→ 回到详解补知识，专项训练 ② <b>粗心失误</b>（会做做错）→ 限时训练+防坑清单 ③ <b>速度不足</b>（会做没时间）→ 专项提速+取舍策略。<b>先分类再对症，别一股脑刷题</b>。",
+   "记录<b>总分、各模块正确率、用时</b>，形成趋势曲线。单次分数受题目难度/状态影响大，<b>3-5 次的趋势才说明真实水平</b>。趋势向上说明方法对；平台期要调整策略；下滑要排查原因。"
+  ],
+  "res": "完整模考 1 套（行测+申论），严格按考试流程，之后逐题复盘",
+  "deep": {
+   "go": "<b>深入目标：建立'模考-复盘-改进'循环</b>。每次模考后 2 小时内完成复盘；错因分析率 100%。<b>深入标志：3 次模考后能准确说出自己的薄弱模块、常错题型和提速点。</b>",
+   "tasks": [
+    "完成第一次全真模考（行测+申论）",
+    "做完整复盘：错因分类表+各模块正确率统计",
+    "制定下一阶段专项计划（薄弱模块优先）",
+    "建立成绩追踪表，记录本次数据"
+   ]
+  }
+ },
+ "s2_0": {
+  "intro": "真题是公考最好的练习材料——出题人的思路、陷阱、风格都在真题里。套卷训练的目标：从'会模块'到'会考试'。",
+  "pts": [
+   "<b>真题价值</b>：近 5 年国考真题含金量最高，考前至少完整做 3-5 套；省考真题作为补充练习",
+   "<b>国考行测结构</b>：135 题 120 分钟——常识 20、言语 40、数量 15、判断 40、资料 20（副省级 135 题，地市级/行政执法 130 题）",
+   "<b>套卷训练三步骤</b>：限时完整做 → 逐题核对解析 → 统计各模块正确率与用时",
+   "<b>逐题复盘</b>：对的题看解析确认思路一致；错的题弄清'为什么错'（不会/粗心/陷阱）并归类",
+   "<b>命题规律</b>：总结近 5 年高频考点（资料：增长率/比重必考；判断：加强削弱必考；言语：意图判断必考）",
+   "<b>记录系统</b>：每次套卷记录总分/各模块正确率/用时，形成趋势表"
+  ],
+  "pit": "最大的坑：做套卷只看对错不看解析——做 10 套不如精做 3 套。第二个坑：掐表但不严格（超时不算错），成绩虚高。",
+  "quiz": [
+   "为什么真题比模拟题更有价值？",
+   "做一套行测真题后，复盘至少要完成哪几步？",
+   "国考行测题量分布是怎样的？"
+  ],
+  "ans": [
+   "真题是<b>出题人真实思路</b>的载体：考点分布、难度曲线、陷阱设计都有规律可循；模拟题质量参差，参考价值有限。<b>真题做 3 遍：第一遍测水平、第二遍研究考点、第三遍提速</b>。",
+   "① <b>对答案算分</b>（各模块正确率）② <b>逐题看解析</b>（对的确认思路、错的弄清原因）③ <b>错因归类</b>（知识/粗心/超时）④ <b>统计用时</b>（各模块超时情况）⑤ <b>制定改进</b>（薄弱模块下一步怎么补）。<b>复盘时间 ≥ 做题时间</b>。",
+   "行测 120 分钟 135 题：<b>常识 20、言语 40、数量 15、判断 40、资料 20</b>（副省级）；地市级/行政执法 130 题（数量 10）。<b>记住题量分布才能做时间预算</b>：资料 30 分钟、言语 32 分钟、判断 35 分钟、常识 8 分钟、数量 10 分钟、涂卡 5 分钟。"
+  ],
+  "res": "找近 5 年国考行测真题（粉笔/中公都有），限时 120 分钟完整做一套",
+  "deep": {
+   "go": "<b>深入目标：用真题建立'考场感'</b>。完成 1 套真题并全量复盘；统计各模块正确率基线。<b>深入标志：能说出自己当前的正确率基线和最该优先提分的模块。</b>",
+   "tasks": [
+    "限时完成一套国考行测真题",
+    "逐题看解析，错题标记错因",
+    "统计 5 模块正确率与用时，填进追踪表",
+    "总结这套题的 5 个命题规律"
+   ]
+  }
+ },
+ "s2_1": {
+  "intro": "行测是'时间紧任务重'的考试：135 题 120 分钟，平均 53 秒/题。提速不是蛮干，是科学的时间分配 + 果断的取舍。",
+  "pts": [
+   "<b>时间预算</b>（120 分钟）：常识 8'、言语 32'、判断 35'、资料 30'、数量 10'、涂卡 5'——按此预算练到不超时",
+   "<b>顺序策略</b>：推荐「资料→言语→判断→常识→数量」：资料分高且需清醒头脑放前面，数量最后做不完可蒙",
+   "<b>跳题原则</b>：单题超过预算时间 1.5 倍立即跳过（标记），做完一轮再回头",
+   "<b>涂卡策略</b>：建议'模块做完即涂'（每 20 题涂一次卡），避免最后 10 分钟慌乱涂错",
+   "<b>提速方法</b>：限时训练（每题压缩到 40-50 秒）+ 熟能生巧（题型反应速度）+ 技巧（估算/排除/代入）",
+   "<b>心态管理</b>：允许自己'不会做'——135 题全做完本来就难，保证做对的题全对才是目标"
+  ],
+  "pit": "最大的坑：速度没到就追求'全做完'——与其 135 题全做完错 60 题，不如做完 110 题对 85 题。第二个坑：涂卡放最后，时间不够涂错串行。",
+  "quiz": [
+   "行测 120 分钟的建议时间分配是什么？",
+   "为什么建议'资料放前面、数量放最后'？",
+   "涂卡的正确姿势是什么？为什么？"
+  ],
+  "ans": [
+   "<b>常识 8'、言语 32'、判断 35'、资料 30'、数量 10'、涂卡 5'</b>。这是通用模板，练习中根据自己强弱微调（资料强就多给 3 分钟）。<b>关键是'有预算'——没有时间预算，做题就必然拖</b>。",
+   "资料分析<b>分值高（每题约 1 分）且需要清醒头脑</b>，放前面正确率最高；数量关系<b>难且耗时</b>，放最后做不完直接蒙不心疼。<b>先吃性价比高的，再处理难的</b>——这是行测最优策略。",
+   "<b>模块做完即涂卡</b>（每完成一个模块涂一次）。原因：① 避免最后时间不够慌乱涂错 ② 换换脑子缓解疲劳 ③ 万一最后没时间，已涂的模块分数拿到。<b>涂卡失误（错位）是最冤的丢分</b>。"
+  ],
+  "res": "用 3 套真题实测时间分配，记录每模块实际用时并调整预算",
+  "deep": {
+   "go": "<b>深入目标：时间预算'肌肉化'</b>。各模块用时稳定在预算内；跳题/涂卡流程熟练。<b>深入标志：连续 3 次模考都能按预算完成，不出现最后 10 题全蒙的慌乱。</b>",
+   "tasks": [
+    "制定自己的时间预算表并贴到书桌",
+    "模考时记录每模块实际用时，对比预算",
+    "练习'模块做完即涂卡'3 次",
+    "总结自己的'必跳题型清单'（超时即跳）"
+   ]
+  }
+ },
+ "s2_2": {
+  "intro": "申论套卷训练：从'会做小题'到'完成整卷'。申论 180 分钟 4 道小题+1 篇大作文，时间管理是最大挑战。",
+  "pts": [
+   "<b>申论时间分配</b>（180 分钟）：归纳概括 20'、综合分析 25'、提出对策 25'、贯彻执行 35'、大作文 60'、检查 15'",
+   "<b>作答顺序</b>：按题目顺序做，但先快速浏览全卷（2 分钟），预估各题难度与时间",
+   "<b>材料共用</b>：申论材料各题共用，先做的题标注的内容后题可能用到——带着'全卷意识'读材料",
+   "<b>字数控制</b>：每道题严格按'不超过 XX 字'控制，超出扣分；写前数好格子",
+   "<b>对照答案</b>：做完对照参考答案，重点看'漏了哪些采分点'和'语言是否规范'",
+   "<b>卷面</b>：字迹工整、不涂改、分条清晰——卷面分白送别丢"
+  ],
+  "pit": "最大的坑：大作文时间不够（前面小题磨太久）——大作文 40 分，必须保证 60 分钟。第二个坑：不写完整套卷只练单题，考场时间管理崩盘。",
+  "quiz": [
+   "申论 180 分钟的时间分配建议是什么？",
+   "为什么强调'全卷意识'？",
+   "申论卷面要注意什么？"
+  ],
+  "ans": [
+   "<b>小题 4 道共 105'、大作文 60'、检查 15'</b>：概括 20'、综合 25'、对策 25'、应用文 35'。<b>大作文 60 分钟是底线</b>——40 分的题如果只剩 30 分钟，必然三类文。平时套卷训练就要按此分配。",
+   "申论材料<b>一套材料贯穿所有题目</b>：第一题的作答要点可能在第三题的题目里被引用，各题答案相互印证。<b>先通读全卷（2 分钟）再作答</b>，带着全卷理解读材料，避免答第一题时漏掉后面题目相关的信息。",
+   "① <b>字迹工整</b>（阅卷老师看不清就不得分）② <b>分条列点</b>（层次清晰）③ <b>不涂改</b>（错了划一横继续）④ <b>控制字数</b>（超字扣分）。<b>卷面是'白送的分'，也是'白扣的分'</b>——书写潦草丢失的采分点无法统计。"
+  ],
+  "res": "完整做一套申论真题（180 分钟），对照答案逐题批改",
+  "deep": {
+   "go": "<b>深入目标：整卷时间管理成熟</b>。180 分钟内完成全部题目且大作文不少于 60 分钟。<b>深入标志：连续 2 套申论都能按时完成，小题要点覆盖 80% 以上。</b>",
+   "tasks": [
+    "限时完成一套申论真题（含大作文）",
+    "对照答案统计每题的采分点覆盖率",
+    "记录各题实际用时，优化时间分配",
+    "把申论错题和范文金句整理进笔记"
+   ]
+  }
+ },
+ "s2_3": {
+  "intro": "错题清零是提分最快的方法：把已经做错的题彻底弄懂，下次不再错，分数自然上去。这一课建立高效的错题处理体系。",
+  "pts": [
+   "<b>错题分级</b>：知识漏洞（不会做）、粗心失误（会做错）、陷阱题（出题人设计）——三类分别对待",
+   "<b>错题记录</b>：按模块分类记录：题目、我的答案、正确答案、错因、正确思路——用平台错题本（记入错题本会自动带错因标签）",
+   "<b>错题重做</b>：隔 3-7 天重做错题，验证是否真会了——'看懂了'不等于'会做了'",
+   "<b>薄弱回炉</b>：某模块错题集中，说明该模块基础不牢，回到详解重新学一遍再专项刷题",
+   "<b>清零目标</b>：每两周清空一次错题本（全部重做一遍，做对移出，做错标记再学）",
+   "<b>防错清单</b>：把高频错误整理成'防错清单'（如：资料题先看单位、言语题警惕绝对化表述）"
+  ],
+  "pit": "最大的坑：错题'看一遍解析'就当会了——三天后重做还是错。真正的'会'是独立重做全对。第二个坑：错题不分类，一股脑重做，效率低。",
+  "quiz": [
+   "错题分哪三类？分别怎么处理？",
+   "'看懂了'和'会做了'有什么区别？怎么验证？",
+   "错题清零的频率建议是什么？"
+  ],
+  "ans": [
+   "① <b>知识漏洞</b>（不会做）→ 回去学知识+专项训练 ② <b>粗心失误</b>（会做错）→ 限时训练+细心检查 ③ <b>陷阱题</b>（设计坑）→ 总结进'防坑清单'。<b>先分类再对症，才能高效提分</b>。",
+   "'看懂了'是被动接受（跟着解析走）；'会做了'是主动产出（独立写出答案）。<b>验证方法：隔 3-7 天重做</b>，不看解析独立完成并做对，才算真的掌握。<b>重做是检验'会'的唯一标准</b>。",
+   "<b>每两周清零一次</b>：把错题本全部重做一遍——做对的移出，仍错的标记'再学'并回到详解。<b>错题本不是收藏夹，是'待消灭'清单</b>；不清零的错题本没有意义。"
+  ],
+  "res": "用平台错题本：把近两周所有错题记入（选错因标签），安排重做时间",
+  "deep": {
+   "go": "<b>深入目标：错题闭环运行</b>。错题分级→记录→重做→清零全流程跑通。<b>深入标志：错题本每周清零一次，同类错误不再二犯。</b>",
+   "tasks": [
+    "清空现有错题本：全部重做一遍",
+    "把错题按知识/粗心/陷阱三类统计占比",
+    "给薄弱模块（错题最多的）安排专项回炉",
+    "整理自己的'防坑清单'（10 条高频错误）"
+   ]
+  }
+ },
+ "s2_4": {
+  "intro": "资料分析 20 题占 20 分，是行测的'压舱石'：资料稳定 85%+，行测就稳了。这一课专攻资料的速度与准确率。",
+  "pts": [
+   "<b>目标设定</b>：4 篇 20 题 20 分钟（每题 60 秒）、正确率 85%+（对 17 题）——这是冲刺目标",
+   "<b>提速关键</b>：① 看问题定位数据（先题后文）② 估算代替精算（截位/百化分）③ 跳过计算量大的题",
+   "<b>错因归类</b>：算错（公式/计算）、看错（单位/时间/题干）、定位错（找错数据）——统计占比针对性解决",
+   "<b>防坑清单</b>：单位（亿/万/千亿）、时间（去年/今年/累计）、表述（增长率/增长量）、口径（同比/环比）、'多几倍/是几倍'",
+   "<b>限时训练</b>：每天 4 篇 20 分钟，做完立刻统计正确率，形成趋势",
+   "<b>取舍</b>：综合分析题（'以下哪项正确'）计算量大，可放最后或凭选项特征快速判断"
+  ],
+  "pit": "最大的坑：做题不限定时间——平时 40 分钟做对 90%，考场上 20 分钟只剩 60%。资料分析必须'限时训练'。第二个坑：错题不复盘，同一陷阱反复踩。",
+  "quiz": [
+   "资料分析的目标速度和正确率是多少？",
+   "资料分析的常见陷阱有哪些？",
+   "为什么资料分析必须限时训练？"
+  ],
+  "ans": [
+   "<b>20 题 20 分钟、正确率 85%+</b>（对 17 题）。这是冲刺目标，分阶段达成：先保证正确率（不限时做到 90%）→ 再压缩时间（限时 25 分钟）→ 最后提速（20 分钟）。<b>先准后快</b>。",
+   "① <b>单位陷阱</b>（亿 vs 万 vs 万亿）② <b>时间陷阱</b>（问去年答今年、问累计答当月）③ <b>概念陷阱</b>（增长率 vs 增长量、'多几倍' vs '是几倍'）④ <b>口径陷阱</b>（同比 vs 环比）。<b>审题 30 秒，防掉 90% 的坑</b>。",
+   "因为<b>平时不限时 = 成绩虚高</b>：40 分钟做对的题考场上没有那个时间。<b>限时训练逼出'快准稳'</b>——时间压力下才知道哪些估算技巧真正上手了。<b>速度是练出来的，不是想出来的</b>。"
+  ],
+  "res": "每天限时 4 篇资料 20 分钟，记录正确率；错题按错因归类统计",
+  "deep": {
+   "go": "<b>深入目标：资料 85%+ 稳定</b>。限时 20 分钟/20 题连续 3 次达标；错因统计清晰。<b>深入标志：模考资料正确率连续 3 次 ≥85%，单题平均用时 ≤60 秒。</b>",
+   "tasks": [
+    "连续 5 天限时训练，统计正确率趋势",
+    "把错题按'算错/看错/定位错'归类统计",
+    "整理个人'防坑清单'（至少 10 条）",
+    "用平台错题本记录所有资料错题，两周清零"
+   ]
+  }
+ },
+ "s2_5": {
+  "intro": "数量关系 15 题（地市级 10 题），与其全做全错，不如'挑 5 题做对、其余蒙'——这是数据支持的性价比最优策略。",
+  "pts": [
+   "<b>保底目标</b>：15 题做对 5-6 题（正确率 40%），其余蒙——数量不拖后腿即可",
+   "<b>必做清单</b>：工程问题、容斥问题、简单方程、最值问题、利润问题、排列组合基础题——这 6 类优先做",
+   "<b>放弃清单</b>：复杂行程、概率难题、数论难题、读题超 1 分钟的题——直接蒙",
+   "<b>秒杀技巧</b>：代入排除（选项代入验证）、数字特性（整除/奇偶/倍数）、特殊值法（设方便算的数）",
+   "<b>蒙题策略</b>：时间不够统一蒙一个选项（如全 B），保证至少对 25%；蒙前先看选项分布",
+   "<b>时间控制</b>：数量最多 10 分钟，超时立刻收手——别用资料分析的时间换数量"
+  ],
+  "pit": "最大的坑：贪心全做——数量全做完需要 30 分钟，挤爆其他模块。第二个坑：蒙题随机乱蒙，不如统一选项保证命中率。",
+  "quiz": [
+   "数量关系的'保底策略'是什么？",
+   "哪些题型属于'必做清单'？",
+   "蒙题的正确姿势是什么？"
+  ],
+  "ans": [
+   "<b>10 分钟内做对 5-6 道必做题型，其余统一蒙</b>。数量 15 题每题 0.8 分，做对 5 题 + 蒙对 3 题 ≈ 6.4 分，与全做（错一半+耗时 30 分钟）得分相近但省下 20 分钟给资料分析。<b>时间的价值 &gt; 数量的分数</b>。",
+   "<b>工程、容斥、简单方程、最值、利润、排列组合基础题</b>。这些题型公式固定、计算简单、套路明确，1 分钟内可解。<b>把 6 类题型练熟，考场上扫一眼就能认出'做还是跳'</b>。",
+   "① <b>统一选项</b>：全部蒙同一个字母（如 B），统计上命中率最高 ② <b>蒙前看选项分布</b>：前面已做的题选了什么，蒙剩下的避免集中 ③ <b>绝不空题</b>：每道都涂，蒙就有 25% 机会。<b>蒙也是策略，不是认命</b>。"
+  ],
+  "res": "把必做 6 类题型各练 20 题；模考中实践'10 分钟挑题'策略",
+  "deep": {
+   "go": "<b>深入目标：数量'做 5 对 5'</b>。必做清单 6 类题型秒识别；秒杀技巧熟练。<b>深入标志：15 题 10 分钟内做对 5 题以上，数量用时不超过 12 分钟。</b>",
+   "tasks": [
+    "做 6 类必做题型各 20 题，建立题感",
+    "练习'读题 30 秒判断做/跳'",
+    "模考实践挑题策略，记录做对数与用时",
+    "总结数字特性速查表并熟记"
+   ]
+  }
+ },
+ "s2_6": {
+  "intro": "全真模考：按考试日的完整流程演练——上午行测、下午申论、严格限时。模考的意义不在分数，在'流程熟练'和'心态稳定'。",
+  "pts": [
+   "<b>模考时间</b>：按国考时间——行测 9:00-11:00（120 分钟）、申论 14:00-17:00（180 分钟），上午下午各一场",
+   "<b>流程完整</b>：提前 30 分钟到场（在家模拟就提前坐好）、发卷、涂卡、交卷——全流程演练",
+   "<b>环境还原</b>：安静环境、手机静音、按考试要求（行测不能提前看申论卷）",
+   "<b>心态训练</b>：紧张是正常的；深呼吸、先做会的；'考不上再来'的心理建设",
+   "<b>成绩追踪</b>：记录每次模考总分、各模块正确率、用时，看 3 次以上趋势",
+   "<b>模考后复盘</b>：当天晚上完成复盘（错因分类+薄弱模块+改进计划）"
+  ],
+  "pit": "最大的坑：模考环境松散（躺着做、中途喝水聊天）——成绩虚高，考场打回原形。第二个坑：模考完不复盘，下一场犯同样的错。",
+  "quiz": [
+   "全真模考要还原哪些要素？",
+   "模考成绩为什么不能只看单次？",
+   "模考后什么时候复盘？复盘什么？"
+  ],
+  "ans": [
+   "<b>时间（按考试时段）、环境（安静+手机静音）、流程（发卷-作答-涂卡-交卷）、心态（严肃对待）</b>。缺一个就不是'全真'。<b>平时越接近实战，考场越接近平时</b>。",
+   "因为<b>单次成绩受题目难度、状态、运气影响大</b>。连续 3-5 次模考的趋势才有参考价值：趋势向上说明方法有效，平台期需调整策略。<b>看趋势，别看单次</b>。",
+   "<b>当天晚上复盘</b>（趁记忆清晰）：① 各模块正确率统计 ② 错因分类（知识/粗心/超时）③ 用时分析 ④ 下一阶段改进计划。<b>模考的价值 80% 在复盘</b>，不复盘等于白考。"
+  ],
+  "res": "安排一次完整全真模考日（上午行测+下午申论），严格按考试流程",
+  "deep": {
+   "go": "<b>深入目标：模考常态化</b>。每 2 周一次全真模考，复盘体系稳定运行。<b>深入标志：连续 3 次模考流程零失误（不超时、涂卡正确、心态平稳）。</b>",
+   "tasks": [
+    "安排一次全真模考日并严格执行",
+    "模考后当晚完成全量复盘",
+    "更新成绩追踪表，对比上次趋势",
+    "针对薄弱模块制定下一周期计划"
+   ]
+  }
+ },
+ "s2_7": {
+  "intro": "申论是'写了没人改等于没写'的科目。批改是申论提分最快的路径——找到自己的失分点，比多做 10 套卷有效。",
+  "pts": [
+   "<b>批改渠道</b>：粉笔人工批改/AI 批改/考友互批/对照范文自改——至少每周一次",
+   "<b>批改重点</b>：采分点覆盖（漏没漏）、语言规范（口语 vs 公文）、结构层次（条理清不清）",
+   "<b>范文精读法</b>：读高分范文，划出结构（总分论点）、语言（规范表达）、素材（金句案例），仿写一段",
+   "<b>答题语言升级</b>：把'多搞点绿化'改成'加强生态保护，推进绿色发展'——建立口语→规范词映射表",
+   "<b>素材库建设</b>：名言金句（'绿水青山就是金山银山'）、典型人物（黄文秀等）、政策表述——按主题分类存放",
+   "<b>书写训练</b>：每天抄写范文 200 字，练字迹工整和速度"
+  ],
+  "pit": "最大的坑：只写不改——错的地方永远不知道。第二个坑：背了范文不会用（素材库是死的，要练习'用'）。",
+  "quiz": [
+   "为什么说'写了没人改等于没写'？",
+   "范文精读要读出哪些东西？",
+   "申论素材库怎么分类存放？"
+  ],
+  "ans": [
+   "因为<b>不知道自己错在哪，就永远改不了</b>。写 10 篇没人批改，等于把错误重复 10 遍。<b>批改能暴露三个盲区</b>：采分点漏没漏（对照答案）、语言规不规范（他人视角）、结构清不清楚。<b>一次有效批改 &gt; 十次盲目练习</b>。",
+   "① <b>结构</b>：总论点是什么、分论点怎么拆 ② <b>语言</b>：规范表达怎么用（划出高频公文词）③ <b>素材</b>：金句和案例怎么嵌进论证 ④ <b>开头结尾</b>：怎么破题、怎么升华。<b>读完要能仿写</b>——仿写是检验是否读懂的方法。",
+   "按<b>主题</b>分类：乡村振兴、科技创新、民生保障、生态文明、基层治理、文化建设……每类下分<b>金句、案例、政策表述</b>三个子类。<b>考前重点背 5 大常考主题</b>各 3 条金句+2 个案例，够用。"
+  ],
+  "res": "本周完成 1 次申论批改（粉笔/AI/考友），精读 2 篇范文",
+  "deep": {
+   "go": "<b>深入目标：申论批改-改进循环</b>。每周 1 次批改、2 篇范文精读；素材库 5 大主题各配齐金句案例。<b>深入标志：连续 2 次批改后，采分点覆盖率提升 10 个百分点以上。</b>",
+   "tasks": [
+    "找 1 个批改渠道完成一次全卷批改",
+    "精读 2 篇范文并各仿写一段",
+    "建立 5 大主题素材库（金句+案例）",
+    "每天抄写范文 200 字练卷面"
+   ]
+  }
+ },
+ "s3_0": {
+  "intro": "国考报名选岗，'选得好'比'考得好'更重要：同样的分数，热门岗位进不了面，冷门岗位轻松上岸。岗位选择是战略问题。",
+  "pts": [
+   "<b>报名时间</b>：一般 10 月中旬报名（笔试 11 月底/12 月初）——提前准备材料，别挤最后一天",
+   "<b>职位表筛选四步</b>：① 硬条件（专业/学历/政治面貌/应届）② 地区偏好 ③ 限制条件（四六级/证书/基层经历）④ 招录人数（招 2 人 &gt; 招 1 人）",
+   "<b>应届身份</b>：国考大量岗位限'应届毕业生'——这是最大优势，务必利用",
+   "<b>避开热门</b>：'三不限'（不限专业/学历/户籍）岗位报录比常达几百比一，慎选",
+   "<b>报录比观察</b>：报名期间每天看报名人数，最后 2 天决定（观察'爆冷'岗位）",
+   "<b>确认要点</b>：报名确认、缴费、打印准考证——三件套时间别错过"
+  ],
+  "pit": "最大的坑：只看'岗位名称'不看'职位要求'（专业目录匹配错误导致资审不过）。第二个坑：报名最后一天才报，网络拥堵+信息不全。",
+  "quiz": [
+   "职位表筛选的四步流程是什么？",
+   "为什么说'应届生身份'是最大优势？",
+   "'三不限'岗位为什么慎选？"
+  ],
+  "ans": [
+   "① <b>硬条件过滤</b>：专业、学历、政治面貌、应届与否 ② <b>地区筛选</b>：想去的城市/省份 ③ <b>限制条件</b>：四六级、证书、户籍等（限制越多竞争越小）④ <b>招录人数</b>：招 2 人以上优先。<b>先硬后软，逐层过滤</b>。",
+   "因为<b>国考 60%+ 岗位限应届</b>：应届生只能和应届生竞争，而往届岗位是和所有社会考生竞争。<b>身份是'入场券'，错过应届身份，路就窄了一大半</b>。",
+   "'三不限'（不限专业/学历/户籍）意味着<b>所有人都有资格报</b>，报录比常常 300:1 以上。<b>竞争激烈 + 进面分虚高</b>。除非没有其他选择，否则避开。<b>限制越多的岗位，竞争越小</b>。"
+  ],
+  "res": "下载当年职位表，按四步法筛选出 10 个备选岗位，对比分析",
+  "deep": {
+   "go": "<b>深入目标：选岗策略科学化</b>。四步筛选流程熟练；报录比数据支撑决策。<b>深入标志：能说出 3 个'进面概率相对高'的备选岗位及理由。</b>",
+   "tasks": [
+    "下载职位表，按四步法筛出 10 个岗位",
+    "对比备选岗位的报录比/进面分/招录人数",
+    "列出自己的'硬条件清单'（专业/学历/证书）",
+    "关注报名动态，制定报名时间表"
+   ]
+  }
+ },
+ "s3_1": {
+  "intro": "考前冲刺 2 周：不学新知识、不刷新题，回归基础 + 保持状态。冲刺期的目标是'稳住'，不是'突进'。",
+  "pts": [
+   "<b>冲刺三原则</b>：不学新知识（学了记不住）、不刷新题（错了影响心态）、保持手感（每天适量做题）",
+   "<b>回归基础</b>：过一遍公式速查表（资料分析全部公式）、答题框架（申论各类题型）、高频成语",
+   "<b>全真模拟</b>：考前 2 周按考试时间做 3-4 套全真模考（行测+申论），让生物钟适应",
+   "<b>易错清单</b>：重看错题本和防坑清单，考前 1 天再过一遍",
+   "<b>作息调整</b>：考前一周 11 点前睡、6:30 起，与考试日同步；饮食清淡",
+   "<b>考前准备</b>：准考证打印 2 份、身份证、文具（2B 铅笔/黑色签字笔/橡皮）、考点踩点"
+  ],
+  "pit": "最大的坑：考前还在刷难题——错了心态崩，对了没意义。第二个坑：考前熬夜突击，考试当天头脑发昏。",
+  "quiz": [
+   "冲刺期的'三不'原则是什么？",
+   "考前一周作息怎么调整？为什么？",
+   "考前需要准备哪些物品？"
+  ],
+  "ans": [
+   "<b>不学新知识、不刷新题、不纠结错题</b>。新知识记不住还打乱体系；新题错了影响心态；错题看了记不住。<b>冲刺期做三件事：回归基础、保持手感、调整状态</b>。",
+   "<b>提前一周把作息调到与考试日同步</b>：考试 9 点开始，就 6:30 起、11 点睡。原因：生物钟适应后，考试时段头脑最清醒。<b>考试当天大脑状态 &gt; 考前多刷的 100 题</b>。",
+   "<b>准考证（打印 2 份备用）、身份证、2B 铅笔（多备）、黑色签字笔（多备）、橡皮、手表、水</b>。提前一天踩点考点（路线/教室位置）。<b>物品提前一晚装袋，别当天早上翻箱倒柜</b>。"
+  ],
+  "res": "考前 2 周计划：3 次全真模考 + 公式/框架回归 + 作息调整",
+  "deep": {
+   "go": "<b>深入目标：状态管理到位</b>。考前 2 周计划执行完毕；易错清单过 2 遍。<b>深入标志：考试前一天能'平静收工'，对考试节奏有把握。</b>",
+   "tasks": [
+    "制定考前 2 周冲刺计划表",
+    "重看错题本+防坑清单各 2 遍",
+    "完成 3 次全真模考",
+    "准备考试物品清单并提前装袋"
+   ]
+  }
+ },
+ "s3_2": {
+  "intro": "行测考前回归：高频考点是'必拿分'，易错清单是'防丢分'。这一课把行测的高频考点与易错点系统过一遍。",
+  "pts": [
+   "<b>资料高频</b>：增长率/增长量/基期/比重/平均数五大公式——必考且可速算，考前默写公式表",
+   "<b>言语高频</b>：主旨/意图（转折之后）、逻辑填空（语境+成语）——高频成语 300 个考前过一遍",
+   "<b>判断高频</b>：图推一笔画、定义关键信息、加强削弱（拆桥/否定论点）、翻译推理——必考",
+   "<b>常识高频</b>：时政（二十大/政府工作报告）、新法、科技成就——考前 3 天集中过时政",
+   "<b>易错清单</b>：自己的防坑清单（资料单位/时间陷阱、言语绝对化、图推超时）——考前 1 天过一遍",
+   "<b>蒙题预案</b>：数量统一蒙、图推 1 分钟跳过——考场预案写下来，别临场犹豫"
+  ],
+  "pit": "最大的坑：考前把时间花在冷门考点（如罕见成语）——高频考点没复习完。第二个坑：易错清单考前没看，考场重蹈覆辙。",
+  "quiz": [
+   "资料分析考前必须默写的内容是什么？",
+   "行测各模块的'必考'高频点各是什么？",
+   "考场的'蒙题预案'指什么？"
+  ],
+  "ans": [
+   "<b>五大公式</b>：增长率、增长量、基期量、比重、平均数（含各自的变形和速算：百化分表）。<b>公式是资料分析的'武器'，考前默写 3 遍</b>——考场上公式记混等于丢分。",
+   "<b>资料</b>：增长率/比重（必考）② <b>言语</b>：意图判断、逻辑填空（占言语大半）③ <b>判断</b>：加强削弱、图推一笔画（每年必考）④ <b>常识</b>：时政热点。<b>高频 = 必拿分，考前把高频练到条件反射</b>。",
+   "<b>提前写好的'遇到什么情况怎么办'的预案</b>：数量超时 10 分钟→立刻蒙；图推 1 分钟没思路→跳过；某模块崩了→先做别的。<b>预案让考场决策自动化，不浪费脑力犹豫</b>。"
+  ],
+  "res": "考前 3 天：公式表默写 + 高频成语过一遍 + 易错清单重看",
+  "deep": {
+   "go": "<b>深入目标：高频全覆盖、易错不重犯</b>。考前清单逐项过完。<b>深入标志：考试当天对'先做什么、卡住怎么办'有明确预案，心态稳定。</b>",
+   "tasks": [
+    "默写资料分析公式表 3 遍",
+    "过一遍 300 高频成语",
+    "重看防坑清单和错题本",
+    "写下自己的考场预案（3 条）"
+   ]
+  }
+ },
+ "s3_3": {
+  "intro": "申论热点与素材是作文的'弹药库'。考前 3 个月开始积累核心热点，考试时才能'有话说、说得好'。",
+  "pts": [
+   "<b>五大核心热点</b>：乡村振兴、科技创新、民生保障、生态文明、基层治理——近 5 年申论材料反复围绕这些主题",
+   "<b>热点学习法</b>：每个热点掌握'是什么-为什么-怎么办'三件套，能说出政策表述和金句",
+   "<b>必背金句</b>：'绿水青山就是金山银山''人民对美好生活的向往就是我们的奋斗目标'等——按主题分类背",
+   "<b>政策表述</b>：二十大报告核心概念（中国式现代化/高质量发展/全过程人民民主）——官方语言是作文的'底气'",
+   "<b>素材运用</b>：案例（黄文秀/张桂梅等）+ 金句 + 政策，在作文中'一个论点配一个案例一句金句'",
+   "<b>范文仿写</b>：考前每个热点主题仿写 1 篇（共 5 篇），练结构、练语言、练速度"
+  ],
+  "pit": "最大的坑：素材背了一堆，考场上用不出来——素材要和论点'绑定'练习。第二个坑：背大段范文原文，被判定雷同（低分甚至零分）。",
+  "quiz": [
+   "申论五大核心热点是什么？",
+   "一个热点主题要掌握哪些内容？",
+   "为什么不能背整篇范文原文？"
+  ],
+  "ans": [
+   "<b>乡村振兴、科技创新、民生保障、生态文明、基层治理</b>。近 5 年国考申论材料几乎都围绕这五类展开。<b>每个主题准备：政策表述（怎么说的）+ 典型案例（谁做了什么）+ 金句（怎么升华）</b>。",
+   "<b>'是什么-为什么-怎么办'三件套</b>：主题内涵（是什么）、重要性/背景（为什么）、对策方向（怎么办），加上 2 条政策表述、1 个案例、1 句金句。<b>背'框架+素材'，不背整文</b>。",
+   "因为<b>阅卷系统会查重，雷同文直接低分甚至零分</b>。而且背整文在考场上'套不上'题目。<b>正确做法：背素材（金句/案例/政策）和框架（结构/思路），考场现场组装</b>——既是原创，又能贴合题目。"
+  ],
+  "res": "建立 5 大热点素材库；本周精读 2 篇时评并仿写 1 篇",
+  "deep": {
+   "go": "<b>深入目标：素材'用得上'</b>。5 大主题素材库配齐；每个主题能现场组织一段论证。<b>深入标志：任意热点主题，5 分钟内列出框架并说出 2 个可用素材。</b>",
+   "tasks": [
+    "完成 5 大主题素材库（金句+案例+政策）",
+    "每个主题仿写 1 篇 800 字作文",
+    "背诵 10 条最高频金句",
+    "用 5 个主题各练 1 次'5 分钟列框架'"
+   ]
+  }
+ },
+ "s3_4": {
+  "intro": "笔试结束后进入面试准备。结构化面试是国考主流形式：3-4 题 15-20 分钟，题型固定、框架可学，短期可速成。",
+  "pts": [
+   "<b>面试形式</b>：结构化面试（统一题目，逐题作答）、结构化小组（国考税务）、无领导小组——先了解自己岗位的形式",
+   "<b>题型分布</b>：综合分析（怎么看）、计划组织（怎么组织）、应急应变（怎么办）、人际关系（怎么处理）——四大题型",
+   "<b>评分维度</b>：综合分析能力、计划组织能力、应变能力、人际协调、言语表达、举止仪表——分维度得分",
+   "<b>时间控制</b>：一般 3 题 15 分钟（思考 1-2 分钟/题 + 作答 3 分钟/题）",
+   "<b>答题框架</b>：综合分析'观点-分析-对策'；组织'事前-事中-事后'；应变'安抚-处理-总结'；人际'态度-沟通-解决'",
+   "<b>备考资料</b>：历年真题、热点时评（半月谈/人民日报评论）、面试理论课"
+  ],
+  "pit": "最大的坑：背模板背答案——考官听腻了，且模板化给低分。第二个坑：不开口练——'心里会'和'说出来'是两回事。",
+  "quiz": [
+   "结构化面试的四大题型是什么？",
+   "综合分析题的答题框架是什么？",
+   "为什么'背模板'会被打低分？"
+  ],
+  "ans": [
+   "<b>综合分析（怎么看）、计划组织（怎么组织）、应急应变（怎么办）、人际关系（怎么处理）</b>。了解题型后针对性练习：综合分析练思维深度，计划组织练流程完整，应急应变练沉稳，人际关系练沟通。<b>四大题型框架是面试的地基</b>。",
+   "<b>观点-分析-对策</b>：先亮明观点（支持/反对/辩证）→ 分析（为什么：原因/影响/意义）→ 对策（怎么办：具体措施）。<b>加上'开头表态、结尾升华'</b>，就是完整的综合分析作答。",
+   "因为<b>考官一天听 30 个考生，模板化答案千篇一律</b>——一听就知道是背的，既显诚意不足，也无法体现个人思考。<b>高分答案的特征：有观点、有细节、有温度</b>——用真实思考+具体例子，而不是背诵腔。"
+  ],
+  "res": "看 3 套结构化面试真题，了解题型；开始积累热点素材",
+  "deep": {
+   "go": "<b>深入目标：面试题型框架入门</b>。四大题型框架能默写；了解自己岗位的面试形式。<b>深入标志：能对着真题说出'这是什么题型、用什么框架答'。</b>",
+   "tasks": [
+    "了解自己岗位的面试形式（结构化/小组/无领导）",
+    "默写四大题型答题框架",
+    "看 3 套真题，练习判断题型",
+    "开始面试素材积累（热点+金句）"
+   ]
+  }
+ },
+ "s3_5": {
+  "intro": "面试专项：综合分析考'思想深度'，应急应变考'沉稳果断'，组织管理考'流程完整'——三大题型各有框架，练到脱口而出。",
+  "pts": [
+   "<b>综合分析框架</b>：观点（态度鲜明）→ 分析（原因/影响，正反辩证）→ 对策（具体可行）→ 升华（联系自身/政策）",
+   "<b>应急应变框架</b>：控制局面（安抚情绪/疏散/暂停）→ 调查处理（核实情况/解决问题）→ 总结反思（防患未然）",
+   "<b>组织管理框架</b>：事前（方案/人财物/宣传）→ 事中（流程把控/突发处理）→ 事后（总结/汇报/长效机制）",
+   "<b>答题亮点</b>：结合实际（'我实习时遇到过类似情况'）、细节具体（'通过微信群+公告栏双渠道通知'）、有温度（'先安抚群众情绪'）",
+   "<b>语言训练</b>：分条作答（第一/第二/第三）、逻辑词（首先/其次/最后）、控制语速（每分钟 200 字）",
+   "<b>高频追问</b>：'你还有什么补充吗''如果领导不同意你的方案呢'——准备预案"
+  ],
+  "pit": "最大的坑：答题'假大空'（'加强宣传''高度重视'）——考官要的是具体做法。第二个坑：条理混乱（想到哪说到哪），考官听不出重点。",
+  "quiz": [
+   "应急应变题的答题框架是什么？",
+   "组织管理题怎么避免'假大空'？",
+   "面试答题怎样做到'有条理'？"
+  ],
+  "ans": [
+   "<b>控制局面 → 调查处理 → 总结反思</b>。第一步先'稳住'（安抚情绪/保证安全/控制事态）；第二步'处理'（核实情况、分类解决）；第三步'反思'（原因分析、建章立制）。<b>原则：先急后缓、先人后事、先稳后理</b>。",
+   "用<b>具体细节代替空话</b>：不说'做好宣传'，说'通过社区微信群、公告栏、上门走访三种方式宣传'；不说'确保效果'，说'设置意见反馈表、活动后 24 小时内电话回访'。<b>细节 = 落地 = 高分</b>。",
+   "<b>分条作答+逻辑词</b>：'第一/第二/第三'或'首先/其次/最后'；每条'观点+展开'。<b>答题前 30 秒列提纲（草稿纸写关键词）</b>，边说边看。条理清晰是面试最基本的得分点。"
+  ],
+  "res": "每天练 2 道专项题（录音回听）；建立自己的答题框架卡",
+  "deep": {
+   "go": "<b>深入目标：三大题型脱口而出</b>。框架烂熟+细节充实+条理清晰。<b>深入标志：任意题型，30 秒列提纲、3 分钟完整作答，无卡顿无口头禅。</b>",
+   "tasks": [
+    "三个题型各练 5 题并录音",
+    "总结 10 个'答题细节库'（具体做法）",
+    "练'30 秒列提纲'20 次",
+    "模拟'追问环节'，准备 5 个预案"
+   ]
+  }
+ },
+ "s3_6": {
+  "intro": "面试最后阶段：全真模拟 + 临场发挥。面试是'表演'——练到'自然的熟练'，考场上才能发挥出真实水平。",
+  "pts": [
+   "<b>全真模拟</b>：找考友/家人/ AI 模拟完整面试（进场-问好-答题-离场），每周 2-3 次",
+   "<b>录音复盘</b>：回听自己的作答——找口头禅（'然后''那个'）、卡顿、语速问题",
+   "<b>仪容仪表</b>：正装（深色西装/衬衫）、发型整洁、坐姿端正、眼神交流（看考官眉心）",
+   "<b>临场心态</b>：紧张是正常的（考官也理解）；深呼吸 3 次；把考官当长辈自然交流",
+   "<b>答题状态</b>：声音洪亮（考场空旷）、语速适中（200 字/分钟）、分条清晰",
+   "<b>细节礼仪</b>：敲门、问好（'各位考官好'）、结束致谢（'谢谢各位考官'）、轻关门"
+  ],
+  "pit": "最大的坑：不模拟直接上考场——第一次开口一定慌。第二个坑：答题像'背书'（眼神飘忽、语速失衡）——考官要的是'交流感'。",
+  "quiz": [
+   "面试前怎么进行全真模拟？",
+   "录音复盘主要找什么问题？",
+   "进考场的基本礼仪流程是什么？"
+  ],
+  "ans": [
+   "<b>完整流程模拟</b>：敲门进场→问好→入座→听题→答题→结束致谢→离场，全程录像/录音，每周 2-3 次。<b>模拟对象越'像考官'越好</b>（找陌生人或 AI 压力更大）。<b>模拟的目的：让流程变成肌肉记忆，考场不慌</b>。",
+   "① <b>口头禅</b>（'然后''那个''嗯'）② <b>卡顿点</b>（哪里卡壳了，准备不充分）③ <b>语速</b>（太快显得慌，太慢显得拖）④ <b>条理</b>（分条是否清晰）。<b>回听自己的录音是最真实的一面镜子</b>。",
+   "<b>敲门 → 进门问好（'各位考官好'）→ 入座 → 听题/看题 → 作答 → 结束致谢（'谢谢各位考官'）→ 起身离座 → 轻关门</b>。全程自然大方，不卑不亢。<b>礼仪是印象分，别因紧张丢掉</b>。"
+  ],
+  "res": "安排 3 次全真模拟面试（录视频回看），调整仪容仪表和答题状态",
+  "deep": {
+   "go": "<b>深入目标：临场状态达标</b>。全真模拟 3 次以上；口头禅/卡顿清零。<b>深入标志：模拟面试能稳定做到'声音洪亮、条理清晰、眼神交流、无口头禅'。</b>",
+   "tasks": [
+    "安排 3 次全真模拟（最好录视频）",
+    "逐次复盘：口头禅/卡顿/仪态问题清单",
+    "准备好正装并试穿（确保舒适）",
+    "考前 1 天写'考场小抄'（框架+金句关键词）"
+   ]
+  }
+ }
+});
+
+/* ============ 知识点详解弹窗/* ============ 知识点详解弹窗 ============ */
+function openDetail(key){
+  const d = DETAILS[key];
+  if(!d) return toast("该条目暂无详解");
+  let title = key, tag = "知识点详解";
+  if(/^s\d_\d+$/.test(key)){
+    const [sid, idx] = key.split("_");
+    const st = STAGES.find(s=>s.id===sid);
+    if(st){ title = st.tasks[+idx][0]; tag = st.badge + " 任务 · 详解"; }
+  }
+  $("#mTitle").textContent = title;
+  $("#mTag").textContent = tag;
+  const m = state.mastery[key] || 0;
+  const mLabel = ["未学","学习中","已掌握·能讲","已掌握·能写"][m] || "未学";
+  $("#mBody").innerHTML = `
+    <div class="intro">${d.intro}</div>
+    ${TERMS[key] ? `<details open><summary>🔍 零基础名词解释（先看懂这些，再看下面内容）</summary>
+      <ul class="terms-list">${TERMS[key].map(t=>`<li><b>${t[0]}</b>${t[1]}${t[2]?`<span class="tl-eg">💡 类比：${t[2]}</span>`:""}</li>`).join("")}</ul>
+    </details>` : ""}
+    <h4>掌握状态（当前：${mLabel}）</h4>
+    <div class="mastery-bar">
+      <button class="m-choice ${m===0?"sel":""}" data-m="0">○ 未学</button>
+      <button class="m-choice ${m===1?"sel":""}" data-m="1">◐ 学习中</button>
+      <button class="m-choice ${m===2?"sel":""}" data-m="2">● 已掌握（能讲）</button>
+      <button class="m-choice ${m===3?"sel":""}" data-m="3">🏆 已掌握（能写）</button>
+    </div>
+    <h4>核心知识点</h4>
+    <ul>${d.pts.map(p=>`<li>${p}</li>`).join("")}</ul>
+    ${d.pit ? `<h4>常见坑</h4><div class="pit">⚠️ ${d.pit}</div>` : ""}
+    ${d.quiz ? `<h4>自测题（先自测，再点开答案核对）</h4><div class="quiz">${d.quiz.map((q,i)=>`
+      <div style="margin-bottom:10px">
+        <div style="margin-bottom:4px">${i+1}. ${q}</div>
+        ${d.ans && d.ans[i] ? `<details class="q-ans"><summary>参考答案</summary><div class="a-body">${d.ans[i]}</div></details>` : ""}
+      </div>`).join("")}</div>` : ""}
+    ${d.res ? `<h4>推荐做法</h4><div>🎯 ${d.res}</div>` : ""}
+    ${d.deep ? `<h4>🚀 深入学习（做完才算真的吃透）</h4>
+      <div class="deep">${d.deep.go}</div>
+      ${d.deep.tpl ? `<div class="deep-tpl">📋 <b>作品化模板：</b>${d.deep.tpl}</div>` : ""}
+      <div class="deep-hd">动手清单（做完一项勾一项，进度自动保存）</div>
+      <ul class="deep-tasks">${d.deep.tasks.map((t,i)=>{
+        const done = !!(state.deepDone && state.deepDone[key+":"+i]);
+        return `<li class="${done?"on":""}"><label><input type="checkbox" data-deep="${key}:${i}" ${done?"checked":""}> <span>${t}</span></label></li>`;
+      }).join("")}</ul>` : ""}
+    <button class="wrong-btn" id="wrongAdd">❌ 自测没答上来？记入错题本（之后复习）</button>
+  `;
+  $("#modal").classList.add("show");
+  document.body.style.overflow = "hidden";
+  /* 深入学习清单勾选：进度持久化 */
+  document.querySelectorAll("[data-deep]").forEach(cb=>{
+    cb.addEventListener("change", ()=>{
+      const k = cb.dataset.deep;
+      state.deepDone = state.deepDone || {};
+      if(cb.checked) state.deepDone[k] = true;
+      else delete state.deepDone[k];
+      cb.closest("li").classList.toggle("on", cb.checked);
+      save();
+      const n = Object.keys(state.deepDone).length;
+      if(cb.checked && n % 4 === 0) toast("深入清单已完成 "+n+" 项 💪");
+    });
+  });
+  document.querySelectorAll(".m-choice").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      state.mastery[key] = +b.dataset.m;
+      save();
+      const lb = ["已标记为未学","已标记为学习中","🎉 已标记为掌握（能讲）","🏆 已标记为掌握（能写）"][+b.dataset.m] || "已更新";
+      toast(lb);
+      closeModal();
+      const act = document.querySelector(".tab.active").dataset.tab;
+      if(RENDER[act]) RENDER[act]();
+    });
+  });
+  $("#wrongAdd").addEventListener("click", ()=>{
+    const quiz = (d.quiz && d.quiz[0]) || "";
+    $("#mTag").textContent = "加入错题本";
+    $("#mTitle").textContent = title;
+    $("#mBody").innerHTML = `
+      <div class="intro">选一个错因标签，复习时能看清自己的薄弱模式 👇</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn ghost" data-reason="💡 概念不清（没理解原理）">💡 概念不清（没理解原理）</button>
+        <button class="btn ghost" data-reason="🧭 思路不对（方法/方向错了）">🧭 思路不对（方法/方向错了）</button>
+        <button class="btn ghost" data-reason="✏️ 粗心（会但写错）">✏️ 粗心（其实会，但写错了）</button>
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:var(--ink-3)">记入后可在「笔记日志 → 错题本」随时复习；同一任务错 2 题以上会自动标记为薄弱点，出现在仪表盘「待攻克」。</div>`;
+    $("#modal").classList.add("show");
+    document.body.style.overflow = "hidden";
+    document.querySelectorAll("[data-reason]").forEach(b=>{
+      b.addEventListener("click", ()=>{
+        state.wrong.unshift({ ts: new Date().toLocaleString("zh-CN",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"}), key, title, quiz, reason: b.dataset.reason, times: 0 });
+        save(); toast("已加入错题本 📕"); closeModal();
+        const act = document.querySelector(".tab.active").dataset.tab;
+        if(RENDER[act]) RENDER[act]();
+      });
+    });
+  });
+}
+function closeModal(){ $("#modal").classList.remove("show"); document.body.style.overflow = ""; }
+$("#mClose").addEventListener("click", closeModal);
+$("#mClose2").addEventListener("click", closeModal);
+$("#modal").addEventListener("click", e=>{ if(e.target === $("#modal")) closeModal(); });
+document.addEventListener("keydown", e=>{ if(e.key === "Escape") closeModal(); });
+
+const RES = [
+ {
+  "h": "刷题与真题（主力）",
+  "items": [
+   [
+    "粉笔 App",
+    "行测/申论刷题+模考+批改，公考必备",
+    "https://www.fenbi.com/"
+   ],
+   [
+    "中公题库",
+    "真题+模拟题+模考大赛",
+    "https://www.offcn.com/"
+   ],
+   [
+    "华图在线",
+    "真题解析+模块专项",
+    "https://v.huatu.com/"
+   ],
+   [
+    "国家公务员局",
+    "国考公告/职位表/报名（官方唯一）",
+    "http://www.scs.gov.cn/"
+   ]
+  ]
+ },
+ {
+  "h": "时政与素材（积累）",
+  "items": [
+   [
+    "学习强国",
+    "时政积累主力 App",
+    "https://www.xuexi.cn/"
+   ],
+   [
+    "人民日报评论",
+    "申论素材+时评范文（公众号同名）",
+    "https://www.people.com.cn/"
+   ],
+   [
+    "半月谈",
+    "时政解读+申论素材库",
+    "http://www.banyuetan.org/"
+   ],
+   [
+    "求是网",
+    "政策理论原文",
+    "http://www.qstheory.cn/"
+   ]
+  ]
+ },
+ {
+  "h": "免费课程与工具",
+  "items": [
+   [
+    "B 站：李梦圆申论",
+    "申论系统课（免费）",
+    "https://space.bilibili.com/"
+   ],
+   [
+    "B 站：花生十三",
+    "资料分析速算技巧",
+    "https://space.bilibili.com/"
+   ],
+   [
+    "B 站：刘文超Vincent",
+    "行测全模块技巧课",
+    "https://space.bilibili.com/"
+   ],
+   [
+    "粉笔模考大赛",
+    "每周模考+全省排名",
+    "https://www.fenbi.com/"
+   ]
+  ]
+ },
+ {
+  "h": "信息与交流",
+  "items": [
+   [
+    "应届生求职网·公考",
+    "国考/省考招考信息汇总",
+    "http://www.yingjiesheng.com/"
+   ],
+   [
+    "各省人事考试网",
+    "省考报名入口（按省份）",
+    "https://www.rsks.net/"
+   ],
+   [
+    "QZZN 论坛",
+    "考公经验交流",
+    "http://bbs.qzzn.com/"
+   ],
+   [
+    "知乎·公务员考试",
+    "备考经验与避坑",
+    "https://www.zhihu.com/"
+   ]
+  ]
+ }
+]
+
+/* ============ 状态 ============ */
+const DEF = { tasks:{}, skills:{}, notes:"", logs:[], pomo:{mode:"work", dur:25*60, left:25*60, running:false, round:0}, theme:"light", checkins:{}, mastery:{}, wrong:[], deepDone:{}, review:{}, checkinTasks:{}, lastBackup:null };
+let state = { ...DEF, ...store.get("bdlp_v1", {}),
+  tasks:{ ...DEF.tasks, ...(store.get("bdlp_v1",{}).tasks||{}) },
+  skills:{ ...DEF.skills, ...(store.get("bdlp_v1",{}).skills||{}) },
+  mastery:{ ...DEF.mastery, ...(store.get("bdlp_v1",{}).mastery||{}) },
+  checkins:{ ...DEF.checkins, ...(store.get("bdlp_v1",{}).checkins||{}) }
+};
+const save = () => store.set("bdlp_v1", state);
+
+const TASK_IDS = STAGES.flatMap(s => s.tasks.map((_,i)=>`${s.id}_${i}`));
+function taskDone(id){ return !!state.tasks[id]; }
+function setTask(id, v){ state.tasks[id]=v; save(); }
+
+/* ============ 倒计时 ============ */
+function daysTo(ts){ const d = Math.ceil((new Date(ts).setHours(0,0,0,0) - new Date().setHours(0,0,0,0))/86400000); return d; }
+function renderCd(id, ts, label){
+  const d = daysTo(ts), el = document.getElementById(id);
+  if(d > 0) el.innerHTML = `距${label} <b>${d}</b> 天`;
+  else if(d === 0) el.innerHTML = `距${label} <b>仅剩今天</b>`;
+  else el.innerHTML = `${label}窗口 <b>进行中</b>`;
+}
+renderCd("chip-intern", "2027-11-28", "国考笔试");
+renderCd("chip-fall", "2028-02-01", "国考面试");
+
+/* ============ 渲染：仪表盘 ============ */
+function fmtDate(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
+function todayStr(){ return fmtDate(new Date()); }
+function monthCount(){
+  const pre = todayStr().slice(0,7);
+  return Object.keys(state.checkins).filter(k=>String(k).slice(0,7)===pre).length;
+}
+function week8Count(){
+  let n=0;
+  for(let i=0;i<182;i++){ const d=new Date(); d.setDate(d.getDate()-i); if(state.checkins[fmtDate(d)]) n++; }
+  return n;
+}
+function heatCells(){
+  const now = new Date();
+  const start = new Date(); start.setDate(now.getDate() - 181); /* 26 周 */
+  start.setDate(start.getDate() - (start.getDay()+6)%7); /* 对齐到周一 */
+  let html = "";
+  for(let w=0; w<26; w++){
+    html += '<div class="heat-col">';
+    for(let d=0; d<7; d++){
+      const dd = new Date(start); dd.setDate(start.getDate()+w*7+d);
+      if(dd > now){ html += '<i class="ht off"></i>'; continue; }
+      html += `<i class="ht ${state.checkins[fmtDate(dd)]?"on":""}"></i>`;
+    }
+    html += '</div>';
+  }
+  return html;
+}
+/* 任务名查询 */
+function taskName(id){
+  const [sid, idx] = id.split("_");
+  const st = STAGES.find(s=>s.id===sid);
+  return st ? st.tasks[+idx][0] : id;
+}
+/* 薄弱任务：同一任务错题 ≥2 道 */
+function weakTasks(){
+  const cnt = {};
+  state.wrong.forEach(w=>{ if(w.key) cnt[w.key]=(cnt[w.key]||0)+1; });
+  return Object.entries(cnt).filter(([,n])=>n>=2).map(([id,n])=>({ id, n }));
+}
+/* 到期复习：任务完成后按 1/3/7 天记忆曲线提醒，复习后重新计时 */
+function reviewDue(){
+  const due = []; const now = Date.now(); const DAY = 86400000;
+  for(const [id, r] of Object.entries(state.review||{})){
+    if(!r || !r.doneAt) continue;
+    const base = r.lastRev || r.doneAt;
+    const el = now - base;
+    const m = el >= 7*DAY ? 7 : el >= 3*DAY ? 3 : el >= 1*DAY ? 1 : 0;
+    if(m) due.push({ id, m });
+  }
+  return due.sort((a,b)=>b.m-a.m).slice(0,6);
+}
+/* 打卡关联任务：弹窗选择今日主攻任务 */
+function openCheckinModal(t){
+  const opt = TASK_IDS.map(id=>{ const [sid,idx]=id.split("_"); const st=STAGES.find(s=>s.id===sid); return `<option value="${id}">${esc(st.badge)} · ${esc(st.tasks[+idx][0])}</option>`; }).join("");
+  $("#mTag").textContent = "每日打卡";
+  $("#mTitle").textContent = "今天主攻哪个任务？";
+  $("#mBody").innerHTML = `
+    <div class="intro">选一个今天主要推进的任务，让打卡记录变成可回看的学习轨迹（可不选）。</div>
+    <select id="ckTask" style="width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;font-size:14px;background:var(--card);color:var(--ink)">
+      <option value="">（不指定，只打卡）</option>${opt}
+    </select>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button class="btn primary" id="ckOk" style="flex:1">✔ 打卡并记录</button>
+      <button class="btn ghost" id="ckSkip" style="flex:1">只打卡</button>
+    </div>`;
+  $("#modal").classList.add("show");
+  document.body.style.overflow = "hidden";
+  const doCheckin = ()=>{
+    const v = $("#ckTask").value;
+    state.checkins[t] = true;
+    if(v) state.checkinTasks[t] = v; else delete state.checkinTasks[t];
+    save(); closeModal(); toast("打卡成功 💪 学点东西再走"); renderDash();
+  };
+  $("#ckOk").addEventListener("click", doCheckin);
+  $("#ckSkip").addEventListener("click", doCheckin);
+}
+/* 最近学习轨迹：最近 5 次带任务的打卡 */
+function recentTrail(){
+  return Object.entries(state.checkinTasks||{}).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,5);
+}
+function renderDash(){
+  const done = TASK_IDS.filter(taskDone).length, total = TASK_IDS.length;
+  const pct = Math.round(done/total*100);
+  const pomoHours = (pomoTotal/3600).toFixed(1);
+  const mastered = TASK_IDS.filter(id=>state.mastery[id]>=2).length;
+  const todo = TASK_IDS.filter(id=>!taskDone(id)).slice(0,5);
+  const today = new Date().toLocaleDateString("zh-CN", { year:"numeric", month:"long", day:"numeric", weekday:"long" });
+  const t = todayStr();
+  const week = [];
+  for(let i=6;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); week.push(d); }
+  $("#main").innerHTML = `
+  <section class="active">
+    <h2 class="sec">仪表盘</h2>
+    <p class="sub">${today} · 你的任务：行测五大模块 + 申论按阶段推进，2028 国考一次上岸</p>
+    <div class="dash-grid">
+      <div class="card stat"><div class="k">路线任务</div><div class="v">${done}<small> / ${total} 项</small></div><div class="d">完成率 ${pct}%</div></div>
+      <div class="card stat"><div class="k">累计专注</div><div class="v">${pomoHours}<small> 小时</small></div><div class="d">番茄钟累计 ${Math.round(pomoTotal/60)} 分钟</div></div>
+      <div class="card stat"><div class="k">已掌握知识点</div><div class="v">${mastered}<small> / ${total}</small></div><div class="d">标记"已掌握"的条目数</div></div>
+      <div class="card stat"><div class="k">累计打卡</div><div class="v">${Object.keys(state.checkins).length}<small> 天</small></div><div class="d">本月 ${monthCount()} 天 · 贵在坚持不在连击</div></div>
+    </div>
+    <div class="card" style="display:flex;gap:22px;flex-wrap:wrap;align-items:center">
+      <div class="ring" id="ringTotal"></div>
+      <div class="today">
+        <h4>接下来要做的事（未完成任务前 5）</h4>
+        ${todo.length ? todo.map((id,i)=>{
+          const [sid, idx] = id.split("_"); const st = STAGES.find(s=>s.id===sid); const [name, desc] = st.tasks[+idx];
+          return `<div class="todo-item"><span class="no">${i+1}</span><div><b>${esc(name)}</b><br><span class="muted">${esc(st.badge)} · ${esc(desc)}</span></div></div>`;
+        }).join("") : `<div class="empty-hint">🎉 全部任务完成！开始秋招冲刺吧。</div>`}
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn primary small" data-go="tasks">去勾任务 →</button>
+          <button class="btn ghost small" data-go="pomo">开一个番茄钟 🍅</button>
+        </div>
+      </div>
+    </div>
+    ${(weakTasks().length || reviewDue().length) ? `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:14px">
+      ${weakTasks().length ? `<div class="card">
+        <h4 style="margin:0 0 8px;font-size:14.5px;color:var(--red)">📌 待攻克（错 2 题以上）</h4>
+        ${weakTasks().map(w=>`<div class="todo-item" style="margin-bottom:8px"><span class="no">${w.n}</span><div><b>${esc(taskName(w.id))}</b><br><span class="muted">错题 ${w.n} 道 · 面试前重点补</span></div><button class="btn ghost small" data-wk="${w.id}">去补</button></div>`).join("")}
+      </div>` : ""}
+      ${reviewDue().length ? `<div class="card">
+        <h4 style="margin:0 0 8px;font-size:14.5px;color:var(--amber)">📅 到期复习（1/3/7 天记忆曲线）</h4>
+        ${reviewDue().map(r=>`<div class="todo-item" style="margin-bottom:8px"><span class="no">${r.m}天</span><div><b>${esc(taskName(r.id))}</b><br><span class="muted">重做自测题，对抗遗忘</span></div><button class="btn ghost small" data-rv="${r.id}">已复习</button></div>`).join("")}
+      </div>` : ""}
+    </div>` : ""}
+    <div class="card" style="margin-top:14px">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div style="flex:1;min-width:280px">
+          <h4 style="margin:0 0 6px;font-size:14.5px">📆 今日打卡 ${state.checkins[t]?"✅ 已打卡"+(state.checkinTasks&&state.checkinTasks[t]?` · 主攻「${esc(taskName(state.checkinTasks[t]))}」`:"") :"未打卡"}</h4>
+          <div class="checkin-grid">
+            ${week.map(d=>{ const k=fmtDate(d); const on=!!state.checkins[k];
+              return `<div class="ci ${on?"on":""} ${k===t?"today":""}" title="${k}${state.checkinTasks&&state.checkinTasks[k]?" · "+esc(taskName(state.checkinTasks[k])):""}"><span class="d">${d.getDate()}</span><span class="w">${"日一二三四五六"[d.getDay()]}</span></div>`; }).join("")}
+          </div>
+          <div class="heat" title="近 26 周打卡热力图（悬停日历格可看当天学了什么）">${heatCells()}</div>
+          <div class="muted" style="font-size:12.5px;margin-top:8px">本月打卡 ${monthCount()} 天 · 近 26 周 ${week8Count()} 天 · 累计 ${Object.keys(state.checkins).length} 天</div>
+          ${recentTrail().length ? `<div class="trail">${recentTrail().map(([d,tid])=>`<span class="trail-item" title="${d}">${d.slice(5)} <b>${esc(taskName(tid))}</b></span>`).join("")}</div>` : ""}
+        </div>
+        <div style="margin-left:auto;display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+          <button class="btn ${state.checkins[t]?"ghost":"primary"}" id="checkinBtn">${state.checkins[t]?"✅ 今天已打卡":"✔ 打卡学习"}</button>
+          <span class="muted">累计 ${Object.keys(state.checkins).length} 天 · 本月 ${monthCount()} 天</span>
+        </div>
+      </div>
+    </div>
+  </section>`;
+  setRing($("#ringTotal"), pct, "#2563eb");
+  $("#checkinBtn").addEventListener("click", ()=>{
+    if(!state.checkins[t]) openCheckinModal(t);
+    else toast("今天已经打过卡啦");
+  });
+  document.querySelectorAll("[data-wk]").forEach(b=>b.addEventListener("click", ()=>openDetail(b.dataset.wk)));
+  document.querySelectorAll("[data-rv]").forEach(b=>b.addEventListener("click", ()=>{
+    const id = b.dataset.rv;
+    if(state.review && state.review[id]){ state.review[id].lastRev = Date.now(); save(); }
+    renderDash(); toast("已记录复习 ✓ 下次按曲线自动提醒");
+  }));
+  maybeBackupTip();
+}
+
+function setRing(el, pct, color){
+  el.style.background = `conic-gradient(${color} ${pct*3.6}deg, var(--bg) 0deg)`;
+  el.innerHTML = `<div style="position:relative;background:var(--card);border-radius:50%;width:82%;height:82%;display:grid;place-items:center;border:1px solid var(--line)"><div style="text-align:center"><div class="rv">${pct}%</div><div class="rl">总进度</div></div></div>`;
+}
+
+/* ============ 备份提醒 ============ */
+function maybeBackupTip(){
+  const bar = $("#backupTip");
+  if(!bar) return;
+  const last = state.lastBackup;
+  let days = null;
+  if(last){ days = Math.floor((Date.now() - new Date(last).getTime())/86400000); }
+  if(days===null || days>=7){
+    bar.style.display = "flex";
+    $("#backupTipTxt").textContent = days===null
+      ? "数据仅存本机浏览器，换设备 / 清缓存会丢失，建议立即导出"
+      : `距离上次备份已 ${days} 天，数据仍仅存本机，建议再次导出`;
+  } else { bar.style.display = "none"; }
+}
+
+/* 首次打开：弹一次说明，讲清「数据仅存本机 + 如何备份」，之后靠 7 天未备份的提示条兜底 */
+function maybeFirstVisitTip(){
+  let seen = false;
+  try { seen = !!localStorage.getItem("bdlp_seen_v1"); } catch(e){ return; }
+  if(seen) return;
+  try { localStorage.setItem("bdlp_seen_v1", "1"); } catch(e){}
+  $("#mTag").textContent = "首次使用";
+  $("#mTitle").textContent = "数据只存在这台设备上";
+  $("#mBody").innerHTML = `
+    <div style="line-height:1.75;font-size:14px">
+      <p style="margin:0 0 10px">学习记录<b>只保存在当前浏览器的本地存储</b>里，不联网同步。</p>
+      <ul style="margin:0 0 14px;padding-left:18px;color:var(--ink-2)">
+        <li>换设备 / 换浏览器 / 清理缓存 → 数据会丢失</li>
+        <li>养成习惯：<b>每完成一个阶段就点「⬇ 导出备份」</b>，存一份 JSON 到本地或网盘</li>
+        <li>需要时用「⬆ 导入」在任意设备一键恢复</li>
+      </ul>
+      <div style="display:flex;gap:8px">
+        <button class="btn primary" id="firstExport" style="flex:1">⬇ 立即导出一份</button>
+        <button class="btn ghost" id="firstGot" style="flex:1">我知道了</button>
+      </div>
+    </div>`;
+  $("#modal").classList.add("show");
+  document.body.style.overflow = "hidden";
+  $("#firstExport").addEventListener("click", ()=>{ closeModal(); $("#exportBtn").click(); });
+  $("#firstGot").addEventListener("click", closeModal);
+}
+function markBackup(){
+  state.lastBackup = new Date().toISOString();
+  save(); maybeBackupTip(); toast("已记录备份时间 ✓");
+}
+
+/* ============ 渲染：路线任务 ============ */
+function renderTasks(){
+  const total = TASK_IDS.length, done = TASK_IDS.filter(taskDone).length;
+  $("#main").innerHTML = `
+  <section class="active">
+    <h2 class="sec">路线任务 <span style="font-size:14px;color:var(--ink-3);font-weight:600">完成 ${done}/${total}</span></h2>
+    <p class="sub">点击勾选即完成 · 阶段头可折叠 · 数据自动保存</p>
+    ${STAGES.map((st,si)=>{
+      const ids = st.tasks.map((_,i)=>`${st.id}_${i}`);
+      const d = ids.filter(taskDone).length, t = ids.length;
+      const pct = Math.round(d/t*100);
+      return `
+      <div class="card stage" data-stage="${st.id}">
+        <div class="stage-hd">
+          <span class="badge">${st.badge}</span><h3>${esc(st.title)}</h3>
+          <span class="when">${esc(st.when)}</span><span class="pct">${d}/${t} · ${pct}%</span><span class="arrow">▼</span>
+        </div>
+        <div class="stage-bd">
+          <div class="sbar" style="margin:10px 0 4px"><i style="width:${pct}%"></i></div>
+          ${st.tasks.map(([name, desc], i)=>{
+            const id = `${st.id}_${i}`;
+            const m = state.mastery[id] || 0;
+            return `<div class="task ${taskDone(id)?"done":""}" data-id="${id}">
+              <input type="checkbox" ${taskDone(id)?"checked":""}>
+              <button class="mbtn" data-m="${m}" data-mid="${id}" title="掌握度：点击切换（○未学 → ◐学习中 → ●能讲 → 🏆能写）">${m===0?"○":m===1?"◐":m===2?"●":"🏆"}</button>
+              <div class="t-main"><div class="t-name">${esc(name)}</div><div class="t-desc">${esc(desc)}</div></div>
+              <button class="kbtn" data-k="${id}">📖 详解</button>
+            </div>`;
+          }).join("")}
+        </div>
+      </div>`;
+    }).join("")}
+  </section>`;
+  document.querySelectorAll(".task").forEach(el=>{
+    el.addEventListener("click", e=>{
+      /* checkbox 已设 pointer-events:none，所有点击统一由行监听处理，避免与 change 时序竞争 */
+      if(e.target.tagName === "BUTTON") return;
+      const c = el.querySelector("input"); c.checked = !c.checked; toggle(el.dataset.id, c.checked);
+    });
+  });
+  document.querySelectorAll(".stage-hd").forEach(hd=>{
+    hd.addEventListener("click", ()=>hd.closest(".stage").classList.toggle("collapsed"));
+  });
+  document.querySelectorAll(".task input").forEach(inp=>{
+    /* 键盘（Tab+空格）切换仍走 change 事件 */
+    inp.addEventListener("change", ()=>{
+      const row = inp.closest(".task"); if(!row) return;
+      toggle(row.dataset.id, inp.checked);
+    });
+  });
+  document.querySelectorAll(".kbtn").forEach(b=>{
+    b.addEventListener("click", e=>{ e.stopPropagation(); openDetail(b.dataset.k); });
+  });
+  document.querySelectorAll(".mbtn").forEach(b=>{
+    b.addEventListener("click", e=>{
+      e.stopPropagation();
+      const id = b.dataset.mid;
+      const next = ((state.mastery[id]||0)+1) % 4;
+      state.mastery[id] = next;
+      save();
+      const label = ["标记为未学","标记为学习中","🎉 标记为掌握（能讲）","🏆 标记为掌握（能写）"][next];
+      toast(label);
+      renderTasks();
+    });
+  });
+  function toggle(id, v){
+    setTask(id, v);
+    if(v && !state.review[id]) state.review[id] = { doneAt: Date.now(), lastRev: 0 };
+    renderTasks();
+  }
+}
+
+
+/* ============ 渲染：资源 ============ */
+function renderRes(){
+  $("#main").innerHTML = `
+  <section class="active">
+    <h2 class="sec">资源直达</h2>
+    <p class="sub">少而精 · 这些够撑满 11 个月，不需要再囤教程</p>
+    <div class="res-grid">
+      ${RES.map(r=>`<div class="card res-card"><h4>${esc(r.h)}</h4><ul>${r.items.map(([t,d,u])=>`<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a><span class="rd">${esc(d)}</span></li>`).join("")}</ul></div>`).join("")}
+    </div>
+  </section>`;
+}
+
+/* ============ 番茄钟 ============ */
+const POMO = { work:25*60, short:5*60, long:15*60 };
+const MODE_LABEL = { work:"专注", short:"短休息", long:"长休息" };
+let pomo = { ...DEF.pomo, ...state.pomo };
+let pomoTotal = store.get("bdlp_pomoTotal", 0);
+let ticker = null;
+
+/* 兼容旧数据：运行中但没有时间基准 → 按剩余秒数重建；时间已过 → 补记一次专注 */
+if(pomo.running && !pomo.endAt){
+  pomo.endAt = Date.now() + pomo.left*1000;
+} else if(pomo.running && Date.now() >= pomo.endAt){
+  if(pomo.mode === "work") pomoTotal += pomo.dur;
+  pomo.running = false;
+  pomo.round += (pomo.mode === "work") ? 1 : 0;
+  pomo.mode = (pomo.round % 4 === 0) ? "long" : "short";
+  pomo.dur = POMO[pomo.mode]; pomo.left = pomo.dur; delete pomo.endAt;
+}
+if(!pomo.running && pomo.endAt) delete pomo.endAt;
+
+function pomoCommit(){ state.pomo = pomo; save(); store.set("bdlp_pomoTotal", pomoTotal); }
+function beep(){
+  try {
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const play = (freq, t0) => { const o = ctx.createOscillator(), g = ctx.createGain();
+      o.frequency.value = freq; o.type = "sine";
+      o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(.18, ctx.currentTime+t0);
+      g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime+t0+.6);
+      o.start(ctx.currentTime+t0); o.stop(ctx.currentTime+t0+.65);
+    };
+    play(880, 0); play(660, .35);
+  } catch(e){}
+}
+function pomoNext(){
+  if(pomo.mode === "work"){
+    pomo.round++;
+    pomo.mode = (pomo.round % 4 === 0) ? "long" : "short";
+  } else { pomo.mode = "work"; }
+  pomo.dur = POMO[pomo.mode]; pomo.left = pomo.dur; delete pomo.endAt;
+  beep(); toast(`进入${MODE_LABEL[pomo.mode]} ${Math.round(pomo.dur/60)} 分钟`);
+  pomoCommit(); renderPomo();
+}
+function pomoTick(){
+  if(!pomo.running) return;
+  /* 以 endAt 时间戳校准剩余时间：标签页后台被节流、电脑休眠都不会丢秒 */
+  pomo.left = Math.max(0, Math.round((pomo.endAt - Date.now())/1000));
+  if(pomo.left <= 0){
+    if(pomo.mode === "work") pomoTotal += pomo.dur;
+    clearInterval(ticker); ticker = null; pomo.running = false; delete pomo.endAt;
+    pomoCommit(); pomoNext(); return;
+  }
+  updatePomoClock(); /* 仅更新界面，不再每秒写 localStorage */
+}
+function updatePomoClock(){
+  const el = $("#pomoTime");
+  if(!el) return;
+  const m = String(Math.floor(pomo.left/60)).padStart(2,"0"), s = String(pomo.left%60).padStart(2,"0");
+  el.textContent = `${m}:${s}`;
+  const ring = $("#pomoRing");
+  if(ring) ring.style.background = `conic-gradient(var(--accent) ${(pomo.dur-pomo.left)/pomo.dur*360}deg, var(--bg) 0deg)`;
+}
+function renderPomo(){
+  const tip = ["第 1 个番茄：只做一件事，手机静音放远", "连续 4 个番茄后长休息 15 分钟", "番茄钟不是用来'熬'的，是用来进入心流的", "休息时离开屏幕：喝水、走动、看远处"][pomo.round % 4];
+  $("#main").innerHTML = `
+  <section class="active">
+    <h2 class="sec">番茄钟</h2>
+    <p class="sub">25 分钟专注 + 5 分钟休息 · 每 4 轮长休息 · 累计 ${Math.round(pomoTotal/60)} min</p>
+    <div class="card pomo">
+      <div class="pomo-ring" id="pomoRing"><div class="pomo-inner">
+        <div class="pomo-time" id="pomoTime">-</div>
+        <div class="pomo-mode">${MODE_LABEL[pomo.mode]} ${Math.round(pomo.dur/60)} 分钟</div>
+        <div class="pomo-round">第 ${Math.max(pomo.round,1)} 轮 · 累计 ${Math.round(pomoTotal/60)} 分钟</div>
+      </div></div>
+      <div class="pomo-ops">
+        <button class="btn primary" id="pomoStart">${pomo.running?"暂停":"开始"}</button>
+        <button class="btn ghost" id="pomoReset">重置本轮</button>
+        <button class="btn ghost" id="pomoSkip">跳过</button>
+      </div>
+      <div class="pomo-modes">
+        <button class="mode-btn ${pomo.mode==="work"?"on":""}" data-m="work">专注 25'</button>
+        <button class="mode-btn ${pomo.mode==="short"?"on":""}" data-m="short">短休 5'</button>
+        <button class="mode-btn ${pomo.mode==="long"?"on":""}" data-m="long">长休 15'</button>
+      </div>
+      <div class="pomo-tip">💡 ${tip}</div>
+    </div>
+  </section>`;
+  updatePomoClock();
+  $("#pomoStart").addEventListener("click", ()=>{
+    if(pomo.running){
+      /* 暂停：按时间戳算出剩余秒数并停表 */
+      pomo.left = Math.max(0, Math.round((pomo.endAt - Date.now())/1000));
+      pomo.running = false; clearInterval(ticker); ticker = null; delete pomo.endAt;
+    } else {
+      pomo.running = true;
+      pomo.endAt = Date.now() + pomo.left*1000;
+      if(!ticker) ticker = setInterval(pomoTick, 500);
+    }
+    pomoCommit(); renderPomo();
+  });
+  $("#pomoReset").addEventListener("click", ()=>{ pomo.left = pomo.dur; clearInterval(ticker); ticker=null; pomo.running=false; delete pomo.endAt; pomoCommit(); renderPomo(); });
+  $("#pomoSkip").addEventListener("click", ()=>{ clearInterval(ticker); ticker=null; pomo.running=false; delete pomo.endAt; pomoNext(); });
+  document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click", ()=>{
+    pomo.mode = b.dataset.m; pomo.dur = POMO[pomo.mode]; pomo.left = pomo.dur;
+    clearInterval(ticker); ticker = null; pomo.running = false; delete pomo.endAt;
+    pomoCommit(); renderPomo();
+  }));
+}
+
+/* ============ 笔记日志 ============ */
+function renderNotes(){
+  $("#main").innerHTML = `
+  <section class="active">
+    <h2 class="sec">笔记与日志</h2>
+    <p class="sub">笔记：知识点与积累 · 日志：每天一条，复盘"今天真正学会了什么" · 错题本：没答上来的自测题</p>
+    <div class="notes-grid">
+      <div class="card">
+        <h4 style="margin:0 0 10px;font-size:14.5px">📓 学习笔记</h4>
+        <textarea id="noteBox" placeholder="记录知识点、报错与解法、面试题……\n笔记存在本浏览器，可导出备份。">${esc(state.notes)}</textarea>
+        <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+          <button class="btn primary small" id="noteSave">保存笔记</button>
+          <span class="muted" id="noteStatus"></span>
+        </div>
+        <h4 style="margin:16px 0 8px;font-size:14.5px;display:flex;align-items:center;gap:8px">📕 错题本（${state.wrong.length} 题）${state.wrong.length?`<button class="btn ghost small" id="wrongQuiz" style="margin-left:auto">🎲 随机复习</button>`:""}</h4>
+        <div style="max-height:260px;overflow:auto" id="wrongList">
+          ${state.wrong.length ? state.wrong.map((w,i)=>`<div class="wrong-item">
+            <div class="wi"><b>${esc(w.title)}</b>${w.reason?`<span class="wr">${esc(w.reason)}</span>`:""}${w.times>0?`<span class="wr hot">❌ 答错 ${w.times} 次</span>`:""}<br>${esc(w.quiz)}</div>
+            <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+              <span class="wd">${esc(w.ts)}</span>
+              <button class="btn ghost small" data-reopen="${i}">复习</button>
+              <button class="btn ghost small" data-wdel="${i}" style="color:var(--red)">删除</button>
+            </div>
+          </div>`).join("") : `<div class="empty-hint">还没有错题。自测答不上来时，点详解里的"记入错题本"就会出现在这里。</div>`}
+        </div>
+      </div>
+      <div class="card">
+        <h4 style="margin:0 0 10px;font-size:14.5px">📅 每日学习日志</h4>
+        <textarea id="logBox" rows="4" style="min-height:90px" placeholder="今天完成了什么？卡在哪？明天做什么？"></textarea>
+        <div style="margin-top:8px"><button class="btn primary small" id="logAdd">记一条</button></div>
+        <div style="margin-top:14px;max-height:300px;overflow:auto" id="logList">
+          ${state.logs.length ? state.logs.map((l,i)=>`<div class="log-item"><span class="ld">${esc(l.ts)}</span><span class="lt">${esc(l.text)}</span><button class="del" data-i="${i}">✕</button></div>`).join("") : `<div class="empty-hint">还没有日志，学完第一个 SQL 就来记一条吧。</div>`}
+        </div>
+      </div>
+    </div>
+  </section>`;
+  $("#noteSave").addEventListener("click", ()=>{
+    state.notes = $("#noteBox").value; save();
+    const st = $("#noteStatus"); st.textContent = "已保存 ✓"; setTimeout(()=>st.textContent="", 1800);
+  });
+  $("#logAdd").addEventListener("click", ()=>{
+    const v = $("#logBox").value.trim();
+    if(!v) return toast("先写点什么再记");
+    const d = new Date();
+    const ts = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+    state.logs.unshift({ ts, text:v }); save(); renderNotes(); toast("已记录 ✓");
+  });
+  document.querySelectorAll(".del").forEach(b=>b.addEventListener("click", ()=>{
+    state.logs.splice(+b.dataset.i, 1); save(); renderNotes();
+  }));
+  document.querySelectorAll("[data-wdel]").forEach(b=>b.addEventListener("click", ()=>{
+    state.wrong.splice(+b.dataset.wdel, 1); save(); renderNotes(); toast("错题已删除");
+  }));
+  document.querySelectorAll("[data-reopen]").forEach(b=>b.addEventListener("click", ()=>{
+    openDetail(state.wrong[+b.dataset.reopen].key);
+  }));
+  const wq = $("#wrongQuiz");
+  if(wq) wq.addEventListener("click", wrongQuizMode);
+}
+/* 错题随机复习：先回想，再核对；可移出已掌握的题 */
+function wrongQuizMode(){
+  if(!state.wrong.length) return toast("错题本是空的");
+  const w = state.wrong[Math.floor(Math.random()*state.wrong.length)];
+  $("#mTag").textContent = "错题复习";
+  $("#mTitle").textContent = w.title || "复习";
+  $("#mBody").innerHTML = `
+    <div class="intro">先在心里回想答案，再点下方按钮核对 👇
+      ${w.reason?`<span style="display:block;margin-top:6px;font-size:12.5px;color:var(--ink-3)">错因：${esc(w.reason)}${w.times>0?` · 已答错 ${w.times} 次`:""}</span>`:""}
+    </div>
+    <div class="quiz">${esc(w.quiz || "（该错题没有记录题目，直接看详解）")}</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+      <button class="btn primary small" id="wShow">👁 翻看详解核对</button>
+      <button class="btn ghost small" id="wNext">🎲 换一题</button>
+      <button class="btn ghost small" id="wOk" style="color:var(--green)">✅ 这次答对了</button>
+      <button class="btn ghost small" id="wAgain" style="color:var(--red)">❌ 还是没答对</button>
+    </div>`;
+  $("#modal").classList.add("show");
+  document.body.style.overflow = "hidden";
+  $("#wShow").addEventListener("click", ()=>openDetail(w.key));
+  $("#wNext").addEventListener("click", wrongQuizMode);
+  $("#wOk").addEventListener("click", ()=>{
+    const i = state.wrong.indexOf(w);
+    if(i>=0) state.wrong.splice(i,1);
+    save(); closeModal(); renderNotes(); toast("答对了，已移出错题本 💪");
+  });
+  $("#wAgain").addEventListener("click", ()=>{
+    const i = state.wrong.indexOf(w);
+    if(i>=0){ state.wrong[i].times = (state.wrong[i].times||0)+1; save(); }
+    closeModal(); renderNotes(); toast("已标记：这题还需再攻 ✍️");
+  });
+}
+
+/* ============ Tab 与主题 ============ */
+const RENDER = { dash: renderDash, tasks: renderTasks, pomo: renderPomo, notes: renderNotes, res: renderRes };
+const TAB_ORDER = ["dash","tasks","pomo","notes","res"];
+const TAB_NAME  = { dash:"仪表盘", tasks:"路线任务", pomo:"番茄钟", notes:"笔记日志", res:"资源" };
+function renderActive(){
+  const t = document.querySelector(".tab.active");
+  if(t && RENDER[t.dataset.tab]) RENDER[t.dataset.tab]();
+}
+function gotoTab(name){
+  const t = document.querySelector(`.tab[data-tab="${name}"]`);
+  if(t && !t.classList.contains("active")) t.click();
+}
+$("#tabs").addEventListener("click", e=>{
+  const b = e.target.closest(".tab"); if(!b) return;
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  RENDER[b.dataset.tab]();
+  /* 记住当前页：刷新/回退后仍停留在原页面，也支持 #tasks 直达 */
+  if(location.hash !== "#" + b.dataset.tab) history.replaceState(null, "", "#" + b.dataset.tab);
+});
+/* 键盘快捷键：1-6 切换页面，/ 聚焦搜索 */
+document.addEventListener("keydown", e=>{
+  const tg = e.target;
+  const typing = tg && tg !== document && typeof tg.matches === "function" && tg.matches("input,textarea");
+  if(typing || e.metaKey || e.ctrlKey || e.altKey) return;
+  if(e.key === "/"){ e.preventDefault(); $searchInput.focus(); return; }
+  const n = parseInt(e.key, 10);
+  if(n >= 1 && n <= TAB_ORDER.length) gotoTab(TAB_ORDER[n-1]);
+});
+document.addEventListener("click", e=>{
+  const g = e.target.closest("[data-go]"); if(!g) return;
+  const t = document.querySelector(`.tab[data-tab="${g.dataset.go}"]`);
+  if(t) t.click();
+});
+function applyTheme(){
+  document.documentElement.dataset.theme = state.theme;
+  $("#themeBtn").textContent = state.theme === "dark" ? "☀️ 浅色" : "🌙 深色";
+}
+$("#themeBtn").addEventListener("click", ()=>{
+  state.theme = state.theme === "dark" ? "light" : "dark";
+  save(); applyTheme();
+});
+
+/* ============ 导出 / 导入 / 快照 / 重置 ============ */
+$("#exportBtn").addEventListener("click", ()=>{
+  /* 备份是静态快照：强制去掉运行中状态，避免导入后按钮显示错乱 */
+  const blob = new Blob([JSON.stringify(makeDump(), null, 2)], { type:"application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `学习平台备份_${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(a.href);
+  markBackup();
+  toast("已导出备份");
+});
+$("#tipExport").addEventListener("click", ()=>$("#exportBtn").click());
+$("#tipClose").addEventListener("click", ()=>{
+  $("#backupTip").style.display = "none";
+  state.lastBackup = new Date().toISOString(); save();
+});
+$("#importBtn").addEventListener("click", ()=>$("#importFile").click());
+function makeDump(){
+  const dump = { ...state, pomo: { ...pomo, running:false }, pomoTotal };
+  delete dump.pomo.endAt;
+  return dump;
+}
+function snapshot(kind){ /* kind: daily 每日 | import 导入前 | reset 重置前 */
+  try {
+    localStorage.setItem("bdlp_snap_" + kind, JSON.stringify({ at: new Date().toISOString(), data: makeDump() }));
+  } catch(e){}
+}
+const SNAP_LABEL = { daily:"每日自动快照", import:"导入前快照", reset:"重置前快照" };
+function openSnapshots(){
+  $("#mTag").textContent = "数据保护";
+  $("#mTitle").textContent = "🛟 本地快照恢复";
+  const rows = Object.keys(SNAP_LABEL).map(k=>{
+    const raw = LS_OK ? store.get("bdlp_snap_"+k, null) : null;
+    if(!raw) return `<div class="snap-row"><div><b>${SNAP_LABEL[k]}</b><br><span class="muted">暂无</span></div><button class="btn ghost small" disabled>不可用</button></div>`;
+    const done = TASK_IDS.filter(id=>raw.data.tasks && raw.data.tasks[id]).length;
+    const at = new Date(raw.at).toLocaleString("zh-CN");
+    return `<div class="snap-row"><div><b>${SNAP_LABEL[k]}</b><br><span class="muted">${esc(at)} · 已完成 ${done} 个任务</span></div><button class="btn primary small" data-snap="${k}">恢复</button></div>`;
+  }).join("");
+  $("#mBody").innerHTML = `
+    <div class="intro">快照保存在本浏览器，是防误操作的"后悔药"：<b>重置、导入覆盖前会自动留一份</b>，每天首次打开也会自动存一份。误删数据时可从这里找回。</div>
+    ${rows}
+    <p class="muted" style="font-size:12.5px;margin:12px 0 0">恢复会用快照内容替换当前数据；恢复前建议先点"导出备份"留存当前数据。</p>`;
+  $("#modal").classList.add("show");
+  document.body.style.overflow = "hidden";
+  document.querySelectorAll("[data-snap]").forEach(b=>b.addEventListener("click", ()=>{
+    const k = b.dataset.snap, raw = store.get("bdlp_snap_"+k, null);
+    if(!raw) return;
+    if(!confirm(`用「${SNAP_LABEL[k]}」的内容替换当前全部数据？\n（恢复前建议先导出备份留存当前数据）`)) return;
+    applyBackup(raw.data, true);
+    closeModal();
+    toast("快照恢复完成 ✓");
+  }));
+}
+$("#snapBtn").addEventListener("click", openSnapshots);
+
+/* 把备份 JSON 应用到当前状态（导入与快照恢复共用），含基本数据校验 */
+function applyBackup(data, replaceAll){
+  const isObj = x => x && typeof x === "object" && !Array.isArray(x);
+  const pick = (obj, valid) => { const out={}; if(isObj(obj)) for(const k of valid) if(k in obj) out[k]=obj[k]; return out; };
+  state.tasks    = pick(data.tasks, TASK_IDS);
+  state.mastery  = pick(data.mastery, TASK_IDS);
+  if(isObj(data.checkins)) state.checkins = data.checkins;
+  if(typeof data.notes === "string") state.notes = data.notes;
+  if(Array.isArray(data.logs))  state.logs  = data.logs.filter(x=>x && typeof x.text==="string");
+  if(Array.isArray(data.wrong)) state.wrong = data.wrong.filter(x=>x && typeof x.quiz==="string");
+  if(isObj(data.pomo)){ pomo = { ...DEF.pomo, ...data.pomo, running:false }; delete pomo.endAt; state.pomo = pomo; }
+  if(Number.isFinite(data.pomoTotal)) pomoTotal = data.pomoTotal;
+  if(typeof data.lastBackup === "string") state.lastBackup = data.lastBackup;
+  if(replaceAll && typeof data.theme === "string") state.theme = data.theme;
+  save(); renderActive();
+}
+$("#importFile").addEventListener("change", e=>{
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    let data;
+    try { data = JSON.parse(r.result); } catch(err){ return toast("导入失败：文件格式不对"); }
+    if(!confirm("导入规则：任务勾选、技能进度、掌握度、打卡 = 合并；笔记、日志、错题本 = 被备份整体替换。\n\n当前数据已自动存为快照（🛟 可找回）。\n确定继续导入？")) return;
+    snapshot("import");
+    applyBackup(data, false);
+    toast("导入成功 ✓");
+  };
+  r.readAsText(f); e.target.value = "";
+});
+$("#resetBtn").addEventListener("click", ()=>{
+  if(!confirm("确定清空所有学习数据？\n（清空前会自动存一份「重置前快照」，可在 🛟 快照恢复 找回）")) return;
+  snapshot("reset");
+  localStorage.removeItem("bdlp_v1"); localStorage.removeItem("bdlp_pomoTotal");
+  location.reload();
+});
+
+/* ============ 全局搜索 ============ */
+let searchIndex = null;
+function buildSearchIndex(){
+  if(searchIndex) return searchIndex;
+  const idx = [];
+  for(const st of STAGES) st.tasks.forEach(([name,desc],i)=>{
+    const key = `${st.id}_${i}`;
+    idx.push({ key, tag: st.badge, title: name, text: `${name} ${desc} ${(DETAILS[key]?.pts||[]).join(" ")} ${(DETAILS[key]?.pit||"")} ${(DETAILS[key]?.deep?.go||"")} ${(DETAILS[key]?.deep?.tasks||[]).join(" ")}` });
+  });
+  for(const [k, terms] of Object.entries(TERMS)){
+    idx.push({ key:k, tag:"名词", title: terms[0][0], text: terms.map(t=>t[0]+t[1]).join(" ") });
+  }
+  searchIndex = idx;
+  return idx;
+}
+const $searchInput = $("#searchInput"), $searchRes = $("#searchRes");
+function hl(text, q){
+  const t = String(text), i = t.toLowerCase().indexOf(q);
+  if(i < 0) return esc(t);
+  return esc(t.slice(0,i)) + "<mark>" + esc(t.slice(i, i+q.length)) + "</mark>" + esc(t.slice(i+q.length));
+}
+$searchInput.addEventListener("input", ()=>{
+  const q = $searchInput.value.trim().toLowerCase();
+  if(!q){ $searchRes.classList.remove("show"); return; }
+  const hits = buildSearchIndex().filter(x=>x.text.toLowerCase().includes(q) || x.title.toLowerCase().includes(q)).slice(0,12);
+  $searchRes.innerHTML = hits.length ? hits.map(h=>`
+    <div class="sr-item" data-k="${h.key}"><span class="sg">${h.tag}</span><span class="st">${hl(h.title, q)}</span></div>
+  `).join("") : `<div class="sr-empty">没有找到「${esc($searchInput.value)}」，换个关键词试试</div>`;
+  $searchRes.classList.add("show");
+});
+$searchRes.addEventListener("click", e=>{
+  const it = e.target.closest(".sr-item"); if(!it) return;
+  $searchRes.classList.remove("show");
+  $searchInput.value = "";
+  openDetail(it.dataset.k);
+});
+document.addEventListener("click", e=>{ if(!e.target.closest(".search-wrap")) $searchRes.classList.remove("show"); });
+$searchInput.addEventListener("keydown", e=>{ if(e.key==="Enter"){ const first=$searchRes.querySelector(".sr-item"); if(first){ $searchRes.classList.remove("show"); $searchInput.value=""; openDetail(first.dataset.k);} } });
+
+/* ============ 初始化 ============ */
+applyTheme();
+renderDash();
+/* 首次打开：弹一次「数据仅存本机」说明（之后不再打扰） */
+maybeFirstVisitTip();
+/* 存储不可用（无痕/隐私模式）→ 顶部红色警告，避免学习一天全白费 */
+if(!LS_OK) $("#lsWarn").style.display = "flex";
+/* 每日自动快照：一天一份滚动覆盖，作为"清缓存/误操作前的最后防线" */
+if(LS_OK && store.get("bdlp_snap_day","") !== todayStr()){
+  snapshot("daily");
+  store.set("bdlp_snap_day", todayStr());
+}
+/* 番茄钟若在计时（刷新/重开页面后）：恢复计时器 */
+if(pomo.running && !ticker) ticker = setInterval(pomoTick, 500);
+/* 从后台切回标签页时立即校准倒计时 */
+document.addEventListener("visibilitychange", ()=>{ if(!document.hidden && pomo.running) pomoTick(); });
+/* 支持 #tasks 等直达链接 */
+(()=>{
+  const h = location.hash.replace("#","");
+  if(TAB_ORDER.includes(h) && h !== "dash") gotoTab(h);
+})();
+window.addEventListener("beforeunload", ()=>{ clearInterval(ticker); pomoCommit(); });
+
+</script>
+</body>
+</html>
