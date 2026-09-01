@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>考公学习平台 · 2028 国考冲刺版</title>
+<title>考公学习平台 · 2028 国考备考版</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%232563eb'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='%23fff' font-family='sans-serif' font-weight='bold'%3E%E6%95%B0%3C/text%3E%3C/svg%3E">
 <style>
   :root{
@@ -2745,18 +2745,18 @@ const RES = [
   "items": [
    [
     "B 站：李梦圆申论",
-    "申论系统课（免费）",
-    "https://space.bilibili.com/"
+    "申论系统课（免费）· 粉笔官方",
+    "https://space.bilibili.com/1964179837"
    ],
    [
     "B 站：花生十三",
     "资料分析速算技巧",
-    "https://space.bilibili.com/"
+    "https://space.bilibili.com/526410150"
    ],
    [
     "B 站：刘文超Vincent",
     "行测全模块技巧课",
-    "https://space.bilibili.com/"
+    "https://space.bilibili.com/300722822"
    ],
    [
     "粉笔模考大赛",
@@ -2885,14 +2885,21 @@ function openCheckinModal(t){
     </div>`;
   $("#modal").classList.add("show");
   document.body.style.overflow = "hidden";
-  const doCheckin = ()=>{
+  const doCheckin = (withLog)=>{
     const v = $("#ckTask").value;
     state.checkins[t] = true;
     if(v) state.checkinTasks[t] = v; else delete state.checkinTasks[t];
+    if(withLog && v){
+      const st = STAGES.find(s=>s.id===v.split("_")[0]);
+      const taskName = st ? st.tasks[+v.split("_")[1]][0] : v;
+      const d = new Date();
+      const ts = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
+      state.logs.unshift({ ts, text:`主攻任务打卡：${taskName}` });
+    }
     save(); closeModal(); toast("打卡成功 💪 学点东西再走"); renderDash();
   };
-  $("#ckOk").addEventListener("click", doCheckin);
-  $("#ckSkip").addEventListener("click", doCheckin);
+  $("#ckOk").addEventListener("click", ()=>doCheckin(true));
+  $("#ckSkip").addEventListener("click", ()=>doCheckin(false));
 }
 /* 最近学习轨迹：最近 5 次带任务的打卡 */
 function recentTrail(){
@@ -3250,7 +3257,7 @@ function renderNotes(){
         <textarea id="logBox" rows="4" style="min-height:90px" placeholder="今天完成了什么？卡在哪？明天做什么？"></textarea>
         <div style="margin-top:8px"><button class="btn primary small" id="logAdd">记一条</button></div>
         <div style="margin-top:14px;max-height:300px;overflow:auto" id="logList">
-          ${state.logs.length ? state.logs.map((l,i)=>`<div class="log-item"><span class="ld">${esc(l.ts)}</span><span class="lt">${esc(l.text)}</span><button class="del" data-i="${i}">✕</button></div>`).join("") : `<div class="empty-hint">还没有日志，学完第一个 SQL 就来记一条吧。</div>`}
+          ${state.logs.length ? state.logs.map((l,i)=>`<div class="log-item"><span class="ld">${esc(l.ts)}</span><span class="lt">${esc(l.text)}</span><button class="del" data-i="${i}">✕</button></div>`).join("") : `<div class="empty-hint">还没有日志，学完第一个任务就来记一条吧。</div>`}
         </div>
       </div>
     </div>
